@@ -1,83 +1,427 @@
 
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="ur" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OmniEase - تمام ڈیجیٹل ٹولز ایک ہی جگہ</title>
+<title>OmniEase - ڈیجیٹل ٹولز، سوشل ایڈز و دکان حساب کتاب</title>
 <style>
+:root {
+--primary: #2c3e50;
+--accent: #27ae60;
+--bg: #f4f7f6;
+--white: #ffffff;
+}
 body {
 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 margin: 0;
 padding: 0;
-background-color: #f4f7f6;
+background-color: var(--bg);
 color: #333;
-text-align: center;
+text-align: right;
 }
-.logo-container {
-padding: 50px 20px;
-background: white;
-box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+header {
+background: var(--white);
+padding: 20px;
+text-align: center;
+box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 .main-logo {
-font-size: 3.5rem;
+font-size: 2.5rem;
 font-weight: 800;
-text-transform: uppercase;
-letter-spacing: -2px;
-display: inline-block;
 margin: 0;
+text-transform: uppercase;
+direction: ltr;
+display: inline-block;
 }
-.logo-omni {
-color: #2c3e50;
-}
-.logo-ease {
-color: #27ae60;
-position: relative;
-}
+.logo-omni { color: var(--primary); }
+.logo-ease { color: var(--accent); position: relative; }
 .logo-ease::after {
 content: '';
 position: absolute;
-bottom: -5px;
+bottom: -4px;
 left: 0;
 width: 100%;
-height: 5px;
-background: #27ae60;
-border-radius: 10px;
+height: 4px;
+background: var(--accent);
+border-radius: 4px;
 }
 .tagline {
-font-size: 1.2rem;
 color: #7f8c8d;
-margin-top: 10px;
+font-size: 1rem;
+margin-top: 5px;
 }
-.content {
-padding: 40px 20px;
+nav {
+display: flex;
+justify-content: center;
+background: var(--primary);
+flex-wrap: wrap;
 }
-p {
-font-size: 1.2rem;
-line-height: 1.6;
-max-width: 600px;
-margin: 0 auto 30px auto;
+nav button {
+background: none;
+border: none;
+color: white;
+padding: 12px 20px;
+font-size: 1rem;
+font-weight: bold;
+cursor: pointer;
+transition: 0.3s;
+}
+nav button:hover, nav button.active {
+background: var(--accent);
+}
+.container {
+max-width: 900px;
+margin: 20px auto;
+padding: 15px;
+}
+.tab-content {
+display: none;
+background: var(--white);
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.tab-content.active {
+display: block;
+}
+h2 {
+color: var(--primary);
+border-bottom: 2px solid var(--accent);
+padding-bottom: 8px;
+margin-top: 0;
+font-size: 1.4rem;
+}
+.form-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 10px;
+margin-bottom: 15px;
+}
+input, select, textarea {
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+box-sizing: border-box;
+font-size: 0.95rem;
 }
 .btn {
-display: inline-block;
-margin-top: 20px;
-padding: 15px 30px;
-background-color: #27ae60;
+background: var(--accent);
 color: white;
-text-decoration: none;
+border: none;
+padding: 12px 20px;
 border-radius: 5px;
-font-size: 1.1rem;
 font-weight: bold;
-transition: background 0.3s ease;
+cursor: pointer;
+width: 100%;
+font-size: 1rem;
+margin-top: 10px;
 }
-.btn:hover {
-background-color: #219150;
+.btn:hover { background: #219150; }
+.btn-sec {
+background: #7f8c8d;
+}
+.canvas-container {
+text-align: center;
+margin-top: 15px;
+overflow-x: auto;
+}
+canvas {
+max-width: 100%;
+height: auto;
+border: 1px solid #ddd;
+border-radius: 5px;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 15px;
+}
+table, th, td { border: 1px solid #ddd; }
+th, td { padding: 10px; text-align: center; font-size: 0.9rem; }
+th { background: var(--primary); color: white; }
+.summary-box {
+display: flex;
+justify-content: space-around;
+background: #eef9f2;
+padding: 15px;
+border-radius: 8px;
+margin: 15px 0;
+font-weight: bold;
 }
 </style>
 </head>
 <body>
-<div class="logo-container">
-<h1 class="main-logo">
+<header>
+<div class="main-logo">
 <span class="logo-omni">Omni</span><span class="logo-ease">Ease</span>
-</h1>
-<p
+</div>
+<div class="tagline">آپ کے تمام ڈیجیٹل ٹولز، سوشل میڈیا ایڈز اور دکان کا حساب کتاب</div>
+</header>
+<nav>
+<button class="active" onclick="switchTab('videoTab', this)">📹 پروڈکٹ ویڈیو میکر</button>
+<button onclick="switchTab('adTab', this)">🎨 سوشل میڈیا ایڈ میکر</button>
+<button onclick="switchTab('ledgerTab', this)">🛍️ دکان حساب کتاب</button>
+<button onclick="switchTab('textTab', this)">📝 ورڈ کاؤنٹر</button>
+</nav>
+<div class="container">
+<!-- 1. Video Creator Tab -->
+<div id="videoTab" class="tab-content active">
+<h2>📹 کپڑوں و پروڈکٹس کے لیے ویڈیو سلائیڈ شو میکر</h2>
+<p>اپنی پروڈکٹ کی 2 یا زیادہ تصاویر اپلوڈ کریں اور ٹک ٹاک، ریلز کے لیے اینیمیٹڈ ویڈیو ریکارڈ کریں۔</p>
+<div class="form-grid">
+<div>
+<label>تصاویر منتخب کریں:</label>
+<input type="file" id="videoImages" multiple accept="image/*">
+</div>
+<div>
+<label>پروڈکٹ ٹائٹل / آفر:</label>
+<input type="text" id="videoTitle" placeholder="مثلاً: کاٹن سوٹ سیل 30% Off">
+</div>
+<div>
+<label>قیمت / واٹس ایپ نمبر:</label>
+<input type="text" id="videoSub" placeholder="مثلاً: صرف 2500 روپے | 0300-1234567">
+</div>
+</div>
+<button class="btn" onclick="startVideoCreation()">ویدیو اینیمیشن شروع کریں</button>
+<button class="btn btn-sec" id="recBtn" style="display:none;" onclick="toggleRecord()">ویڈیو ریکارڈ و ڈاؤن لوڈ کریں</button>
+<div class="canvas-container">
+<canvas id="videoCanvas" width="540" height="960" style="width:270px; height:480px; background:#000;"></canvas>
+</div>
+</div>
+<!-- 2. Social Media Ad Designer Tab -->
+<div id="adTab" class="tab-content">
+<h2>🎨 سوشل میڈیا پوسٹر و ایڈ میکر</h2>
+<div class="form-grid">
+<div>
+<label>تصویر منتخب کریں:</label>
+<input type="file" id="adImage" accept="image/*" onchange="drawAd()">
+</div>
+<div>
+<label>پوسٹ کا سائز:</label>
+<select id="adSize" onchange="drawAd()">
+<option value="1:1">فیس بک / انسٹاگرام پوسٹ (1:1)</option>
+<option value="9:16">ٹک ٹاک / اسٹوڑی (9:16)</option>
+<option value="16:9">یوٹیوب تھمب نیل (16:9)</option>
+</select>
+</div>
+<div>
+<label>ہیڈ لائن (عنوان):</label>
+<input type="text" id="adHeading" placeholder="خاص دھماکہ سیل!" oninput="drawAd()">
+</div>
+<div>
+<label>قیمت / رابطہ تفصیل:</label>
+<input type="text" id="adDetail" placeholder="قیمت: 1999 روپے" oninput="drawAd()">
+</div>
+</div>
+<button class="btn" onclick="downloadAd()">ایڈ تصویر ڈاؤن لوڈ کریں</button>
+<div class="canvas-container">
+<canvas id="adCanvas" width="600" height="600"></canvas>
+</div>
+</div>
+<!-- 3. Store Khata Tab -->
+<div id="ledgerTab" class="tab-content">
+<h2>🛍️ دکان حساب کتاب و کسٹمر لیجر</h2>
+<div class="form-grid">
+<input type="text" id="custName" placeholder="کسٹمر کا نام">
+<input type="text" id="itemDetail" placeholder="کپڑے کی تفصیل">
+<input type="number" id="itemQty" placeholder="تعداد / پیکٹ">
+<input type="number" id="totalPrice" placeholder="کل رقم (RS)">
+<input type="number" id="paidPrice" placeholder="وصول رقم (RS)">
+</div>
+<button class="btn" onclick="addSale()">حساب محفوظ کریں</button>
+<div class="summary-box">
+<div>کل فروخت: <span id="sTotal">0</span> RS</div>
+<div>وصولی: <span id="sPaid">0</span> RS</div>
+<div>بقایا ادھار: <span id="sPending" style="color:red;">0</span> RS</div>
+</div>
+<table>
+<thead>
+<tr>
+<th>کسٹمر</th>
+<th>تفصیل</th>
+<th>تعداد</th>
+<th>کل رقم</th>
+<th>وصول</th>
+<th>بقایا</th>
+</tr>
+</thead>
+<tbody id="ledgerTable"></tbody>
+</table>
+</div>
+<!-- 4. Word Counter Tab -->
+<div id="textTab" class="tab-content">
+<h2>📝 ورڈ اور ٹیکسٹ کاؤنٹر</h2>
+<textarea id="textInput" placeholder="یہاں اپنا ٹیکسٹ لکھیں..." oninput="countText()"></textarea>
+<div class="summary-box">
+<div>الفاظ: <span id="wCount">0</span></div>
+<div>حروف: <span id="cCount">0</span></div>
+</div>
+</div>
+</div>
+<script>
+function switchTab(tabId, btn) {
+document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+document.getElementById(tabId).classList.add('active');
+btn.classList.add('active');
+}
+// --- 1. VIDEO CREATOR CODE ---
+let vCanvas = document.getElementById('videoCanvas');
+let vCtx = vCanvas.getContext('2d');
+let vImages = [];
+let vAnimId = null;
+let mediaRecorder = null;
+let recordedChunks = [];
+let isRecording = false;
+document.getElementById('videoImages').addEventListener('change', function(e) {
+vImages = [];
+let files = Array.from(e.target.files);
+files.forEach(file => {
+let img = new Image();
+img.src = URL.createObjectURL(file);
+vImages.push(img);
+});
+});
+function startVideoCreation() {
+if (vImages.length === 0) { alert('براہ کرم کم از کم 1 یا 2 تصاویر منتخب کریں!'); return; }
+document.getElementById('recBtn').style.display = 'block';
+let step = 0;
+let currentImg = 0;
+function animate() {
+vCtx.fillStyle = '#000';
+vCtx.fillRect(0, 0, vCanvas.width, vCanvas.height);
+let img = vImages[currentImg];
+if (img && img.complete) {
+let scale = 1 + (step % 100) * 0.002;
+let w = vCanvas.width * scale;
+let h = (img.height / img.width) * w;
+vCtx.drawImage(img, (vCanvas.width - w)/2, (vCanvas.height - h)/2, w, h);
+}
+// Overlay Text
+vCtx.fillStyle = 'rgba(0,0,0,0.6)';
+vCtx.fillRect(0, vCanvas.height - 180, vCanvas.width, 180);
+vCtx.fillStyle = '#27ae60';
+vCtx.font = 'bold 32px Segoe UI';
+vCtx.textAlign = 'center';
+vCtx.fillText(document.getElementById('videoTitle').value || 'OmniEase Products', vCanvas.width/2, vCanvas.height - 110);
+vCtx.fillStyle = '#fff';
+vCtx.font = '24px Segoe UI';
+vCtx.fillText(document.getElementById('videoSub').value || 'آرڈر کے لیے رابطہ کریں', vCanvas.width/2, vCanvas.height - 50);
+step++;
+if(step % 120 === 0) {
+currentImg = (currentImg + 1) % vImages.length;
+}
+vAnimId = requestAnimationFrame(animate);
+}
+if(vAnimId) cancelAnimationFrame(vAnimId);
+animate();
+}
+function toggleRecord() {
+let btn = document.getElementById('recBtn');
+if(!isRecording) {
+let stream = vCanvas.captureStream(30);
+mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+recordedChunks = [];
+mediaRecorder.ondataavailable = e => { if(e.data.size > 0) recordedChunks.push(e.data); };
+mediaRecorder.onstop = () => {
+let blob = new Blob(recordedChunks, { type: 'video/webm' });
+let url = URL.createObjectURL(blob);
+let a = document.createElement('a');
+a.href = url;
+a.download = 'omniease-product-video.webm';
+a.click();
+};
+mediaRecorder.start();
+isRecording = true;
+btn.innerText = 'ریکارڈنگ روکیں اور ویڈیو ڈاؤن لوڈ کریں';
+btn.style.background = '#e74c3c';
+} else {
+mediaRecorder.stop();
+isRecording = false;
+btn.innerText = 'ویڈیو ریکارڈ و ڈاؤن لوڈ کریں';
+btn.style.background = '#27ae60';
+}
+}
+// --- 2. AD DESIGNER CODE ---
+let adCanvas = document.getElementById('adCanvas');
+let adCtx = adCanvas.getContext('2d');
+let loadedAdImg = null;
+function drawAd() {
+let file = document.getElementById('adImage').files[0];
+let size = document.getElementById('adSize').value;
+if(size === '1:1') { adCanvas.width = 600; adCanvas.height = 600; }
+else if(size === '9:16') { adCanvas.width = 540; adCanvas.height = 960; }
+else { adCanvas.width = 800; adCanvas.height = 450; }
+adCtx.fillStyle = '#2c3e50';
+adCtx.fillRect(0, 0, adCanvas.width, adCanvas.height);
+if(file) {
+if(!loadedAdImg || loadedAdImg.src !== file.name) {
+loadedAdImg = new Image();
+loadedAdImg.src = URL.createObjectURL(file);
+loadedAdImg.onload = () => renderAdElements();
+} else {
+renderAdElements();
+}
+} else {
+renderAdElements();
+}
+}
+function renderAdElements() {
+if(loadedAdImg) {
+adCtx.drawImage(loadedAdImg, 0, 0, adCanvas.width, adCanvas.height * 0.75);
+}
+adCtx.fillStyle = 'rgba(39, 174, 96, 0.9)';
+adCtx.fillRect(0, adCanvas.height * 0.72, adCanvas.width, adCanvas.height * 0.28);
+adCtx.fillStyle = '#fff';
+adCtx.textAlign = 'center';
+adCtx.font = 'bold 30px Segoe UI';
+adCtx.fillText(document.getElementById('adHeading').value || 'خصوصی پیشکش', adCanvas.width/2, adCanvas.height * 0.82);
+adCtx.font = '22px Segoe UI';
+adCtx.fillText(document.getElementById('adDetail').value || 'OmniEase Store', adCanvas.width/2, adCanvas.height * 0.92);
+}
+function downloadAd() {
+let a = document.createElement('a');
+a.href = adCanvas.toDataURL('image/jpeg');
+a.download = 'omniease-ad.jpg';
+a.click();
+}
+// --- 3. KHATA LEDGER CODE ---
+let sales = JSON.parse(localStorage.getItem('omniLedger')) || [];
+function renderLedger() {
+let table = document.getElementById('ledgerTable');
+table.innerHTML = '';
+let tS = 0, tP = 0, tPend = 0;
+sales.forEach(s => {
+let pend = s.price - s.paid;
+tS += s.price; tP += s.paid; tPend += pend;
+table.innerHTML += <tr> <td>${s.cust}</td><td>${s.item}</td><td>${s.qty}</td> <td>${s.price}</td><td>${s.paid}</td> <td style="color:${pend > 0 ? 'red':'green'}; font-weight:bold;">${pend}</td> </tr>;
+});
+document.getElementById('sTotal').innerText = tS;
+document.getElementById('sPaid').innerText = tP;
+document.getElementById('sPending').innerText = tPend;
+}
+function addSale() {
+let cust = document.getElementById('custName').value || 'عام گاہک';
+let item = document.getElementById('itemDetail').value || 'کپڑا';
+let qty = parseInt(document.getElementById('itemQty').value) || 1;
+let price = parseFloat(document.getElementById('totalPrice').value) || 0;
+let paid = parseFloat(document.getElementById('paidPrice').value) || 0;
+if(price === 0) return alert('براہ کرم قیمت درج کریں');
+sales.push({cust, item, qty, price, paid});
+localStorage.setItem('omniLedger', JSON.stringify(sales));
+renderLedger();
+}
+// --- 4. WORD COUNTER CODE ---
+function countText() {
+let txt = document.getElementById('textInput').value;
+document.getElementById('cCount').innerText = txt.length;
+let words = txt.trim().split(/\s+/).filter(w => w.length > 0);
+document.getElementById('wCount').innerText = words.length;
+}
+renderLedger();
+drawAd();
+</script>
+</body>
+  </html>
