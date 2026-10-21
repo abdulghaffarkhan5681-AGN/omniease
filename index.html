@@ -1,161 +1,137 @@
 <!DOCTYPE html>
-<html lang="ur" dir="rtl">
+<html lang="ur">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OmniEase - ال ان ون ڈیجیٹل و بزنس سوٹ</title>
-<script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-<link href="[https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap](https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap)" rel="stylesheet">
+<title>OMNI EASE</title>
 <style>
+/* پورے پیج کا خوبصورت بیک گراؤنڈ */
 body {
-font-family: 'Noto Nastaliq Urdu', serif;
+background-color: #f0f4f8;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+color: #2c3e50;
+margin: 0;
+padding: 20px;
+text-align: center;
 }
-.tab-content {
-display: none;
+/* مین نام (Title) */
+h1 {
+color: #1a252f;
+font-size: 2.2rem;
+margin-bottom: 5px;
 }
-.tab-content.active {
-display: block;
+/* سب ٹائٹل */
+.subtitle {
+color: #7f8c8d;
+font-size: 1.1rem;
+margin-bottom: 25px;
+}
+/* بٹنوں کا باکس */
+.buttons-container {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 10px;
+margin-bottom: 30px;
+}
+/* ہر بٹن کا خوبصورت اسٹائل */
+.btn {
+color: white;
+border: none;
+padding: 12px 18px;
+border-radius: 8px;
+font-size: 0.95rem;
+font-weight: bold;
+cursor: pointer;
+box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+transition: all 0.2s ease;
+}
+.btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+/* تمام بٹنوں کے الگ الگ مخصوص رنگ */
+.btn-islamic { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+.btn-quran { background: linear-gradient(135deg, #16a085, #1abc9c); }
+.btn-ledger { background: linear-gradient(135deg, #f39c12, #d35400); }
+.btn-ad { background: linear-gradient(135deg, #e67e22, #d35400); }
+.btn-video { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+.btn-word { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+/* کارڈز / وائٹ باکس کا ڈیزائن */
+.card {
+background: white;
+border-radius: 12px;
+padding: 25px;
+max-width: 600px;
+margin: 0 auto 20px auto;
+box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+border-top: 5px solid #2ecc71;
+}
+.card h2 {
+color: #27ae60;
+margin-top: 0;
+}
+blockquote {
+font-style: italic;
+color: #34495e;
+background: #eef9f1;
+padding: 12px;
+border-left: 4px solid #2ecc71;
+border-radius: 4px;
+margin: 15px 0;
+}
+textarea {
+width: 90%;
+height: 80px;
+border: 1px solid #bdc3c7;
+border-radius: 6px;
+padding: 10px;
+font-family: inherit;
+resize: vertical;
+}
+.save-btn {
+background-color: #27ae60;
+color: white;
+border: none;
+padding: 8px 20px;
+border-radius: 5px;
+margin-top: 10px;
+cursor: pointer;
+font-weight: bold;
 }
 </style>
 </head>
-<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen text-gray-800">
-<!-- Header / Logo Section -->
-<header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg py-6 px-4 mb-6">
-<div class="max-w-4xl mx-auto text-center">
-<h1 class="text-3xl md:text-4xl font-bold tracking-wide">🌟 OMNI EASE 🌟</h1>
-<p class="text-sm md:text-base mt-2 text-indigo-100">آپ کا اپنا ال ان-ون ڈیجیٹل، کاروباری، اور روحانی مرکز</p>
+<body>
+<h1>🌟 OMNI EASE 🌟</h1>
+<div class="subtitle">Your own all-in-one digital, business, and spiritual hub</div>
+<!-- تمام الگ الگ رنگین بٹنز -->
+<div class="buttons-container">
+<button class="btn btn-islamic" onclick="buttonAction('Islamic Calendar')">📅 Islamic Calendar</button>
+<button class="btn btn-quran" onclick="buttonAction('Holy Quran')">📖 Holy Quran</button>
+<button class="btn btn-ledger" onclick="buttonAction('Shop Ledger')">📊 Shop Ledger</button>
+<button class="btn btn-ad" onclick="buttonAction('Ad Designer')">🎨 Ad Designer</button>
+<button class="btn btn-video" onclick="buttonAction('Video Maker')">🎥 Video Maker</button>
+<button class="btn btn-word" onclick="buttonAction('Word counter')">✏️ Word counter</button>
 </div>
-</header>
-<!-- Main Navigation Bar -->
-<nav class="max-w-4xl mx-auto px-4 mb-6">
-<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 bg-white p-3 rounded-2xl shadow-md">
-<button onclick="switchTab('quran')" id="btn-quran" class="nav-btn bg-emerald-600 text-white font-bold py-2 px-3 rounded-xl text-xs md:text-sm transition hover:bg-emerald-700 shadow">📖 قرآن مجید</button>
-<button onclick="switchTab('islamic-date')" id="btn-islamic-date" class="nav-btn bg-gray-100 text-gray-700 font-bold py-2 px-3 rounded-xl text-xs md:text-sm transition hover:bg-gray-200">🗓️ اسلامی کیلنڈر</button>
-<button onclick="switchTab('video-maker')" id="btn-video-maker" class="nav-btn bg-gray-100 text-gray-700 font-bold py-2 px-3 rounded-xl text-xs md:text-sm transition hover:bg-gray-200">🎥 ویڈیو میکر</button>
-<button onclick="switchTab('ad-designer')" id="btn-ad-designer" class="nav-btn bg-gray-100 text-gray-700 font-bold py-2 px-3 rounded-xl text-xs md:text-sm transition hover:bg-gray-200">🎨 ایڈ ڈیزائنر</button>
-<button onclick="switchTab('shop-ledger')" id="btn-shop-ledger" class="nav-btn bg-gray-100 text-gray-700 font-bold py-2 px-3 rounded-xl text-xs md:text-sm transition hover:bg-gray-200">📊 شاپ لیجر</button>
-<button onclick="switchTab('word-counter')" id="btn-word-counter" class="nav-btn bg-gray-100 text-gray-700 font-bold py-2 px-3 rounded-xl text-xs md:text-sm transition hover:bg-gray-200">📝 ورڈ کاؤنٹر</button>
+<!-- اسلامی و روحانی سیکشن -->
+<div class="card">
+<h2>📖 The Holy Quran and Spiritual Guidance</h2>
+<p>Daily recitation, selected surahs and a source of inspired peace.</p>
+<p><strong>In the name of Allah, the Merciful</strong></p>
+<blockquote>
+"Indeed, in the remembrance of Allah do hearts find rest." (Ar-Ra'd: 28)
+</blockquote>
+<label for="surah-note"><strong>Surah or verse selection / note:</strong></label>
+
+
+<textarea id="surah-note" placeholder="Save the translation of the verse or surah here..."></textarea>
+
+<button class="save-btn" onclick="buttonAction('Note Saved')">Save</button>
 </div>
-</nav>
-<!-- Main Content Container -->
-<main class="max-w-4xl mx-auto px-4 pb-12">
-<!-- 1. Quran Section -->
-<section id="quran" class="tab-content active bg-white p-6 rounded-2xl shadow-xl border-t-4 border-emerald-500">
-<h2 class="text-xl font-bold text-emerald-700 mb-3 pb-2 border-b">📖 قرآن مجید اور روحانی رہنمائی</h2>
-<p class="text-sm text-gray-600 mb-4">روزانہ تلاوت، منتخب سورتیں اور الہامی سکون کا ذریعہ۔</p>
-<div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200 mb-4 text-center">
-<p class="text-lg font-bold text-emerald-900 mb-2">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-<p class="text-sm text-emerald-800">"بے شک اللہ کے ذکر سے ہی دلوں کو سکون ملتا ہے۔" (الرعد: 28)</p>
-</div>
-<div class="space-y-3">
-<label class="block text-xs font-medium text-gray-700">سورۃ یا آیت کا انتخاب / نوٹ:</label>
-<textarea rows="3" class="w-full text-sm border rounded-xl p-3 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="آیت یا سورۃ کا ترجمہ یہاں محفوظ کریں..."></textarea>
-<button onclick="alert('روحانی نوٹ محفوظ ہو گیا!')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl shadow transition">محفوظ کریں</button>
-</div>
-</section>
-<!-- 2. Islamic Date & Calendar Section -->
-<section id="islamic-date" class="tab-content bg-white p-6 rounded-2xl shadow-xl border-t-4 border-purple-500">
-<h2 class="text-xl font-bold text-purple-700 mb-3 pb-2 border-b">🗓️ اسلامی مہینے اور تاریخ ٹول</h2>
-<p class="text-sm text-gray-600 mb-4">ہجری تاریخ، اہم اسلامی مہینے اور ایامِ بیض کی معلومات۔</p>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-<div class="bg-purple-50 p-4 rounded-xl border border-purple-200">
-<h3 class="font-bold text-purple-800 mb-1">🌙 اہم اسلامی مہینے</h3>
-<p class="text-xs text-gray-600">محرم، صفر، ربیع الاول، ربیع الثانی، جمادی الاول، جمادی الثانی، رجب، شعبان، رمضان، شوال، ذوالقعدہ، ذوالحجہ۔</p>
-</div>
-<div class="bg-purple-50 p-4 rounded-xl border border-purple-200">
-<h3 class="font-bold text-purple-800 mb-1">📅 دن اور تاریخ کی یاد دہانی</h3>
-<input type="date" class="w-full text-sm border rounded-xl p-2.5 mt-2 focus:ring-2 focus:ring-purple-500 outline-none">
-</div>
-</div>
-</section>
-<!-- 3. Video Maker Section -->
-<section id="video-maker" class="tab-content bg-white p-6 rounded-2xl shadow-xl border-t-4 border-blue-500">
-<h2 class="text-xl font-bold text-blue-700 mb-3 pb-2 border-b">🎥 پروڈکٹ ویڈیو سلائیڈ شو میکر</h2>
-<p class="text-sm text-gray-600 mb-4">اپنی تصاویر اپ لوڈ کریں اور ٹک ٹاک یا فیس بک کے لیے ویڈیو تیار کریں۔</p>
-<div class="space-y-3">
-<label class="block text-xs font-medium text-gray-700">تصاویر منتخب کریں:</label>
-<input type="file" multiple class="w-full text-sm border rounded-xl p-2 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-<label class="block text-xs font-medium text-gray-700">پروڈکٹ کا نام / آفر:</label>
-<input type="text" placeholder="مثلاً: کاٹن سوٹ سیل 30% آف" class="w-full text-sm border rounded-xl p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
-<label class="block text-xs font-medium text-gray-700">قیمت / واٹس ایپ نمبر:</label>
-<input type="text" placeholder="صرف Rs. 2500 | 03066512651" class="w-full text-sm border rounded-xl p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
-<button onclick="alert('ویڈیو اینیمیشن تیار ہو رہی ہے!')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl shadow transition">ویڈیو اینیمیشن شروع کریں</button>
-</div>
-</section>
-<!-- 4. Ad Designer Section -->
-<section id="ad-designer" class="tab-content bg-white p-6 rounded-2xl shadow-xl border-t-4 border-amber-500">
-<h2 class="text-xl font-bold text-amber-700 mb-3 pb-2 border-b">🎨 سوشل میڈیا ایڈ ڈیزائنر</h2>
-<p class="text-sm text-gray-600 mb-4">اپنے کاروباری اشتہارات اور بینرز کے لیے دلکش متن تیار کریں۔</p>
-<div class="space-y-3">
-<label class="block text-xs font-medium text-gray-700">اشتہار کی ہیڈنگ (Headline):</label>
-<input type="text" placeholder="بگ کلیئرنس سیل!" class="w-full text-sm border rounded-xl p-2.5 focus:ring-2 focus:ring-amber-500 outline-none">
-<label class="block text-xs font-medium text-gray-700">تفصیل / ڈسکرپشن:</label>
-<textarea rows="3" placeholder="تمام اشیاء پر 50% چھوٹ محدود مدت کے لیے..." class="w-full text-sm border rounded-xl p-2.5 focus:ring-2 focus:ring-amber-500 outline-none"></textarea>
-<button onclick="alert('اشتہار بینر تیار ہو گیا ہے!')" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-xl shadow transition">اشتہار بینر بنائیں</button>
-</div>
-</section>
-<!-- 5. Shop Ledger Section (Triple Acre / Khata) -->
-<section id="shop-ledger" class="tab-content bg-white p-6 rounded-2xl shadow-xl border-t-4 border-rose-500">
-<h2 class="text-xl font-bold text-rose-700 mb-3 pb-2 border-b">📊 شاپ لیجر، کھاتا اور ٹرپل ایکڑ اکاؤنٹنگ</h2>
-<p class="text-sm text-gray-600 mb-4">روزانہ کا لین دین، ادھار (محفوظ کھاتا)، نقد (Cash) اور آمدنی کا مکمل حساب۔</p>
-<div class="space-y-3">
-<label class="block text-xs font-medium text-gray-700">گاہک / آئٹم کا نام:</label>
-<input type="text" placeholder="گاہک کا نام یا آئٹم" class="w-full text-sm border rounded-xl p-2.5 focus:ring-2 focus:ring-rose-500 outline-none">
-<label class="block text-xs font-medium text-gray-700">رقم (روپے):</label>
-<input type="number" placeholder="0.00" class="w-full text-sm border rounded-xl p-2.5 focus:ring-2 focus:ring-rose-500 outline-none">
-<div class="grid grid-cols-2 gap-3 pt-2">
-<button onclick="alert('ادھار (لینے والے) میں رقم درج ہو گئی!')" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl shadow transition text-sm">ادھار (لینا ہے)</button>
-<button onclick="buttonAction('جمہ (دینے والے) میں رقم درج ہو گئی!')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl shadow transition text-sm">نقد / جمع (دینا ہے)</button>
-</div>
-</div>
-</section>
-<!-- 6. Word Counter Section -->
-<section id="word-counter" class="tab-content bg-white p-6 rounded-2xl shadow-xl border-t-4 border-indigo-500">
-<h2 class="text-xl font-bold text-indigo-700 mb-3 pb-2 border-b">📝 ورڈ کاؤنٹر اور ٹیکسٹ ٹول</h2>
-<p class="text-sm text-gray-600 mb-4">الفاظ اور حروف کی گنتی فوری طور پر کریں۔</p>
-<div class="space-y-3">
-<textarea id="text-input" oninput="countWords()" rows="4" placeholder="یہاں اپنا متن ٹائپ یا پیسٹ کریں..." class="w-full text-sm border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
-<div class="flex justify-between text-sm font-semibold bg-indigo-50 p-3 rounded-xl border border-indigo-200">
-<span id="word-count">الفاظ: 0</span>
-<span id="char-count">حروف: 0</span>
-</div>
-</div>
-</section>
-</main>
-<!-- JavaScript for Tab Switching & Word Counter -->
 <script>
-function switchTab(tabId) {
-// Hide all tab contents
-const contents = document.querySelectorAll('.tab-content');
-contents.forEach(content => content.classList.remove('active'));
-// Reset all buttons to default gray style
-const buttons = document.querySelectorAll('.nav-btn');
-buttons.forEach(btn => {
-btn.classList.remove('bg-emerald-600', 'bg-purple-600', 'bg-blue-600', 'bg-amber-600', 'bg-rose-600', 'bg-indigo-600', 'text-white', 'shadow');
-btn.classList.add('bg-gray-100', 'text-gray-700');
-});
-// Show target tab content
-document.getElementById(tabId).classList.add('active');
-// Highlight active button with color
-const activeBtn = document.getElementById('btn-' + tabId);
-activeBtn.classList.remove('bg-gray-100', 'text-gray-700');
-if(tabId === 'quran') activeBtn.classList.add('bg-emerald-600', 'text-white', 'shadow');
-else if(tabId === 'islamic-date') activeBtn.classList.add('bg-purple-600', 'text-white', 'shadow');
-else if(tabId === 'video-maker') activeBtn.classList.add('bg-blue-600', 'text-white', 'shadow');
-else if(tabId === 'ad-designer') activeBtn.classList.add('bg-amber-600', 'text-white', 'shadow');
-else if(tabId === 'shop-ledger') activeBtn.classList.add('bg-rose-600', 'text-white', 'shadow');
-else if(tabId === 'word-counter') activeBtn.classList.add('bg-indigo-600', 'text-white', 'shadow');
-}
-function countWords() {
-const text = document.getElementById('text-input').value.trim();
-const words = text === '' ? 0 : text.split(/\s+/).length;
-const chars = text.length;
-document.getElementById('word-count').innerText = 'الفاظ: ' + words;
-document.getElementById('char-count').innerText = 'حروف: ' + chars;
-}
-function buttonAction(msg) {
-alert(msg);
+function buttonAction(name) {
+alert(name + " clicked!");
 }
 </script>
 </body>
-  </html>
+</html>
