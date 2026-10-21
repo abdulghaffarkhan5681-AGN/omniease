@@ -1,10 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="ur" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OmniEase - ڈیجیٹل ٹولز، سوشل ایڈز و دکان حساب کتاب</title>
+<!-- HD App Icons & Theme Color -->
+<meta name="theme-color" content="#27ae60">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2327ae60'/><text x='50%' y='65%' font-size='50' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>OE</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2327ae60'/><text x='50%' y='65%' font-size='50' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>OE</text></svg>">
 <style>
 :root {
 --primary: #2c3e50;
@@ -181,7 +184,7 @@ font-weight: bold;
 </div>
 <div>
 <label>قیمت / واٹس ایپ نمبر:</label>
-<input type="text" id="videoSub" placeholder="مثلاً: صرف 2500 روپے | 0300-1234567">
+<input type="text" id="videoSub" placeholder="مثلاً: صرف 2500 روپے | 03066512651">
 </div>
 </div>
 <button class="btn" onclick="startVideoCreation()">ویدیو اینیمیشن شروع کریں</button>
@@ -212,7 +215,7 @@ font-weight: bold;
 </div>
 <div>
 <label>قیمت / رابطہ تفصیل:</label>
-<input type="text" id="adDetail" placeholder="قیمت: 1999 روپے" oninput="drawAd()">
+<input type="text" id="adDetail" placeholder="قیمت: 1999 روپے | WhatsApp: 03066512651" oninput="drawAd()">
 </div>
 </div>
 <button class="btn" onclick="downloadAd()">ایڈ تصویر ڈاؤن لوڈ کریں</button>
@@ -308,7 +311,7 @@ vCtx.textAlign = 'center';
 vCtx.fillText(document.getElementById('videoTitle').value || 'OmniEase Products', vCanvas.width/2, vCanvas.height - 110);
 vCtx.fillStyle = '#fff';
 vCtx.font = '24px Segoe UI';
-vCtx.fillText(document.getElementById('videoSub').value || 'آرڈر کے لیے رابطہ کریں', vCanvas.width/2, vCanvas.height - 50);
+vCtx.fillText(document.getElementById('videoSub').value || 'آرڈر کے لیے رابطہ کریں: 03066512651', vCanvas.width/2, vCanvas.height - 50);
 step++;
 if(step % 120 === 0) {
 currentImg = (currentImg + 1) % vImages.length;
@@ -379,13 +382,13 @@ adCtx.textAlign = 'center';
 adCtx.font = 'bold 30px Segoe UI';
 adCtx.fillText(document.getElementById('adHeading').value || 'خصوصی پیشکش', adCanvas.width/2, adCanvas.height * 0.82);
 adCtx.font = '22px Segoe UI';
-adCtx.fillText(document.getElementById('adDetail').value || 'OmniEase Store', adCanvas.width/2, adCanvas.height * 0.92);
+adCtx.fillText(document.getElementById('adDetail').value || 'WhatsApp: 03066512651', adCanvas.width/2, adCanvas.height * 0.92);
 }
 function downloadAd() {
-let a = document.createElement('a');
-a.href = adCanvas.toDataURL('image/jpeg');
-a.download = 'omniease-ad.jpg';
-a.click();
+let link = document.createElement('a');
+link.href = adCanvas.toDataURL('image/jpeg');
+link.download = 'omniease-ad.jpg';
+link.click();
 }
 // --- 3. KHATA LEDGER CODE ---
 let sales = JSON.parse(localStorage.getItem('omniLedger')) || [];
