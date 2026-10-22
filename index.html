@@ -835,5 +835,440 @@ changeAudioStream();
 drawPoster();
 };
 </script>
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OMNI EASE - All-in-One Digital Hub</title>
+<link rel="stylesheet" href="[https://unpkg.com/leaflet@1.9.4/dist/leaflet.css](https://unpkg.com/leaflet@1.9.4/dist/leaflet.css)" />
+<script src="[https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js](https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js)"></script>
+<style>
+:root {
+--primary-color: #1a4d2e;
+--secondary-color: #2e7d32;
+--accent-color: #d4af37;
+--bg-color: #f4f7f6;
+--card-bg: #ffffff;
+--text-color: #333333;
+}
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+margin: 0;
+padding: 0;
+background-color: var(--bg-color);
+color: var(--text-color);
+}
+header {
+background-color: var(--primary-color);
+color: white;
+padding: 20px;
+text-align: center;
+position: relative;
+box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.lang-selector {
+position: absolute;
+top: 20px;
+left: 20px;
+}
+select, input, button, textarea {
+padding: 8px 12px;
+border-radius: 5px;
+border: 1px solid #ccc;
+font-size: 14px;
+box-sizing: border-box;
+width: 100%;
+margin-top: 5px;
+}
+.container {
+max-width: 1100px;
+margin: 20px auto;
+padding: 0 15px;
+}
+.card {
+background: var(--card-bg);
+border-radius: 12px;
+padding: 25px;
+margin-bottom: 25px;
+box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+border-top: 4px solid var(--accent-color);
+}
+h2 {
+color: var(--primary-color);
+margin-top: 0;
+border-bottom: 2px solid var(--bg-color);
+padding-bottom: 10px;
+}
+.grid-2 {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 20px;
+}
+@media (max-width: 768px) {
+.grid-2 { grid-template-columns: 1fr; }
+.lang-selector { position: static; margin-bottom: 10px; }
+}
+.btn {
+background: var(--primary-color);
+color: white;
+border: none;
+cursor: pointer;
+font-weight: bold;
+transition: 0.3s;
+width: 100%;
+margin-top: 10px;
+}
+.btn:hover {
+background: var(--secondary-color);
+}
+.responsive-video {
+width: 100%;
+height: 300px;
+border-radius: 8px;
+border: none;
+}
+#map {
+height: 300px;
+width: 100%;
+border-radius: 8px;
+}
+.quran-box, .translator-box {
+background: #fffdf7;
+padding: 15px;
+border-radius: 8px;
+border-right: 4px solid var(--accent-color);
+margin-top: 15px;
+max-height: 250px;
+overflow-y: auto;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 15px;
+}
+table, th, td {
+border: 1px solid #ddd;
+padding: 10px;
+text-align: center;
+}
+th { background-color: var(--primary-color); color: white; }
+#interactive.viewport {
+position: relative;
+width: 100%;
+height: 180px;
+border: 2px dashed var(--primary-color);
+border-radius: 8px;
+overflow: hidden;
+background: #000;
+margin-bottom: 10px;
+}
+#interactive.viewport canvas, #interactive.viewport video {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+</style>
+</head>
+<body>
+<header>
+<div class="lang-selector">
+<select id="languageSelect" onchange="changeLanguage()">
+<option value="ur">اردو (Urdu)</option>
+<option value="skr">سرائیکی (Saraiki)</option>
+<option value="ps">پشتو (Pashto)</option>
+<option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+<option value="sd">سنڌي (Sindhi)</option>
+<option value="fa">فارسی (Persian)</option>
+<option value="ar">العربية (Arabic)</option>
+<option value="en">English</option>
+<option value="hi">हिन्दी (Hindi)</option>
+<option value="zh">中文 (Chinese)</option>
+<option value="es">Español (Spanish)</option>
+<option value="fr">Français (French)</option>
+<option value="de">Deutsch (German)</option>
+<option value="tr">Türkçe (Turkish)</option>
+</select>
+</div>
+<h1 id="app-title">☀️ OMNI EASE ☀️</h1>
+<p id="app-tagline">آپ کا اپنا ڈیجیٹل، بزنس اور روحانی مرکز</p>
+</header>
+<div class="container">
+<div class="card">
+<h2 id="cal-heading">📅 اسلامی و عیسوی کیلنڈر</h2>
+<div id="calendarDisplay" style="font-size: 18px; font-weight: bold; color: var(--primary-color);">لوڈ ہو رہا ہے...</div>
+</div>
+<div class="card">
+<h2>🌐 عالمی زبانوں کا لائیو ٹرانسلیٹر (Live Translator)</h2>
+<p>یہاں اپنی زبان میں تحریر لکھیں اور اسے دنیا کی کسی بھی زبان میں فوری ترجمہ کریں:</p>
+<div class="grid-2">
+<div>
+<label>ماخذ متن (Source Text):</label>
+<textarea id="sourceText" rows="3" placeholder="یہاں کچھ لکھیں..."></textarea>
+<label style="margin-top: 10px; display:block;">منتقل کرنے والی زبان منتخب کریں:</label>
+<select id="targetLang">
+<option value="en">English</option>
+<option value="ur">Urdu</option>
+<option value="ar">Arabic</option>
+<option value="hi">Hindi</option>
+<option value="zh">Chinese</option>
+<option value="es">Spanish</option>
+<option value="fr">French</option>
+<option value="de">German</option>
+<option value="fa">Persian</option>
+</select>
+<button class="btn" onclick="translateText()">ترجمہ کریں (Translate)</button>
+</div>
+<div>
+<label>ترجمہ شدہ نتیجہ (Translated Result):</label>
+<div id="translatedResult" class="translator-box" style="min-height: 90px; background: #fff; border: 1px solid #ccc;">ترجمہ یہاں ظاہر ہوگا...</div>
+</div>
+</div>
+</div>
+<div class="card">
+<h2 id="quran-heading">📖 لائیو قرآن مجید (24/7 ویڈیو و آڈیو)</h2>
+<div class="grid-2">
+<div>
+<h3>📹 لائیو مکہ / مدینہ ویڈیو سٹریم</h3>
+<iframe class="responsive-video" src="[https://www.youtube.com/embed/live_stream?channel=UCqmyT2e8z3A33yQG_K-eB2Q](https://www.youtube.com/embed/live_stream?channel=UCqmyT2e8z3A33yQG_K-eB2Q)" allowfullscreen></iframe>
+</div>
+<div>
+<h3>📻 24/7 آڈیو تلاوت و ترجمہ</h3>
+<label>موڈ منتخب کریں:</label>
+<select id="audioStreamSelect" onchange="changeAudioStream()">
+<option value="[https://qurango.net/radio/tarteel](https://qurango.net/radio/tarteel)">صرف عربی تلاوت (24 Hours)</option>
+<option value="[https://qurango.net/radio/translation_urdu](https://qurango.net/radio/translation_urdu)">تلاوت بمعہ اردو ترجمہ</option>
+</select>
+<audio id="quranAudioPlayer" controls style="width: 100%; margin-top: 15px;"></audio>
+</div>
+</div>
+<hr style="margin: 20px 0;">
+<h3>🔍 سورۃ منتخب کریں اور متن پڑھیں:</h3>
+<div class="grid-2">
+<select id="surahSelect">
+<option value="1">1. سورۃ الفاتحہ</option>
+<option value="36">36. سورۃ یٰس</option>
+<option value="55">55. سورۃ الرحمن</option>
+<option value="112">112. سورۃ الاخلاص</option>
+</select>
+<button class="btn" onclick="fetchSurahData()">سورۃ لوڈ کریں</button>
+</div>
+<div id="quranDisplay" class="quran-box" style="display:none;">
+<div id="arabicText" style="font-size: 22px; font-weight: bold; margin-bottom: 10px;"></div>
+<div id="translationText" style="color: #555;"></div>
+</div>
+</div>
+<div class="card">
+<h2 id="map-heading">🗺️ نقشہ و قبلہ رخ (Navigation & Qibla)</h2>
+<p id="locationStatus">لوکیشن معلوم کرنے کے لیے بٹن پر کلک کریں۔</p>
+<button class="btn" onclick="getUserLocation()" style="width: auto;">میری لوکیشن اور قبلہ معلوم کریں</button>
+<div id="map" style="margin-top: 15px;"></div>
+</div>
+<div class="card">
+<h2>📊 بزنس ہب، بارکوڈ اسکینر اور شاپ لیجر</h2>
+<div class="grid-2">
+<div>
+<h3>📷 بارکوڈ / پروڈکٹ اسکینر</h3>
+<button class="btn" onclick="startScanner()">اسکینر شروع کریں</button>
+<div id="interactive" class="viewport" style="margin-top: 10px;"></div>
+<p>اسکین شدہ کوڈ: <b id="scannedResult" style="color: var(--secondary-color);">کوئی نہیں</b></p>
+</div>
+<div>
+<h3>📈 روزنامچہ / کھاتہ سسٹم</h3>
+<input type="text" id="entryDesc" placeholder="تفصیل (مثلاً: پروڈکٹ کا نام)">
+<input type="number" id="entryAmount" placeholder="رقم (روپے)">
+<div class="grid-2" style="margin-top: 5px;">
+<button class="btn" onclick="addLedgerEntry('income')">آمدن (+)</button>
+<button class="btn" onclick="addLedgerEntry('expense')" style="background: #c62828;">خرچ (-)</button>
+</div>
+</div>
+</div>
+<table>
+<thead>
+<tr>
+<th>تفصیل</th>
+<th>نوعیت</th>
+<th>رقم (روپے)</th>
+</tr>
+</thead>
+<tbody id="ledgerTableBody"></tbody>
+</table>
+<h3 style="text-align: right; margin-top: 15px;">کل بقایا بیلنس: <span id="netTotal">0</span> روپے</h3>
+</div>
+<div class="card">
+<h2 id="tools-heading">🎨 ڈیجیٹل ٹولز (ایڈ میکر و ورڈ کاؤنٹر)</h2>
+<div class="grid-2">
+<div>
+<h3>📝 الفاظ کی گنتی</h3>
+<textarea id="textInput" style="height: 90px;" placeholder="یہاں اپنی تحریر لکھیں..." oninput="countWords()"></textarea>
+<p>الفاظ: <b id="wordCount">0</b> | حروف: <b id="charCount">0</b></p>
+</div>
+<div>
+<h3>🖼️ سمپل پوسٹر / ایڈ میکر</h3>
+<canvas id="posterCanvas" width="250" height="130" style="border: 1px solid #ccc; background: #e8f5e9; display: block; margin: 0 auto;"></canvas>
+<input type="text" id="posterText" placeholder="پوسٹر کی تحریر" style="margin-top: 5px;">
+<button class="btn" onclick="drawPoster()">پوسٹر اپ ڈیٹ کریں</button>
+</div>
+</div>
+</div>
+</div>
+<script src="[https://unpkg.com/leaflet@1.9.4/dist/leaflet.js](https://unpkg.com/leaflet@1.9.4/dist/leaflet.js)"></script>
+<script>
+function initCalendar() {
+const today = new Date();
+const options = { year: 'numeric', month: 'long', day: 'numeric' };
+const greg = today.toLocaleDateString('ur-PK', options);
+const hijri = new Intl.DateTimeFormat('ur-PK-u-ca-islamic-umalqura', options).format(today);
+document.getElementById('calendarDisplay').innerHTML = عیسوی تاریخ: ${greg} &nbsp;|&nbsp; ہجری تاریخ: ${hijri};
+}
+async function translateText() {
+const text = document.getElementById('sourceText').value;
+const target = document.getElementById('targetLang').value;
+const resultBox = document.getElementById('translatedResult');
+if(!text) {
+alert("براہ کرم ترجمہ کے لیے کچھ تحریر لکھیں۔");
+return;
+}
+resultBox.innerHTML = "ترجمہ ہو رہا ہے...";
+try {
+const res = await fetch([https://api.mymemory.translated.net/get?q=$](https://api.mymemory.translated.net/get?q=$){encodeURIComponent(text)}&langpair=auto|${target});
+const data = await res.json();
+if(data && data.responseData) {
+resultBox.innerHTML = data.responseData.translatedText;
+} else {
+resultBox.innerHTML = "ترجمہ کرنے میں دشواری پیش آئی۔";
+}
+} catch(e) {
+resultBox.innerHTML = "انٹرنیٹ کنکشن کا مسئلہ ہے۔";
+}
+}
+function changeAudioStream() {
+const player = document.getElementById('quranAudioPlayer');
+player.src = document.getElementById('audioStreamSelect').value;
+player.play();
+}
+async function fetchSurahData() {
+const surah = document.getElementById('surahSelect').value;
+const display = document.getElementById('quranDisplay');
+const arabicDiv = document.getElementById('arabicText');
+const transDiv = document.getElementById('translationText');
+display.style.display = 'block';
+arabicDiv.innerHTML = "لوڈ ہو رہا ہے...";
+try {
+const resAr = await fetch([https://api.alquran.cloud/v1/surah/$](https://api.alquran.cloud/v1/surah/$){surah}/ar.alafasy);
+const dataAr = await resAr.json();
+let arText = "";
+dataAr.data.ayahs.forEach(a => { arText += a.text + " ﴿" + a.numberInSurah + "﴾ "; });
+arabicDiv.innerHTML = arText;
+const resUr = await fetch([https://api.alquran.cloud/v1/surah/$](https://api.alquran.cloud/v1/surah/$){surah}/ur.jalandhry);
+const dataUr = await resUr.json();
+let urText = "";
+dataUr.data.ayahs.forEach(a => { urText += a.text + " (" + a.numberInSurah + ") "; });
+transDiv.innerHTML = urText;
+} catch (e) {
+arabicDiv.innerHTML = "ڈیٹا لوڈ کرنے میں دشواری پیش آئی۔";
+}
+}
+let map;
+function getUserLocation() {
+if (navigator.geolocation) {
+navigator.geolocation.getCurrentPosition(position => {
+const lat = position.coords.latitude;
+const lng = position.coords.longitude;
+document.getElementById('locationStatus').innerHTML = آپ کی لوکیشن: Latitude ${lat.toFixed(3)}, Longitude ${lng.toFixed(3)};
+if(!map) {
+map = L.map('map').setView([lat, lng], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+} else {
+map.setView([lat, lng], 13);
+}
+L.marker([lat, lng]).addTo(map).bindPopup('آپ کی موجودہ لوکیشن').openPopup();
+});
+}
+}
+function startScanner() {
+Quagga.init({
+inputStream : { name : "Live", type : "LiveStream", target: document.querySelector('#interactive') },
+decoder : { readers : ["code_128_reader", "ean_reader", "ean_8_reader"] }
+}, function(err) {
+if (err) { alert("کیمرہ شروع کرنے میں مسئلہ ہے۔"); return; }
+Quagga.start();
+});
+Quagga.onDetected(function(result) {
+let code = result.codeResult.code;
+document.getElementById('scannedResult').innerText = code;
+document.getElementById('entryDesc').value = "بارکوڈ: " + code;
+Quagga.stop();
+});
+}
+let totalBalance = 0;
+function addLedgerEntry(type) {
+const desc = document.getElementById('entryDesc').value;
+const amount = parseFloat(document.getElementById('entryAmount').value);
+if(!desc || isNaN(amount)) {
+alert("درست تفصیل اور رقم درج کریں۔");
+return;
+}
+const table = document.getElementById('ledgerTableBody');
+const row = table.insertRow();
+row.insertCell(0).innerText = desc;
+row.insertCell(1).innerText = type === 'income' ? 'آمدن' : 'اخراجات';
+row.insertCell(2).innerText = amount;
+if(type === 'income') totalBalance += amount;
+else totalBalance -= amount;
+document.getElementById('netTotal').innerText = totalBalance;
+document.getElementById('entryDesc').value = '';
+document.getElementById('entryAmount').value = '';
+}
+function countWords() {
+const text = document.getElementById('textInput').value.trim();
+const words = text ? text.split(/\s+/).length : 0;
+document.getElementById('wordCount').innerText = words;
+document.getElementById('charCount').innerText = text.length;
+}
+function drawPoster() {
+const canvas = document.getElementById('posterCanvas');
+const ctx = canvas.getContext('2d');
+const txt = document.getElementById('posterText').value || "OMNI EASE";
+ctx.fillStyle = "#1a4d2e";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+ctx.fillStyle = "#d4af37";
+ctx.font = "16px Arial";
+ctx.textAlign = "center";
+ctx.fillText(txt, canvas.width / 2, canvas.height / 2);
+}
+function changeLanguage() {
+const lang = document.getElementById('languageSelect').value;
+const tagline = document.getElementById('app-tagline');
+if(lang === 'skr') {
+tagline.innerText = "تہاڈا اپنا ڈیجیٹل، بزنس تے روحانی مرکز";
+} else if(lang === 'ps') {
+tagline.innerText = "ستاسو خپل ډیجیټل، سوداګرۍ او روحاني مرکز";
+} else if(lang === 'pa') {
+tagline.innerText = "ਤੁਹਾਡਾ ਆਪਣਾ ਡਿਜੀਟਲ, ਵਪਾਰਕ ਅਤੇ ਰੂਹਾਨੀ ਕੇਂਦਰ";
+} else if(lang === 'sd') {
+tagline.innerText = "توهان جو پنهنجو ڊجيٽل، ڪاروبار ۽ روحاني مرڪز";
+} else if(lang === 'fa') {
+tagline.innerText = "مرکز دیجیتل، تجاری و روحانی شما";
+} else if(lang === 'ar') {
+tagline.innerText = "مركزكم الرقمي والتجاري والروحي الخاص";
+} else if(lang === 'en') {
+tagline.innerText = "Your own all-in-one digital, business, and spiritual hub";
+} else if(lang === 'hi') {
+tagline.innerText = "आपका अपना डिजिटल, व्यवसाय और आध्यात्मिक केंद्र";
+} else if(lang === 'zh') {
+tagline.innerText = "您专属的数字、商业与精神中心";
+} else if(lang === 'es') {
+tagline.innerText = "Tu propio centro digital, comercial y espiritual";
+} else {
+tagline.innerText = "آپ کا اپنا ڈیجیٹل، بزنس اور روحانی مرکز";
+}
+}
+window.onload = function() {
+initCalendar();
+changeAudioStream();
+drawPoster();
+};
+</script>
 </body>
-</html>                                           </html>
+ </html>                                       
