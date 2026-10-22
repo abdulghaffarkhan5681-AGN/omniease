@@ -745,6 +745,265 @@ status.innerText = "آڈیو چل رہی ہے...";
 isPlaying = true;
 }
 }
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OMNI EASE - امنی ایز</title>
+<style>
+:root {
+--primary: #105b38;
+--accent: #d4af37;
+--bg: #f8f9fa;
+--text: #212529;
+--card-bg: #ffffff;
+}
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+background-color: var(--bg);
+color: var(--text);
+line-height: 1.6;
+padding-bottom: 30px;
+}
+header {
+background: linear-gradient(135deg, #0a3d25, #105b38);
+color: white;
+padding: 15px 20px;
+text-align: center;
+box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+header h1 {
+font-size: 22px;
+color: var(--accent);
+}
+header p {
+font-size: 13px;
+opacity: 0.9;
+}
+nav {
+display: flex;
+overflow-x: auto;
+background: #ffffff;
+border-bottom: 2px solid var(--accent);
+position: sticky;
+top: 0;
+z-index: 100;
+white-space: nowrap;
+}
+nav button {
+background: none;
+border: none;
+padding: 12px 15px;
+font-weight: bold;
+color: var(--text);
+cursor: pointer;
+font-size: 13px;
+transition: 0.3s;
+flex-shrink: 0;
+}
+nav button.active {
+color: var(--primary);
+border-bottom: 3px solid var(--primary);
+background-color: #f0f7f3;
+}
+.container {
+padding: 15px;
+max-width: 800px;
+margin: 0 auto;
+}
+.tab-content {
+display: none;
+}
+.tab-content.active {
+display: block;
+}
+.card {
+background: var(--card-bg);
+border-radius: 10px;
+padding: 15px;
+margin-bottom: 15px;
+box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+border-right: 4px solid var(--primary);
+}
+.btn {
+display: inline-block;
+background: var(--primary);
+color: white;
+padding: 8px 16px;
+border-radius: 5px;
+text-decoration: none;
+border: none;
+cursor: pointer;
+font-size: 14px;
+margin-top: 10px;
+}
+.btn-whatsapp {
+background: #25d366;
+color: white;
+}
+input[type="text"], input[type="number"], textarea, select {
+width: 100%;
+padding: 10px;
+margin: 8px 0;
+border: 1px solid #ccc;
+border-radius: 5px;
+font-size: 14px;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 10px;
+}
+table, th, td {
+border: 1px solid #ddd;
+padding: 8px;
+text-align: center;
+font-size: 13px;
+}
+th {
+background-color: var(--primary);
+color: white;
+}
+.brand-footer {
+text-align: center;
+margin-top: 30px;
+padding: 15px;
+background: #e9f0ec;
+border-radius: 8px;
+border: 1px solid #cce0d5;
+}
+</style>
+</head>
+<body>
+<header>
+<h1>OMNI EASE - امنی ایز</h1>
+<p>کچے گھر پکے رشتے (AGN) | طالبِ دعا: عبدالغفار خان</p>
+</header>
+<nav>
+<button class="active" onclick="openTab('home', this)">ہوم</button>
+<button onclick="openTab('quran', this)">قرآن و حدیث</button>
+<button onclick="openTab('roznamcha', this)">روزنامچہ (اشیائے حساب)</button>
+<button onclick="openTab('calendar', this)">کیلنڈر و رمضان</button>
+<button onclick="openTab('map', this)">میپ و لوکیشن</button>
+<button onclick="openTab('whatsapp', this)">واٹس ایپ</button>
+</nav>
+<div class="container">
+<!-- ہوم -->
+<div id="home" class="tab-content active">
+<div class="card">
+<h2>پلیٹ فارم میں خوش آمدید</h2>
+<p>امنی ایز (OMNI EASE) پر تمام دینی، حساب کتاب اور روزنامچہ کے فیچرز اب فعال ہیں۔</p>
+</div>
+</div>
+<!-- قرآن و حدیث -->
+<div id="quran" class="tab-content">
+<div class="card">
+<h3>قرآن مجید - منتخب آیات</h3>
+<p><b>سورۃ البقرۃ (آیت 255 - آۃ الکرسی):</b>
+اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...</p>
+<button class="btn" onclick="alert('تلاوت آڈیو جلد دستیاب ہوگی۔')">آڈیو سنیں</button>
+</div>
+<div class="card">
+<h3>حدیثِ مبارکہ</h3>
+<p><b>رسول اللہ ﷺ نے فرمایا:</b> "تم میں سے بہترین شخص وہ ہے جو قرآن سیکھے اور سکھائے۔" (صحیح بخاری)</p>
+</div>
+</div>
+<!-- روزنامچہ (اشیاء میں کمی بیشی کا حساب) -->
+<div id="roznamcha" class="tab-content">
+<div class="card">
+<h3>روزنامچہ - اشیاء میں کمی بیشی کا اندراج</h3>
+<input type="text" id="itemName" placeholder="شے / سامان کا نام">
+<input type="number" id="itemQty" placeholder="مقدار (کمی / بیشی)">
+<select id="itemType">
+<option value="اضافہ (بیشی)">اضافہ (بیشی)</option>
+<option value="کمی">کمی</option>
+</select>
+<button class="btn" onclick="addRoznamcha()">اندراج کریں</button>
+<h4 style="margin-top:15px;">حساب کا ریکارڈ:</h4>
+<table id="roznamchaTable">
+<thead>
+<tr>
+<th>نام</th>
+<th>مقدار</th>
+<th>قسم</th>
+</tr>
+</thead>
+<tbody>
+<!-- اینٹریز یہاں آئیں گی -->
+</tbody>
+</table>
+</div>
+</div>
+<!-- کیلنڈر و رمضان -->
+<div id="calendar" class="tab-content">
+<div class="card">
+<h3>اسلامی کیلنڈر و رمضان ٹائمنگ</h3>
+<p><b>آج کی اسلامی تاریخ:</b> درج ذیل سسٹم سے اپڈیٹ شدہ۔</p>
+<p><b>سحر و افطار اوقات:</b></p>
+<ul>
+<li>سحری کا آخری وقت: 04:30 AM</li>
+<li>افطار کا وقت: 06:15 PM</li>
+</ul>
+</div>
+</div>
+<!-- میپ و لوکیشن -->
+<div id="map" class="tab-content">
+<div class="card">
+<h3>لوکیشن و میپ (Map)</h3>
+<p>قریب ترین مساجد اور اہم مقامات دیکھنے کے لیے بٹن دبائیں۔</p>
+<button class="btn" onclick="openGoogleMap()">گوگل میپ اوپن کریں</button>
+</div>
+</div>
+<!-- واٹس ایپ -->
+<div id="whatsapp" class="tab-content">
+<div class="card">
+<h3>براہِ راست واٹس ایپ رابطہ</h3>
+<button class="btn btn-whatsapp" onclick="window.open('[https://wa.me/','_blank](https://wa.me/','_blank)')">واٹس ایپ اوپن کریں</button>
+</div>
+</div>
+<!-- برانڈ فٹر -->
+<div class="brand-footer">
+<h3>کچے گھر پکے رشتے (AGN)</h3>
+<p>طالبِ دعا: عبدالغفار خان</p>
+</div>
+</div>
+<script>
+function openTab(tabId, element) {
+let contents = document.querySelectorAll('.tab-content');
+contents.forEach(content => content.classList.remove('active'));
+let buttons = document.querySelectorAll('nav button');
+buttons.forEach(button => button.classList.remove('active'));
+document.getElementById(tabId).classList.add('active');
+element.classList.add('active');
+}
+function addRoznamcha() {
+let name = document.getElementById('itemName').value;
+let qty = document.getElementById('itemQty').value;
+let type = document.getElementById('itemType').value;
+if(name === '' || qty === '') {
+alert('براہ کرم تمام خانے پر کریں!');
+return;
+}
+let table = document.getElementById('roznamchaTable').getElementsByTagName('tbody')[0];
+let newRow = table.insertRow();
+let cell1 = newRow.insertCell(0);
+let cell2 = newRow.insertCell(1);
+let cell3 = newRow.insertCell(2);
+cell1.innerHTML = name;
+cell2.innerHTML = qty;
+cell3.innerHTML = type;
+document.getElementById('itemName').value = '';
+document.getElementById('itemQty').value = '';
+}
+function openGoogleMap() {
+window.open('https://www.google.com/maps', '_blank');
+}
 </script>
 </body>
 </html>
