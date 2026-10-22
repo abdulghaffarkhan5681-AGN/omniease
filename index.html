@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+یہ<!DOCTYPE html>
 <html lang="ur" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -527,6 +527,223 @@ const desc = document.getElementById('prodDesc').value || "";
 const text = 🛍️ *${name}*\n💰 *قیمت:* ${price} روپے\n📝 *تفصیل:* ${desc}\n\nدریافت کے لیے ہم سے رابطہ کریں!;
 const whatsappURL = [https://api.whatsapp.com/send?text=$](https://api.whatsapp.com/send?text=$){encodeURIComponent(text)};
 window.open(whatsappURL, '_blank');
+}
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OMNI EASE - امنی ایز</title>
+<style>
+:root {
+--primary: #105b38;
+--accent: #d4af37;
+--bg: #f8f9fa;
+--text: #212529;
+--card-bg: #ffffff;
+}
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+background-color: var(--bg);
+color: var(--text);
+line-height: 1.6;
+}
+header {
+background: linear-gradient(135deg, #0a3d25, #105b38);
+color: white;
+padding: 15px 20px;
+text-align: center;
+box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+header h1 {
+font-size: 24px;
+color: var(--accent);
+}
+header p {
+font-size: 13px;
+opacity: 0.9;
+}
+nav {
+display: flex;
+justify-content: space-around;
+background: #ffffff;
+border-bottom: 2px solid var(--accent);
+position: sticky;
+top: 0;
+z-index: 100;
+}
+nav button {
+background: none;
+border: none;
+padding: 12px 10px;
+font-weight: bold;
+color: var(--text);
+cursor: pointer;
+flex-grow: 1;
+font-size: 14px;
+transition: 0.3s;
+}
+nav button.active {
+color: var(--primary);
+border-bottom: 3px solid var(--primary);
+background-color: #f0f7f3;
+}
+.container {
+padding: 15px;
+max-width: 800px;
+margin: 0 auto;
+}
+.tab-content {
+display: none;
+}
+.tab-content.active {
+display: block;
+}
+.card {
+background: var(--card-bg);
+border-radius: 10px;
+padding: 15px;
+margin-bottom: 15px;
+box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+border-right: 4px solid var(--primary);
+}
+.btn {
+display: inline-block;
+background: var(--primary);
+color: white;
+padding: 8px 16px;
+border-radius: 5px;
+text-decoration: none;
+border: none;
+cursor: pointer;
+font-size: 14px;
+margin-top: 10px;
+}
+.btn-whatsapp {
+background: #25d366;
+color: white;
+}
+.brand-footer {
+text-align: center;
+margin-top: 30px;
+padding: 15px;
+background: #e9f0ec;
+border-radius: 8px;
+border: 1px solid #cce0d5;
+}
+.brand-footer h3 {
+color: var(--primary);
+font-size: 18px;
+}
+.brand-footer p {
+font-size: 13px;
+color: #555;
+}
+.media-player {
+background: #105b38;
+color: white;
+padding: 15px;
+border-radius: 8px;
+text-align: center;
+}
+.media-player button {
+background: var(--accent);
+border: none;
+padding: 8px 20px;
+border-radius: 20px;
+font-weight: bold;
+cursor: pointer;
+margin-top: 10px;
+}
+</style>
+</head>
+<body>
+<header>
+<h1>OMNI EASE - امنی ایز</h1>
+<p>کچے گھر پکے رشتے (AGN)</p>
+</header>
+<nav>
+<button class="active" onclick="openTab('home', this)">ہوم</button>
+<button onclick="openTab('products', this)">پروڈکٹس</button>
+<button onclick="openTab('media', this)">میڈیا</button>
+<button onclick="openTab('whatsapp', this)">واٹس ایپ</button>
+</nav>
+<div class="container">
+<!-- ہوم ٹیب -->
+<div id="home" class="tab-content active">
+<div class="card">
+<h2>پلیٹ فارم میں خوش آمدید</h2>
+<p>امنی ایز (OMNI EASE) ہر قسم کی دینی، اخلاقی اور سماجی سہولیات کا ایک فعال مرکز ہے۔</p>
+<button class="btn" onclick="alert('تمام فیچرز کامیابی سے ایکٹیویٹ ہیں!')">فیچرز چیک کریں</button>
+</div>
+<div class="card">
+<h3>اصلاحی تحریریں اور پوسٹرز</h3>
+<p>دینی و اخلاقی پوسٹرز اور اصلاحی مواد کے لیے ہمارے پلیٹ فارم سے جڑے رہیں۔</p>
+</div>
+</div>
+<!-- پروڈکٹس ٹیب -->
+<div id="products" class="tab-content">
+<div class="card">
+<h3>18x12 اسلامی موٹیویشنل پوسٹرز</h3>
+<p>اعلیٰ کوالٹی کے سائز میں دستیاب ڈیزائنز۔</p>
+<button class="btn btn-whatsapp" onclick="sendWhatsApp('سلام، مجھے 18x12 پوسٹر کی تفصیلات چاہئیں۔')">واٹس ایپ پر آرڈر کریں</button>
+</div>
+<div class="card">
+<h3>دینی و اصلاحی کتب</h3>
+<p>مختلف دینی و اخلاقی موضوعات پر کتب کا ذخیرہ۔</p>
+<button class="btn" onclick="alert('کتب کی لسٹ جلد اپڈیٹ کی جائے گی۔')">تفصیل دیکھیں</button>
+</div>
+</div>
+<!-- میڈیا ٹیب -->
+<div id="media" class="tab-content">
+<div class="card media-player">
+<h3>آڈیو بپانیات و بیانات</h3>
+<p id="audio-status">آڈیو بند ہے</p>
+<button onclick="toggleAudio()">پلے / پاؤز</button>
+</div>
+</div>
+<!-- واٹس ایپ ٹیب -->
+<div id="whatsapp" class="tab-content">
+<div class="card">
+<h3>براہِ راست واٹس ایپ رابطہ</h3>
+<p>کسی بھی سوال یا معلومات کے لیے فوراً رابطہ کریں۔</p>
+<button class="btn btn-whatsapp" onclick="sendWhatsApp('السلام علیکم! مجھے مزید معلومات چاہیے۔')">واٹس ایپ اوپن کریں</button>
+</div>
+</div>
+<!-- برانڈ فٹر -->
+<div class="brand-footer">
+<h3>کچے گھر پکے رشتے (AGN)</h3>
+<p>طالبِ دعا: عبدالغفار خان</p>
+</div>
+</div>
+<script>
+function openTab(tabId, element) {
+let contents = document.querySelectorAll('.tab-content');
+contents.forEach(content => content.classList.remove('active'));
+let buttons = document.querySelectorAll('nav button');
+buttons.forEach(button => button.classList.remove('active'));
+document.getElementById(tabId).classList.add('active');
+element.classList.add('active');
+}
+function sendWhatsApp(message) {
+let url = "https://wa.me/?text=" + encodeURIComponent(message);
+window.open(url, '_blank');
+}
+let isPlaying = false;
+function toggleAudio() {
+let status = document.getElementById('audio-status');
+if (isPlaying) {
+status.innerText = "آڈیو بند ہے";
+isPlaying = false;
+} else {
+status.innerText = "آڈیو چل رہی ہے...";
+isPlaying = true;
+}
 }
 </script>
 </body>
