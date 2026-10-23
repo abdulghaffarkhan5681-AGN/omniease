@@ -202,7 +202,7 @@ margin-top: 10px;
 <nav>
 <button class="active" onclick="openTab('quran', this)">📖 قرآن پاک</button>
 <button onclick="openTab('library', this)">📚 اسلامی کتب</button>
-<button onclick="openTab('business', this)">💼 بزنس حب (AGN)</button>
+<button onclick="openTab('business', this)">💼 بزنس و ایڈز (AGN)</button>
 <button onclick="openTab('calendar', this)">📅 کیلنڈر</button>
 <button onclick="openTab('ledger', this)">📒 لیجر</button>
 <button onclick="openTab('translator', this)">🌐 ترجمہ</button>
@@ -267,24 +267,41 @@ margin-top: 10px;
 </div>
 </div>
 
-<!-- 3. BUSINESS HUB -->
+<!-- 3. BUSINESS & AD STUDIO HUB -->
 <div id="business" class="tab-content">
 <div class="card" style="border-right-color: var(--accent);">
-<h3>💼 کچے گھر پکے رشتے (AGN) - بزنس اینڈ انوینٹری حب</h3>
-<p style="font-size:13px; color:#555; margin-bottom:10px;">کپڑے کا کاروبار، فوڈ کارٹ اسٹال، ملٹی پرائس اور اینٹی تھیفٹ اسٹاک مینجمنٹ سسٹمز۔</p>
+<h3>💼 کچے گھر پکے رشتے (AGN) - بزنس اور ڈیجیٹل ایڈ اسٹوڈیو</h3>
+<p style="font-size:13px; color:#555; margin-bottom:10px;">کپڑے، فوڈ کارٹ اور ہر قسم کے کاروبار کے لیے انوینٹری اور فوٹو/ویڈیو اشتہار پوسٹنگ سسٹم۔</p>
+
+<!-- Inventory Section -->
 <label><b>نیا آئٹم / پروڈکٹ شامل کریں (انوینٹری):</b></label>
 <input type="text" id="prodName" placeholder="پروڈکٹ کا نام">
 <input type="number" id="prodQty" placeholder="تعداد / مقدار">
 <input type="number" id="prodCost" placeholder="خرید قیمت">
 <input type="number" id="prodPrice" placeholder="فروخت قیمت">
 <button class="btn" onclick="addInventoryItem()">➕ اسٹاک میں شامل کریں</button>
-<h4 style="margin-top:15px; color:var(--primary);">📦 موجودہ اسٹاک اور اینٹی تھیفٹ آڈٹ لسٹ:</h4>
+<h4 style="margin-top:10px; color:var(--primary);">📦 موجودہ اسٹاک لسٹ:</h4>
 <table>
 <thead>
-<tr><th>آئٹم</th><th>تعداد</th><th>خرید قیمت</th><th>فروخت قیمت</th><th>عمل</th></tr>
+<tr><th>آئٹم</th><th>تعداد</th><th>خرید</th><th>فروخت</th><th>عمل</th></tr>
 </thead>
 <tbody id="inventoryTable"></tbody>
 </table>
+
+<!-- Ad & Media Posting Studio -->
+<div style="background:#f0f7f3; padding:12px; border-radius:8px; margin-top:20px; border:1px dashed var(--primary);">
+<h4 style="color:var(--primary); margin-bottom:8px;">📢 اپنا اشتہار (تصویر اور ویڈیو کے ساتھ) پبلش کریں</h4>
+<input type="text" id="adTitle" placeholder="اشتہار کا عنوان (مثلاً: خصوصی لان سوٹ سیل یا فوڈ کارٹ)">
+<input type="text" id="adContact" placeholder="رابطہ نام / نمبر (مثلاً: فیضان مبیلوی)">
+<textarea id="adDesc" rows="2" placeholder="اشتہار کی مکمل تفصیل لکھیں..."></textarea>
+<input type="text" id="adMediaUrl" placeholder="تصویر یا ویڈیو کا لنک (Image/Video URL درج کریں)">
+<button class="btn btn-accent" onclick="publishAd()">🚀 اشتہار پبلش اور سیو کریں</button>
+</div>
+
+<h4 style="margin-top:15px; color:var(--primary);">📰 لائیو پبلشڈ اشتہارات اور میڈیا فیڈ:</h4>
+<div id="adsFeedContainer" style="margin-top:10px;">
+<p style="font-size:13px; color:#777;">ابھی کوئی اشتہار موجود نہیں ہے۔ اوپر فارم سے اپنا اشتہار لگائیں!</p>
+</div>
 </div>
 </div>
 
@@ -292,8 +309,15 @@ margin-top: 10px;
 <div id="calendar" class="tab-content">
 <div class="card">
 <h3>📅 اسلامی و عیسوی کیلنڈر</h3>
-<div id="calendarBox" style="font-size: 18px; font-weight: bold; text-align: center; color: var(--primary); margin-bottom: 10px;">
-تاریخ لوڈ ہو رہی ہے...
+<div style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
+  <div style="background: #f0f7f3; padding: 15px; border-radius: 8px; border-right: 4px solid var(--primary); text-align: right;">
+    <span style="font-size: 13px; color: #555; display: block; margin-bottom: 4px;">عیسوی تاریخ (Gregorian Date):</span>
+    <span id="gregorianBox" style="font-size: 17px; font-weight: bold; color: var(--text);">تاریخ لوڈ ہو رہی ہے...</span>
+  </div>
+  <div style="background: #fdf8e2; padding: 15px; border-radius: 8px; border-right: 4px solid var(--accent); text-align: right;">
+    <span style="font-size: 13px; color: #555; display: block; margin-bottom: 4px;">ہجری تاریخ (Islamic Hijri Date):</span>
+    <span id="hijriBox" style="font-size: 17px; font-weight: bold; color: var(--primary);">تاریخ لوڈ ہو رہی ہے...</span>
+  </div>
 </div>
 </div>
 </div>
@@ -381,9 +405,11 @@ const today = new Date();
 const options = { year: 'numeric', month: 'long', day: 'numeric' };
 const greg = today.toLocaleDateString('ur-PK', options);
 const hijri = new Intl.DateTimeFormat('ur-TN-u-ca-islamic', options).format(today);
-document.getElementById('calendarBox').innerHTML = "عیسوی: " + greg + "<br>ہجری: " + hijri;
+document.getElementById('gregorianBox').innerHTML = greg;
+document.getElementById('hijriBox').innerHTML = hijri;
 } catch (e) {
-document.getElementById('calendarBox').innerHTML = new Date().toDateString();
+document.getElementById('gregorianBox').innerHTML = new Date().toDateString();
+document.getElementById('hijriBox').innerHTML = "ہجری تاریخ دستیاب نہیں";
 }
 }
 
@@ -559,55 +585,100 @@ function renderInventory() {
   });
 }
 
+// Ads & Media Studio Logic
+let adsList = [];
+function publishAd() {
+  const title = document.getElementById('adTitle').value;
+  const contact = document.getElementById('adCon
+                                          const desc = document.getElementById('adDesc').value;
+const mediaUrl = document.getElementById('adMediaUrl').value;
+if(!title) {
+  alert("براہ کرم اشتہار کا عنوان درج کریں۔");
+  return;
+}
+adsList.unshift({title, contact, desc, mediaUrl});
+renderAds();
+document.getElementById('adTitle').value = '';
+document.getElementById
+'adContact').value = '';
+document.getElementById('adDesc').value = '';
+document.getElementById('adMediaUrl').value = '';
+}
+
+function renderAds() {
+const container = document.getElementById('adsFeedContainer');
+if(adsList.length === 0) {
+  container.innerHTML = "<p style='font-size:13px; color:#777;'>ابھی کوئی اشتہار موجود نہیں ہے۔</p>";
+  return;
+}
+let html = '';
+adsList.forEach((ad, index) => {
+  html += '<div style="background:white; border:1px solid #ccc; padding:12px; border-radius:8px; margin-bottom:10px;">';
+  html += '<h5 style="color:var(--primary); font-size:16px;">' + ad.title + '</h5>';
+  if(ad.contact) html += '<p style="font-size:12px; color:#555;"><b>رابطہ:</b> ' + ad.contact + '</p>';
+  if(ad.desc) html += '<p style="font-size:14px; margin:5px 0;">' + ad.desc + '</p>';
+  if(ad.mediaUrl) {
+    if(ad.mediaUrl.match(/\.(mp4|webm|ogg)$/i)) {
+      html += '<video src="' + ad.mediaUrl + '" controls style="width:100%; max-height:200px; border-radius:5px; margin-top:5px;"></video>';
+    } else {
+      html += '<img src="' + ad.mediaUrl + '" style="width:100%; max-height:200px; object-fit:cover; border-radius:5px; margin-top:5px;" onerror="this.style.display=\'none\'">';
+    }
+  }
+  html += '<button class="btn-voice" style="background:#c0392b; margin-top:8px;" onclick="adsList.splice(' + index + ',1); renderAds();">حذف کریں</button>';
+  html += '</div>';
+});
+container.innerHTML = html;
+}
+
 let totalBalance = 0;
 function addLedgerEntry(type) {
-  const name = document.getElementById('itemName').value;
-  const qty = document.getElementById('itemQty').value || 1;
-  const amount = parseFloat(document.getElementById('itemAmount').value);
-  if (!name || isNaN(amount)) return;
-  if (type === 'income') totalBalance += amount;
-  else totalBalance -= amount;
-  document.getElementById('totalBalance').innerText = totalBalance;
-  const table = document.getElementById('ledgerTable');
-  const row = table.insertRow();
-  row.insertCell(0).innerText = name;
-  row.insertCell(1).innerText = qty;
-  row.insertCell(2).innerText = (type === 'income' ? '+' : '-') + amount;
-  document.getElementById('itemName').value = '';
-  document.getElementById('itemQty').value = '';
-  document.getElementById('itemAmount').value = '';
+const name = document.getElementById('itemName').value;
+const qty = document.getElementById('itemQty').value || 1;
+const amount = parseFloat(document.getElementById('itemAmount').value);
+if (!name || isNaN(amount)) return;
+if (type === 'income') totalBalance += amount;
+else totalBalance -= amount;
+document.getElementById('totalBalance').innerText = totalBalance;
+const table = document.getElementById('ledgerTable');
+const row = table.insertRow();
+row.insertCell(0).innerText = name;
+row.insertCell(1).innerText = qty;
+row.insertCell(2).innerText = (type === 'income' ? '+' : '-') + amount;
+document.getElementById('itemName').value = '';
+document.getElementById('itemQty').value = '';
+document.getElementById('itemAmount').value = '';
 }
 
 function translateText() {
-  const text = document.getElementById('sourceText').value;
-  const target = document.getElementById('targetLang').value;
-  const resBox = document.getElementById('transResult');
-  if (!text) return;
-  fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=ur|' + target)
-  .then(res => res.json())
-  .then(data => { resBox.innerText = data.responseData.translatedText; })
-  .catch(e => { resBox.innerText = "ترجمہ کا مسئلہ پیش آیا۔"; });
+const text = document.getElementById('sourceText').value;
+const target = document.getElementById('targetLang').value;
+const resBox = document.getElementById('transResult');
+if (!text) return;
+fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=ur|' + target)
+.then(res => res.json())
+.then(data => { resBox.innerText = data.responseData.translatedText; })
+.catch(e => { resBox.innerText = "ترجمہ کا مسئلہ پیش آیا۔"; });
 }
 
 function startVoiceInput(inputId) {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) return;
-  const recognition = new SpeechRecognition();
-  recognition.lang = 'ur-PK';
-  recognition.onresult = function(event) {
-    document.getElementById(inputId).value = event.results[0][0].transcript;
-    if(inputId === 'posterText') drawPoster();
-  };
-  recognition.start();
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (!SpeechRecognition) return;
+const recognition = new SpeechRecognition();
+recognition.lang = 'ur-PK';
+recognition.onresult = function(event) {
+  document.getElementById(inputId).value = event.results[0][0].transcript;
+  if(inputId === 'posterText') drawPoster();
+};
+recognition.start();
 }
 
 function drawPoster() {
-  const canvas = document.getElementById('posterCanvas');
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const txt = document.getElementById('posterText').value;
-  ctx.fillStyle = "#105b38";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+const canvas = document.getElementById('posterCanvas');
+if(!canvas) return;
+const ctx = canvas.getContext('2d');
+const txt = document.getElementById('posterText').value;
+ctx.fillStyle = "#105b38";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 ctx.fillStyle = "#d4af37";
 ctx.font = "bold 18px Arial";
 ctx.textAlign = "center";
@@ -618,47 +689,47 @@ ctx.fillText("کچے گھر پکے رشتے (AGN)", canvas.width / 2, canvas.hei
 
 let map;
 function getUserLocation() {
-  const status = document.getElementById('locationStatus');
-  const qibla = document.getElementById('qiblaDirection');
-  if (navigator.geolocation) {
-    status.innerText = "ایچ ڈی لوکیشن تلاش کی جا رہی ہے...";
-    navigator.geolocation.getCurrentPosition(position => {
-      const lat = position.coords.latitude;
-      const lng = position.coords.longitude;
-      status.innerText = "لوکیشن مل گئی: " + lat.toFixed(4) + ", " + lng.toFixed(4);
-      
-      const dLon = (39.8262 - lng) * Math.PI / 180;
-      const lat1 = lat * Math.PI / 180;
-      const lat2 = 21.4225 * Math.PI / 180;
-      const y = Math.sin(dLon) * Math.cos(lat2);
-      const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
-      let brng = Math.atan2(y, x) * 180 / Math.PI;
-      brng = (brng + 360) % 360;
-      qibla.innerText = "🕋 قبلہ رخ سمت: شمال سے " + brng.toFixed(1) + " ڈگری";
+const status = document.getElementById('locationStatus');
+const qibla = document.getElementById('qiblaDirection');
+if (navigator.geolocation) {
+  status.innerText = "ایچ ڈی لوکیشن تلاش کی جا رہی ہے...";
+  navigator.geolocation.getCurrentPosition(position => {
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
+    status.innerText = "لوکیشن مل گئی: " + lat.toFixed(4) + ", " + lng.toFixed(4);
+    
+    const dLon = (39.8262 - lng) * Math.PI / 180;
+    const lat1 = lat * Math.PI / 180;
+    const lat2 = 21.4225 * Math.PI / 180;
+    const y = Math.sin(dLon) * Math.cos(lat2);
+    const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+    let brng = Math.atan2(y, x) * 180 / Math.PI;
+    brng = (brng + 360) % 360;
+    qibla.innerText = "🕋 قبلہ رخ سمت: شمال سے " + brng.toFixed(1) + " ڈگری";
 
-      if (!map) {
-        map = L.map('map').setView([lat, lng], 15);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-      } else {
-        map.setView([lat, lng], 15);
-        map.invalidateSize();
-      }
-      L.marker([lat, lng]).addTo(map).bindPopup('آپ کی موجودہ ایچ ڈی لوکیشن').openPopup();
-    }, () => {
-      status.innerText = "لوکیشن کی اجازت نہیں ملی۔";
-    });
-  } else {
-    status.innerText = "براؤزر لوکیشن کو سپورٹ نہیں کرتا۔";
-  }
+    if (!map) {
+      map = L.map('map').setView([lat, lng], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    } else {
+      map.setView([lat, lng], 15);
+      map.invalidateSize();
+    }
+    L.marker([lat, lng]).addTo(map).bindPopup('آپ کی موجودہ ایچ ڈی لوکیشن').openPopup();
+  }, () => {
+    status.innerText = "لوکیشن کی اجازت نہیں ملی۔";
+  });
+} else {
+  status.innerText = "براؤزر لوکیشن کو سپورٹ نہیں کرتا۔";
+}
 }
 
 window.onload = function() {
-  try {
-    if (typeof drawPoster === 'function') drawPoster();
-  } catch (e) {
-    console.error(e);
-  }
+try {
+  if (typeof drawPoster === 'function') drawPoster();
+} catch (e) {
+  console.error(e);
+}
 };
 </script>
 </body>
-</html>
+</html>  
