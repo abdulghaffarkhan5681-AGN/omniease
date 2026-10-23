@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+در<!DOCTYPE html>
 <html lang="ur" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -453,8 +453,12 @@ status.innerText = "آپ کا براؤزر لوکیشن کو سپورٹ نہیں
 }
 }
   window.onload = function() {
+try {
 if (typeof drawPoster === 'function') {
 drawPoster();
+}
+} catch (e) {
+console.error(e);
 }
 };
 </script>
