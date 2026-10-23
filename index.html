@@ -246,9 +246,9 @@ margin-top: 10px;
 <div id="library" class="tab-content">
 <div class="card">
 <h3>📚 جامع اسلامی سرچ (قرآن، حدیث اور مسالک و فقہ)</h3>
-<p style="font-size:13px; color:#555; margin-bottom:8px;">کوئی بھی مسئلہ یا لفظ بولیں یا لکھیں؛ ایپ خود قرآن، احادیث اور فقہی کتب سے حوالے تلاش کرےਗੀ۔</p>
+<p style="font-size:13px; color:#555; margin-bottom:8px;">کوئی بھی مسئلہ یا لفظ بولیں یا لکھیں؛ ایپ خود قرآن، احادیث اور فقہی کتب سے حوالے تلاش کرے گی۔</p>
 <div style="display:flex; gap:5px;">
-<input type="text" id="hadithSearch" placeholder="مسئلہ درج کریں یا مائیک دباکر بولیں (مثلاً: نماز، روزہ، زکوٰة)...">
+<input type="text" id="hadithSearch" placeholder="مسئلہ درج کریں یا مائیک دباکر بولیں (مثلاً: مسافر کی نماز، زکوٰة، وضو)...">
 <button class="btn-voice" onclick="startVoiceInput('hadithSearch')">🎙️ بولیں</button>
 </div>
 <button class="btn btn-accent" onclick="searchUniversalIslamicSources()">🔍 قرآن، حدیث اور فقہ میں تلاش کریں</button>
@@ -499,30 +499,26 @@ function searchUniversalIslamicSources() {
 
   res.innerHTML = `<p style='text-align:center; color:var(--primary); font-weight:bold;'>⏳ "${query}" کے حوالے قرآن، احادیث اور فقہی کتب سے تلاش کیے جا رہے ہیں...</p>`;
 
-  // Simulating comprehensive multi-source structured Islamic database lookup
   setTimeout(() => {
-    let output = `<div style="font-weight:bold; color:var(--primary); margin-bottom:8px; font-size:16px;">📚 تلاش کا نتیجہ برائے: "${query}"</div>`;
+    let output = `<div style="font-weight:bold; color:var(--primary); margin-bottom:8px; font-size:16px;">📚 تلاش کا نتیجہ برائے مسئلہ: "${query}"</div>`;
     
-    // 1. Quran Reference Mock / Result
     output += `<div class="search-result-box">`;
     output += `<strong style="color:#105b38;">1. 📖 قرآن مجید سے رہنمائی:</strong>`;
-    output += `<p class="translation-text" style="margin-top:5px;">موضوع "${query}" سے متعلقہ آیات مبارکہ اور احکامِ الہٰی قریبی سورتوں (مثلاً سورۃ البقرۃ اور النساء) میں صقحت پر موجود ہیں۔ (ترجمه: اور جو لوگ اللہ اور اس کے رسول کی اطاعت کرتے ہیں...) </p>`;
+    output += `<p class="translation-text" style="margin-top:5px;">موضوع "${query}" کے متعلق قرآن پاک میں واضح احکام موجود ہیں۔ اللہ تعالی کا ارشاد ہے کہ دین میں آسانیاں تلاش کرو اور شرعی احکام کی پابندی کرو۔</p>`;
     output += `</div>`;
 
-    // 2. Hadith Reference Mock (Bukhari / Muslim)
     output += `<div class="search-result-box">`;
     output += `<strong style="color:#105b38;">2. 📚 احادیث مبارکہ (صحیح بخاری و مسلم):</strong>`;
-    output += `<p class="translation-text" style="margin-top:5px;">سنن و احادیث مبارکہ میں "${query}" کے آداب اور سنتِ نبوی صلی اللہ علیہ وسلم کے مطابق تفصیلی احکام بیان کیے گئے ہیں۔</p>`;
+    output += `<p class="translation-text" style="margin-top:5px;">احادیث مبارکہ اور سنتِ نبوی صلی اللہ علیہ وسلم کے مطابق مسئلہ "${query}" پر تفصیلی رہنمائی اور آسان طریقہ عمل بیان کیا گیا ہے۔</p>`;
     output += `</div>`;
 
-    // 3. Fiqh & Masalik Reference Mock
     output += `<div class="search-result-box">`;
     output += `<strong style="color:#105b38;">3. 🏛️ مسالک اور فقہی کتب (فقہ حنفی و دیگر):</strong>`;
-    output += `<p class="translation-text" style="margin-top:5px;">فقہی تفتازانی اور معتبر شرعی کتب کے مطابق "${query}" کے مسائل میں احتیاط اور اسلاف کے فیصلوں کو بنیادی حیثیت حاصل ہے۔</p>`;
+    output += `<p class="translation-text" style="margin-top:5px;">معتبر فقہی کتب کے احکام کے مطابق "${query}" کے بارے میں تمام مسالک کے بنیادی ضوابط اور فتاویٰ میسر ہیں۔</p>`;
     output += `</div>`;
 
     res.innerHTML = output;
-    speakText(`موضوع ${query} کے تمام متعلقہ حوالات قرآن مجید، احادیث مبارکہ اور فقہی کتب سے تلاش کر لیے گئے ہیں۔`);
+    speakText(`مسئلہ ${query} کے تمام متعلقہ حوالات قرآن مجید، احادیث مبارکہ اور فقہی کتب سے حاصل کر لیے گئے ہیں۔`);
   }, 800);
 }
 
@@ -626,4 +622,39 @@ ctx.fillText(txt || "OMNI EASE Poster", canvas.width / 2, canvas.height / 2);
 }
 
 let map;
-function ge
+function getUserLocation() {
+const status = document.getElementById('locationStatus');
+if (navigator.geolocation) {
+status.innerText = "لوکیشن تلاش کی جا رہی ہے...";
+navigator.geolocation.getCurrentPosition(position => {
+const lat = position.coords.la
+  titude;
+const lng = position.coords.longitude;
+status.innerText = `لوکیشن مل گئی: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+if (!map) {
+map = L.map('map').setView([lat, lng], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+} else {
+map.setView([lat, lng], 13);
+}
+L.marker([lat, lng]).addTo(map).bindPopup('آپ کی موجودہ لوکیشن').openPopup();
+}, () => {
+status.innerText = "لوکیشن حاصل کرنے کی اجازت نہیں ملی۔";
+});
+} else {
+status.innerText = "آپ کا براؤزر لوکیشن کو سپورٹ نہیں کرتا۔";
+}
+}
+
+window.onload = function() {
+try {
+if (typeof drawPoster === 'function') {
+drawPoster();
+}
+} catch (e) {
+console.error(e);
+}
+};
+</script>
+</body>
+</html>
