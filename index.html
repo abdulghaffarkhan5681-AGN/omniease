@@ -849,16 +849,67 @@
     }
   }
 
-  function searchUniversalIslamicSources() {
+async function searchUniversalIslamicSources() {
     const q = document.getElementById('hadithSearch').value.trim();
     const res = document.getElementById('libraryResult');
-    if (!q) { 
-      res.innerHTML = `<div class="card" style="background:#fff3f3;"><strong>حلال و حرام اور تجارت کے بنیادی اصول:</strong><p>اسلام میں رزق حلال کمانا فرض ہے۔ سود، دھوکہ دہی، ناپ تول میں کمی اور حرام اشیاء (جیسے شراب، مردار) کی خرید و فروخت سخت حرام ہے۔</p></div>`; 
-      return; 
+    
+    if (!q) {
+        res.innerHTML = '<div class="card" style="background:#fff3f3; text-align:center;"><strong>تلاش / Search:</strong> براہ کرم اپنا سوال درج کریں۔ / Please enter your question.</div>';
+        return;
     }
-    res.innerHTML = `<div class="card" style="background:#f9f9f9;"><strong>تلاش کا نتیجہ (${q}):</strong><p>مستند اسلامی فقہ کے مطابق "${q}" کے معاملے میں دیانت داری، صدق اور حلال شرائط کا خیال رکھنا لازم ہے۔ سود اور غرر (غیر یقینی دھوکہ) سے بچیں۔</p></div>`;
- }
 
+    res.innerHTML = '<div class="card" style="text-align:center;">⏳ تلاش جاری ہے... / Searching...</div>';
+
+    // 1. بنیادی حنفی فقہ کے جوابات (اردو میں)
+    let baseAnswerUrdu = "";
+    const lowerQ = q.toLowerCase();
+
+    if (q.includes("غسل") || lowerQ.includes("ghusl") || q.includes("نپھڑن") || q.includes("نہاوݨ")) {
+        baseAnswerUrdu = "<strong>حنفی فقہ کے مطابق غسل فرض ہونے کے اسباب:</strong><br>1. منی کا شہوت کے ساتھ جدا ہو کر نکلنا۔<br>2. احتلام (خواب میں انزال ہونا)۔<br>3. جماع (ہم بستری کرنا، چاہے انزال ہو یا نہ ہو)۔<br>4. خواتین کے لیے حیض اور نفاس سے فراغت۔";
+    } else if (q.includes("حلال") || q.includes("حرام") || lowerQ.includes("halal") || lowerQ.includes("haram") || q.includes("سود")) {
+        baseAnswerUrdu = "<strong>شرعی اصول (حلال و حرام):</strong> تجارت اور خوراک میں دیانت داری، سچائی اور حلال شرائط کا خیال رکھنا لازم ہے۔ سود، دھوکہ دہی، اور حرام و مشتبہ اجزاء سے مکمل پرہیز کریں۔";
+    } else {
+        baseAnswerUrdu = "<strong>مستند حنفی فقہ کی روشنی میں:</strong> آپ کا سوال <em>\"" + q + "\"</em> موصول ہوا۔ معتبر کتبِ فقہ (ہدایہ/فتاویٰ عالمگیری) اور علماءِ کرام سے اس مسئلے کی مزید تفصیل معلوم کی جا سکتی ہے۔";
+    }
+
+    // 2. اگر سوال اردو/عربی رسم الخط میں نہ ہو تو خودکار ترجمہ
+    const isUrduScript = /[\u0600-\u06FF]/.test(q);
+
+    if (isUrduScript) {
+        // اگر اردو/سندھی/پنجابی/پشتو (عربی رسم الخط) ہے تو براہ راست اردو میں دکھائیں
+        res.innerHTML = '<div class="card" style="background:#f9f9f9; line-height:1.8; text-align:right;">' +
+            '<h4>تلاش کا نتیجہ (' + q + '):</h4>' +
+            '<p style="margin-top:10px;">' + baseAnswerUrdu + '</p>' +
+            '</div>';
+    } else {
+        // کسی بھی دوسری زبان (چینی، انگریزی، فلپائنی وغیرہ) کے لیے خودکار عالمی ترجمہ
+        try {
+            const cleanText = baseAnswerUrdu.replace(/<[^>]*>/g, ' '); // HTML ہٹا کر ترجمہ کے لیے ٹیکسٹ بنانا
+            const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=ur&tl=auto&dt=t&q=${encodeURIComponent(cleanText)}`;
+            
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            
+            let translatedAnswer = "";
+            if (data && data[0]) {
+                data[0].forEach(item => {
+                    if (item[0]) translatedAnswer += item[0];
+                });
+            }
+
+            res.innerHTML = '<div class="card" style="background:#f9f9f9; line-height:1.8; text-align:left;">' +
+                '<h4>Search Result (' + q + '):</h4>' +
+                '<p style="margin-top:10px; font-weight:bold;">' + (translatedAnswer || baseAnswerUrdu) + '</p>' +
+                '</div>';
+        } catch (error) {
+            // اگر آن لائن ترجمہ میں کوئی مسئلہ ہو تو انگریزی/اردو بیک اپ
+            res.innerHTML = '<div class="card" style="background:#f9f9f9; line-height:1.8; text-align:right;">' +
+                '<h4>تلاش کا نتیجہ (' + q + '):</h4>' +
+                '<p style="margin-top:10px;">' + baseAnswerUrdu + '</p>' +
+                '</div>';
+        }
+    }
+      }
 // AI Islamic System Instruction (Multilingual & Hanafi Fiqh)
 const systemInstruction = {
     role: "system",
