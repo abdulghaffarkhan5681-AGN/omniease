@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+یہ<!DOCTYPE html>
 <html lang="ur" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -400,15 +400,13 @@
     </div>
 
     <!-- 8. POSTER -->
-    <div id="poster" class="tab-content">
-      <div class="card">
-        <h3>🎨 پوسٹر میکر (حلال و حرام / برانڈ 9:16)</h3>
-        <label>اوپر والا متن:</label>
-        <input type="text" id="posterTopText" value="فیضان مبیلوی" oninput="drawPoster()">
-        <label>درمیان والا متن:</label>
-        <input type="text" id="posterMidText" value="حلال روزی، برکت اور سکون کا ذریعہ" oninput="drawPoster()">
-        <label>نیچے والا متن:</label>
-        <input type="text" id="posterBotText" value="کچے گھر پکے رشتے (AGN)" oninput="drawPoster()">
+<h3>پوستر میکر (حدیث و فقہی تشریح) 9:16</h3>
+<label>اوپر کا متن</label>
+<input type="text" id="posterTopText" value="فیضان مبیلوی" oninput="drawPoster()">
+<label>درمیان کا متن</label>
+<input type="text" id="posterMidText" value="حدیثِ مبارکہ اور فقہی مسائل کی روشنی میں" oninput="drawPoster()">
+<label>نیچے کا متن</label>
+<input type="text" id="posterBotText" value="کچے گھر پکے رشتے (AGN)" oninput="drawPoster()">
         
         <div style="display:flex; gap:10px; margin:10px 0;">
           <button class="btn" onclick="increasePosterLines()">➕ لائن زیادہ کریں</button>
@@ -859,58 +857,67 @@
       return; 
     }
     res.innerHTML = `<div class="card" style="background:#f9f9f9;"><strong>تلاش کا نتیجہ (${q}):</strong><p>مستند اسلامی فقہ کے مطابق "${q}" کے معاملے میں دیانت داری، صدق اور حلال شرائط کا خیال رکھنا لازم ہے۔ سود اور غرر (غیر یقینی دھوکہ) سے بچیں۔</p></div>`;
-  }
+ }
 
-  // --- HD Qibla Compass & Map ---
-  let map;
-  let qiblaBearing = 0;
-  function getUserLocation() {
-    const status = document.getElementById('locationStatus');
-    const qibla = document.getElementById('qiblaDirection');
+// AI Islamic System Instruction (Multilingual & Hanafi Fiqh)
+const systemInstruction = {
+    role: "system",
+    parts: [{ 
+        text: "You are an authentic Islamic Jurisprudence & Scholar Assistant for OMNI EASE - AGN. Answer user queries accurately based on Quran, Sunnah, and Hanafi Fiqh (Fatawa Alamgiri, Radd al-Muhtar, Al-Hedaya). Respond automatically in whatever language the user asks their question in (Urdu, English, Arabic, Pashto, Hindi, French, Spanish, etc.) with scholarly precision." 
+    }]
+};
+
+// قبلہ نما کو آٹو گھمانے اور لوکیشن سے ڈگری نکالنے کا فنکشن
+function startQiblaAutoCompass() { 
     if (navigator.geolocation) {
-      status.innerText = "لوکیشن تلاش کی جا رہی ہے...";
-      navigator.geolocation.getCurrentPosition(position => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-        status.innerText = "لوکیشن مل گئی: " + lat.toFixed(4) + ", " + lng.toFixed(4);
-        
-        const dLon = (39.8262 - lng) * Math.PI / 180;
-        const lat1 = lat * Math.PI / 180;
-        const lat2 = 21.4225 * Math.PI / 180;
-        const y = Math.sin(dLon) * Math.cos(lat2);
-        const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
-        qiblaBearing = Math.atan2(y, x) * 180 / Math.PI;
-        qiblaBearing = (qiblaBearing + 360) % 360;
-        
-        qibla.innerText = "🕋 قبلہ رخ سمت: شمال سے " + qiblaBearing.toFixed(1) + " ڈگری";
+        navigator.geolocation.getCurrentPosition(position => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            const qiblaAngle = calculateQiblaAngle(lat, lng);
+
+            if (window.DeviceOrientationEvent) {
+                window.addEventListener('deviceorientation', function(event) {
+                    let compassHeading = null;
+
+                    if (event.webkitCompassHeading) {
+                        compassHeading = event.webkitCompassHeading; // iPhone کے لیے
+                    } else if (event.alpha !== null) {
+                        compassHeading = 360 - event.alpha; // Android کے لیے
+                    }
+
+      if (compassHeading !== null) {
+        const needleRotation = qiblaBearing - compassHeading;
         const needle = document.getElementById('compassNeedle');
-        if(needle) needle.style.transform = 'rotate(' + qiblaBearing + 'deg)';
-
-        if (!map) {
-          map = L.map('map').setView([lat, lng], 15);
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-        } else {
-          map.setView([lat, lng], 15);
-          map.invalidateSize();
+        if (needle) {
+            needle.style.transform = `rotate(${needleRotation}deg)`;
         }
-        L.marker([lat, lng]).addTo(map).bindPopup('آپ کی موجودہ لوکیشن').openPopup();
-      }, () => {
-        status.innerText = "لوکیشن کی اجازت نہیں ملی۔";
-      });
-    } else {
-      status.innerText = "براؤزر لوکیشن کو سپورٹ نہیں کرتا۔";
     }
-  }
-
-  window.addEventListener('deviceorientation', function(event) {
-    let compass = event.alpha;
-    if (compass !== null && qiblaBearing) {
-      let rotation = qiblaBearing - compass;
-      const needle = document.getElementById('compassNeedle');
-      if(needle) needle.style.transform = 'rotate(' + rotation + 'deg)';
+}, true);
+} else {
+    alert("آپ کے ڈیوائس میں کمپاس سینسر دستیاب نہیں ہے۔");
+    }                
+        }, error => {
+            alert("براہ کرم لوکیشن (GPS) کی اجازت آن کریں۔");
+        });
     }
-  }, true);
+}
 
+function calculateQiblaAngle(lat, lng) {
+    const kaabaLat = 21.422487;
+    const kaabaLng = 39.826206;
+    
+    const phiK = kaabaLat * Math.PI / 180;
+    const lambdaK = kaabaLng * Math.PI / 180;
+    const phi = lat * Math.PI / 180;
+    const lambda = lng * Math.PI / 180;
+
+    const qibla = Math.atan2(
+        Math.sin(lambdaK - lambda),
+        Math.cos(phi) * Math.tan(phiK) - Math.sin(phi) * Math.cos(lambdaK - lambda)
+    );
+
+    return (qibla * 180 / Math.PI + 360) % 360;
+    }
   window.onload = function() {
     try {
       if (typeof drawPoster === 'function') drawPoster();
