@@ -128,6 +128,13 @@ text-align: right;
 line-height: 1.8;
 direction: rtl;
 }
+.verse-box {
+background: #fdfdfd;
+border: 1px solid #e2e8f0;
+padding: 12px;
+margin-bottom: 10px;
+border-radius: 8px;
+}
 table {
 width: 100%;
 border-collapse: collapse;
@@ -204,14 +211,11 @@ margin-top: 10px;
 <option value="ps.abdulwali">پشتو - عبدالولی</option>
 <option value="sd.amrooti">سندھی - تاج محمود امروٹی</option>
 <option value="ar.jalalayn">عربی - تفسير الجلالين</option>
-<option value="hi.farooq">ہندی - فاروق خان</option>
 </select>
 <button class="btn" onclick="fetchSurahData()">لوڈ کریں</button>
 </div>
 <div id="quranDisplay" class="card" style="display:none;">
-<div id="arabicText" class="quran-text"></div>
-<hr style="margin: 15px 0;">
-<div id="translationText" class="translation-text"></div>
+<div id="quranContainer"></div>
 </div>
 </div>
 <!-- 2. ISLAMIC LIBRARY (HADITH & FIQH) -->
@@ -329,44 +333,35 @@ document.getElementById('calendarBox').innerHTML = عیسوی: ${greg} <br> ہج
 document.getElementById('calendarBox').innerHTML = new Date().toDateString();
 }
 }
-// Updated Direct Quran API Logic
-function fetchSurahData() {
+// ULTRA FAST DIRECT QURAN LOADER
+async function fetchSurahData() {
 const surah = document.getElementById('surahSelect').value;
-const lang = document.getElementById('langSelect').value;
+const edition = document.getElementById('langSelect').value;
 const display = document.getElementById('quranDisplay');
-const arabicDiv = document.getElementById('arabicText');
-const transDiv = document.getElementById('translationText');
+const container = document.getElementById('quranContainer');
 display.style.display = 'block';
-arabicDiv.innerHTML = "<b>عربی متن لوڈ ہو رہا ہے...</b>";
-transDiv.innerHTML = "<b>ترجمہ لوڈ ہو رہا ہے...</b>";
-// Fetch Arabic
-fetch('https://api.alquran.cloud/v1/surah/' + surah)
-.then(response => response.json())
-.then(dataAr => {
-if (dataAr.code === 200) {
-let arabicContent = dataAr.data.ayahs.map(a => a.text + ' ﴿' + a.numberInSurah + '﴾').join(' ');
-arabicDiv.innerText = arabicContent;
-} else {
-arabicDiv.innerText = "عربی متن نہ مل سکا۔";
+container.innerHTML = "<p style='text-align:center;'>⏳ سورت کا متن اور ترجمہ لوڈ ہو رہا ہے...</p>";
+try {
+const url = 'https://api.alquran.cloud/v1/surah/' + surah + '/editions/quran-uthmani,' + edition;
+const response = await fetch(url);
+const data = await response.json();
+if (data.code === 200 && data.data.length >= 2) {
+const arabicAyahs = data.data[0].ayahs;
+const transAyahs = data.data[1].ayahs;
+let html = '';
+for (let i = 0; i < arabicAyahs.length; i++) {
+html += '<div class="verse-box">';
+html += '<div class="quran-text">' + arabicAyahs[i].text + ' ﴿' + arabicAyahs[i].numberInSurah + '﴾</div>';
+html += '<div class="translation-text">' + transAyahs[i].text + '</div>';
+html += '</div>';
 }
-})
-.catch(err => {
-arabicDiv.innerText = "انٹرنیٹ کنکشن کی خرابی کی وجہ سے ڈیٹا لوڈ نہیں ہو سکا۔";
-});
-// Fetch Translation
-fetch('https://api.alquran.cloud/v1/surah/' + surah + '/' + lang)
-.then(response => response.json())
-.then(dataTr => {
-if (dataTr.code === 200) {
-let translationContent = dataTr.data.ayahs.map(a => '(' + a.numberInSurah + ') ' + a.text).join(' ');
-transDiv.innerText = translationContent;
+container.innerHTML = html;
 } else {
-transDiv.innerText = "ترجمہ دستیاب نہیں ہے۔";
+container.innerHTML = "<p style='color:red; text-align:center;'>ڈیٹا حاصل نہیں ہو سکا۔ برائے کرم دوبارہ کوشش کریں۔</p>";
 }
-})
-.catch(err => {
-transDiv.innerText = "ترجمہ لوڈ نہیں ہو سکا۔";
-});
+} catch (error) {
+container.innerHTML = "<p style='color:red; text-align:center;'>انٹرنیٹ کنکشن کی خرابی یا سرور رسپانس نہیں دے رہا۔</p>";
+}
 }
 function searchLibrary() {
 const book = document.getElementById('bookSelect').value;
@@ -464,4 +459,3 @@ drawPoster();
 </script>
 </body>
   </html>
-                            
