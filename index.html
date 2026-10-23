@@ -627,8 +627,7 @@ const status = document.getElementById('locationStatus');
 if (navigator.geolocation) {
 status.innerText = "لوکیشن تلاش کی جا رہی ہے...";
 navigator.geolocation.getCurrentPosition(position => {
-const lat = position.coords.la
-  titude;
+const lat = position.coords.latitude;
 const lng = position.coords.longitude;
 status.innerText = `لوکیشن مل گئی: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
 if (!map) {
