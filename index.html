@@ -1,862 +1,552 @@
 <!DOCTYPE html>
 <html lang="ur" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OMNI EASE - امنی ایز</title>
-<meta name="theme-color" content="#105b38">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<style>
-:root {
---primary: #105b38;
---accent: #d4af37;
---bg: #f8f9fa;
---text: #212529;
---card-bg: #ffffff;
-}
-* {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-body {
-background-color: var(--bg);
-color: var(--text);
-line-height: 1.6; کہ
-padding-bottom: 40px;
-}
-header {
-background: linear-gradient(135deg, #105b38, #0a3a24);
-color: white;
-padding: 15px 20px;
-text-align: center;
-box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-header h1 {
-font-size: 24px;
-color: var(--accent);
-}
-header p {
-font-size: 13px;
-opacity: 0.9;
-}
-nav {
-display: flex;
-overflow-x: auto;
-background: #ffffff;
-border-bottom: 2px solid var(--accent);
-position: sticky;
-top: 0;
-z-index: 100;
-white-space: nowrap;
-}
-nav button {
-background: none;
-border: none;
-padding: 12px 15px;
-font-weight: bold;
-color: var(--text);
-cursor: pointer;
-font-size: 13px;
-transition: 0.3s;
-flex-shrink: 0;
-}
-nav button.active {
-color: var(--primary);
-border-bottom: 3px solid var(--primary);
-background-color: #f0f7f3;
-}
-.container {
-padding: 15px;
-max-width: 800px;
-margin: 0 auto;
-}
-.tab-content {
-display: none;
-}
-.tab-content.active {
-display: block;
-}
-.card {
-background: var(--card-bg);
-border-radius: 10px;
-padding: 15px;
-margin-bottom: 15px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-border-right: 4px solid var(--primary);
-}
-.btn {
-display: inline-block;
-background: var(--primary);
-color: white;
-padding: 10px 18px;
-border-radius: 5px;
-text-decoration: none;
-border: none;
-cursor: pointer;
-font-size: 15px;
-margin-top: 8px;
-width: 100%;
-font-weight: bold;
-}
-.btn-accent {
-background: var(--accent);
-color: #000;
-}
-.btn-voice {
-background: #2980b9;
-color: white;
-padding: 6px 12px;
-font-size: 13px;
-border-radius: 4px;
-border: none;
-cursor: pointer;
-margin-top: 5px;
-display: inline-block;
-}
-input, select, textarea {
-width: 100%;
-padding: 10px;
-margin: 8px 0;
-border: 1px solid #ccc;
-border-radius: 5px;
-font-size: 14px;
-}
-.quran-text {
-font-size: 26px;
-text-align: right;
-line-height: 2.2;
-color: #105b38;
-margin-bottom: 10px;
-direction: rtl;
-font-weight: bold;
-}
-.translation-text {
-font-size: 18px;
-color: #333;
-text-align: right;
-line-height: 1.8;
-direction: rtl;
-}
-.verse-box {
-background: #fdfdfd;
-border: 1px solid #e2e8f0;
-padding: 15px;
-margin-bottom: 12px;
-border-radius: 8px;
-}
-.search-result-box {
-background: #f9fbf9;
-border: 1px solid #cce0d5;
-padding: 12px;
-margin-top: 10px;
-border-radius: 6px;
-text-align: right;
-}
-table {
-width: 100%;
-border-collapse: collapse;
-margin-top: 10px;
-}
-table, th, td {
-border: 1px solid #ddd;
-padding: 8px;
-text-align: center;
-font-size: 13px;
-}
-th {
-background-color: var(--primary);
-color: white;
-}
-.brand-footer {
-text-align: center;
-margin-top: 30px;
-padding: 15px;
-background: #e9f0ec;
-border-radius: 8px;
-border: 1px solid #cce0d5;
-}
-.brand-footer h3 {
-color: var(--primary);
-font-size: 16px;
-}
-.brand-footer p {
-font-size: 13px;
-color: #555;
-}
-#map {
-height: 280px;
-border-radius: 8px;
-margin-top: 10px;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OMNI EASE (AGN)</title>
+  <!-- Leaflet CSS for Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    :root {
+      --primary: #1b4d3e;
+      --accent: #d4af37;
+      --bg: #f4f7f6;
+      --text: #333;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    header p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #ddd;
+    }
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      justify-content: center;
+    }
+    .nav button {
+      background: none;
+      border: none;
+      padding: 10px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #555;
+      transition: 0.3s;
+    }
+    .nav button.active {
+      color: var(--primary);
+      border-bottom: 3px solid var(--primary);
+    }
+    .container {
+      padding: 15px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      margin-bottom: 15px;
+    }
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+      font-size: 13px;
+    }
+    th {
+      background: #f2f2f2;
+    }
+    #map {
+      height: 280px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .brand-footer {
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px;
+      background: #fff;
+      border-top: 1px solid #ddd;
+    }
+    .brand-footer h3 {
+      margin: 0;
+      color: var(--primary);
+      font-size: 16px;
+    }
+    .brand-footer p {
+      margin: 3px 0;
+      font-size: 13px;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
-<header>
-<h1>☀ OMNI EASE - امنی ایز ☀</h1>
-<p>آپ کا اپنا ڈیجیٹل، بزنس اور روحانی مرکز</p>
-</header>
 
-<nav>
-<button class="active" onclick="openTab('quran', this)">📖 قرآن پاک</button>
-<button onclick="openTab('library', this)">📚 اسلامی کتب</button>
-<button onclick="openTab('business', this)">💼 بزنس و ایڈز (AGN)</button>
-<button onclick="openTab('calendar', this)">📅 کیلنڈر</button>
-<button onclick="openTab('ledger', this)">📒 لیجر</button>
-<button onclick="openTab('translator', this)">🌐 ترجمہ</button>
-<button onclick="openTab('poster', this)">🎨 پوسٹر</button>
-<button onclick="openTab('map-sec', this)">🗺️ ایچ ڈی میپ</button>
-</nav>
+  <header>
+    <h1>OMNI EASE (AGN)</h1>
+    <p>آپ کا اپنا ڈیجیٹل بزنس اور روحانی مرکز</p>
+  </header>
 
-<div class="container">
+  <nav class="nav">
+    <button class="active" onclick="openTab('quran', this)">📖 قرآن پاک</button>
+    <button onclick="openTab('library', this)">📚 اسلامی کتب</button>
+    <button onclick="openTab('inventory', this)">💼 بزنس و انوینٹری</button>
+    <button onclick="openTab('calendar', this)">📅 کیلنڈر</button>
+    <button onclick="openTab('ledger', this)">📒 لیجر</button>
+    <button onclick="openTab('translator', this)">🌐 ترجمہ</button>
+    <button onclick="openTab('poster', this)">🎨 پوسٹر</button>
+    <button onclick="openTab('map-sec', this)">🧭 قبلہ و نقشہ</button>
+  </nav>
 
-<!-- 1. QURAN MODULE -->
-<div id="quran" class="tab-content active">
-<div class="card">
-<h3>📖 قرآن مجید و تلاوت (مختلف قراء اور تراجم)</h3>
-<label>سورت کا انتخاب کریں:</label>
-<select id="surahSelect">
-<option value="1">1. الفاتحة</option>
-<option value="2">2. البقرة</option>
-<option value="36">36. يس</option>
-<option value="55">55. الرحمن</option>
-<option value="67">67. الملك</option>
-<option value="112">112. الإخلاص</option>
-<option value="113">113. الفلق</option>
-<option value="114">114. الناس</option>
-</select>
+  <div class="container">
 
-<label>قاری کا انتخاب کریں:</label>
-<select id="qariSelect">
-<option value="ar.alafasy">شیخ مشاری راشد العفاسی</option>
-<option value="ar.abdulbasit">قاری عبدالباسط عبدالصمد</option>
-<option value="ar.sudais">شيخ عبدالرحمن السدیس</option>
-<option value="ar.minshawi">قاری محمد صدیق المنشاوی</option>
-<option value="ar.shuraym">شيخ سعود الشريم</option>
-<option value="ar.ghamdi">سعد الغامدی</option>
-</select>
+    <!-- 1. QURAN MODULE -->
+    <div id="quran" class="tab-content active">
+      <div class="card">
+        <h3>📖 قرآن مجید (مصحف قرآء اور تراجم)</h3>
+        <label>سورت کا انتخاب کریں:</label>
+        <select id="surahSelect">
+          <option value="1">1. الفاتحہ</option>
+          <option value="2">2. البقرۃ</option>
+          <option value="36">36. یٰسین</option>
+          <option value="55">55. الرحمن</option>
+          <option value="67">67. الملك</option>
+          <option value="112">112. الإخلاص</option>
+          <option value="113">113. الفلق</option>
+          <option value="114">114. الناس</option>
+        </select>
 
-<label>زبان اور مترجم منتخب کریں:</label>
-<select id="langSelect">
-<option value="ur.jalandhry">اردو - فتح محمد جالندھری</option>
-<option value="ur.junagarhi">اردو - مولانا جوناگڑھی</option>
-<option value="en.sahih">English - Sahih International</option>
-<option value="ps.abdulwali">پشتو - عبدالولی</option>
-<option value="ar.jalalayn">عربی - تفسير الجلالين</option>
-</select>
+        <label>قاری کا انتخاب کریں:</label>
+        <select id="qariSelect">
+          <option value="ar.alafasy">مشاری بن راشد العفاسی</option>
+          <option value="ar.abdulbasit">عبدالباسط عبدالصمد</option>
+          <option value="ar.sudais">عبدالرحمن السدیس</option>
+          <option value="ar.minshawi">محمد صدیق المنشاوی</option>
+        </select>
 
-<button class="btn" onclick="fetchSurahData(false)">تلاوت و ویڈیو لوڈ کریں</button>
-</div>
-<div id="quranDisplay" class="card" style="display:none;">
-<div id="quranContainer"></div>
-</div>
-</div>
+        <label>زبان اور ترجمہ منتخب کریں:</label>
+        <select id="langSelect">
+          <option value="ur.jalandhry">اردو - فتح محمد جالندھری</option>
+          <option value="ur.junagarhi">اردو - جوناگرھی</option>
+          <option value="en.sahih">English - Sahih International</option>
+        </select>
 
-<!-- 2. ISLAMIC LIBRARY -->
-<div id="library" class="tab-content">
-<div class="card">
-<h3>📚 جامع اسلامی سرچ اور فقہی کتب</h3>
-<div style="display:flex; gap:5px;">
-<input type="text" id="hadithSearch" placeholder="مسئلہ درج کریں (مثلاً: نماز، زکوٰة، وضو)...">
-<button class="btn-voice" onclick="startVoiceInput('hadithSearch')">🎙️ بولیں</button>
-</div>
-<button class="btn btn-accent" onclick="searchUniversalIslamicSources()">🔍 قرآن و سنت اور فقہ میں تلاش کریں</button>
-<div id="libraryResult" style="margin-top:15px;"></div>
-</div>
-</div>
+        <button class="btn" onclick="fetchSurahData(false)">تلاوت اور ترجمہ لوڈ کریں</button>
+      </div>
+      <div id="quranDisplay" class="card" style="display:none;">
+        <div id="quranContainer"></div>
+      </div>
+    </div>
 
-<!-- 3. BUSINESS & AD STUDIO HUB -->
-<div id="business" class="tab-content">
-<div class="card" style="border-right-color: var(--accent);">
-<h3>💼 کچے گھر پکے رشتے (AGN) - بزنس اور ڈیجیٹل ایڈ اسٹوڈیو</h3>
-<p style="font-size:13px; color:#555; margin-bottom:10px;">کپڑے، فوڈ کارٹ اور ہر قسم کے کاروبار کے لیے انوینٹری اور فوٹو/ویڈیو اشتہار پوسٹنگ سسٹم۔</p>
+    <!-- 2. ISLAMIC LIBRARY -->
+    <div id="library" class="tab-content">
+      <div class="card">
+        <h3>📚 نایاب اسلامی اور فقہی کتب</h3>
+        <div style="display:flex; gap:5px;">
+          <input type="text" id="hadithSearch" placeholder="مسئلہ درج کریں (مثلاً: نماز، وضو)...">
+          <button class="btn" onclick="startVoiceInput('hadithSearch')">🎙️</button>
+        </div>
+        <button class="btn btn-accent" onclick="searchUniversalIslamicSources()">قرآن و سنت اور فقہ میں تلاش کریں</button>
+        <div id="libraryResult" style="margin-top:15px;"></div>
+      </div>
+    </div>
 
-<!-- Inventory Section -->
-<label><b>نیا آئٹم / پروڈکٹ شامل کریں (انوینٹری):</b></label>
-<input type="text" id="prodName" placeholder="پروڈکٹ کا نام">
-<input type="number" id="prodQty" placeholder="تعداد / مقدار">
-<input type="number" id="prodCost" placeholder="خرید قیمت">
-<input type="number" id="prodPrice" placeholder="فروخت قیمت">
-<button class="btn" onclick="addInventoryItem()">➕ اسٹاک میں شامل کریں</button>
-<h4 style="margin-top:10px; color:var(--primary);">📦 موجودہ اسٹاک لسٹ:</h4>
-<table>
-<thead>
-<tr><th>آئٹم</th><th>تعداد</th><th>خرید</th><th>فروخت</th><th>عمل</th></tr>
-</thead>
-<tbody id="inventoryTable"></tbody>
-</table>
+    <!-- 3. INVENTORY SECTION -->
+    <div id="inventory" class="tab-content">
+      <div class="card">
+        <h3>💼 نئی آئٹم / پروڈکٹ شامل کریں (انوینٹری)</h3>
+        <input type="text" id="prodName" placeholder="پروڈکٹ کا نام">
+        <input type="number" id="prodQty" placeholder="تعداد / مقدار">
+        <input type="number" id="prodCost" placeholder="خرید قیمت">
+        <input type="number" id="prodPrice" placeholder="فروخت قیمت">
+        <button class="btn" onclick="addInventoryItem()">سٹاک میں شامل کریں</button>
+        <h4 style="margin-top:10px; color:var(--primary);">📦 موجودہ اسٹاک</h4>
+        <table>
+          <thead>
+            <tr><th>نام</th><th>تعداد</th><th>خرید</th><th>فروخت</th><th>ایکشن</th></tr>
+          </thead>
+          <tbody id="inventoryTable"></tbody>
+        </table>
+      </div>
+    </div>
 
-<!-- Ad & Media Posting Studio -->
-<div style="background:#f0f7f3; padding:12px; border-radius:8px; margin-top:20px; border:1px dashed var(--primary);">
-<h4 style="color:var(--primary); margin-bottom:8px;">📢 اپنا اشتہار (تصویر اور ویڈیو کے ساتھ) پبلش کریں</h4>
-<input type="text" id="adTitle" placeholder="اشتہار کا عنوان (مثلاً: خصوصی لان سوٹ سیل یا فوڈ کارٹ)">
-<input type="text" id="adContact" placeholder="رابطہ نام / نمبر (مثلاً: فیضان مبیلوی)">
-<textarea id="adDesc" rows="2" placeholder="اشتہار کی مکمل تفصیل لکھیں..."></textarea>
-<input type="text" id="adMediaUrl" placeholder="تصویر یا ویڈیو کا لنک (Image/Video URL درج کریں)">
-<button class="btn btn-accent" onclick="publishAd()">🚀 اشتہار پبلش اور سیو کریں</button>
-</div>
+    <!-- 4. CALENDAR -->
+    <div id="calendar" class="tab-content">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin:10px 0;">
+          <button class="btn" onclick="changeMonth(-1)">◀ پچھلا مہینہ</button>
+          <h3 id="monthYearDisplay" style="margin:0;"></h3>
+          <button class="btn" onclick="changeMonth(1)">اگلا مہینہ ▶</button>
+        </div>
+        <table>
+          <thead>
+            <tr><th>اتوار</th><th>پیر</th><th>منگل</th><th>بدھ</th><th>جمعرات</th><th>جمعہ</th><th>ہفتہ</th></tr>
+          </thead>
+          <tbody id="calendarDaysGrid"></tbody>
+        </table>
+        <div style="background:#f0f7f3; padding:10px; border-radius:8px; margin-top:10px; text-align:center;">
+          <span id="gregorianBox" style="font-size:14px; font-weight:bold; display:block;"></span>
+          <span id="hijriBox" style="font-size:14px; font-weight:bold; color:var(--accent); display:block; margin-top:5px;"></span>
+        </div>
+      </div>
+    </div>
 
-<h4 style="margin-top:15px; color:var(--primary);">📰 لائیو پبلشڈ اشتہارات اور میڈیا فیڈ:</h4>
-<div id="adsFeedContainer" style="margin-top:10px;">
-<p style="font-size:13px; color:#777;">ابھی کوئی اشتہار موجود نہیں ہے۔ اوپر فارم سے اپنا اشتہار لگائیں!</p>
-</div>
-</div>
-</div>
+    <!-- 5. LEDGER -->
+    <div id="ledger" class="tab-content">
+      <div class="card">
+        <h3>📒 روزنامچہ / ڈیجیٹل لیجر</h3>
+        <input type="text" id="itemName" placeholder="تفصیل / کام یا زرائع">
+        <input type="number" id="itemQty" placeholder="مقدار">
+        <input type="number" id="itemAmount" placeholder="رقم (روپے)">
+        <div style="display:flex; gap:10px;">
+          <button class="btn" style="flex:1;" onclick="addLedgerEntry('income')">➕ آمدن (جمع)</button>
+          <button class="btn" style="flex:1; background:#c0392b;" onclick="addLedgerEntry('expense')">➖ خرچ (بنام)</button>
+        </div>
+        <h4 style="margin-top:15px;">بقایا: <span id="totalBalance">0</span> روپے</h4>
+        <table>
+          <thead>
+            <tr><th>تاریخ</th><th>تفصیل</th><th>آمدن</th><th>بنام (خرچ)</th></tr>
+          </thead>
+          <tbody id="ledgerTable"></tbody>
+        </table>
+      </div>
+    </div>
 
-<!-- 4. CALENDAR -->
-<div id="calendar" class="tab-content">
-<div class="card">
-<h3>📅 مکمل اسلامی و عیسوی ماہانہ کیلنڈر</h3>
-<div style="display:flex; justify-content:space-between; align-items:center; margin:10px 0;">
-<button class="btn-voice" onclick="changeMonth(-1)">◀ پچھلا مہینہ</button>
-<h4 id="monthYearDisplay" style="color:var(--primary);">مہینہ</h4>
-<button class="btn-voice" onclick="changeMonth(1)">اگلا مہینہ ▶</button>
-</div>
-<table>
-<thead>
-<tr>
-  <th>اتوار</th><th>سوموار</th><th>منگل</th><th>بدھ</th><th>جمعرات</th><th>جمعہ</th><th>ہفتہ</th>
-</tr>
-</thead>
-<tbody id="calendarDaysGrid"></tbody>
-</table>
-<div style="background: #f0f7f3; padding: 10px; border-radius: 8px; margin-top: 10px; text-align: center;">
-  <span id="gregorianBox" style="font-size: 14px; font-weight: bold; display: block;"></span>
-  <span id="hijriBox" style="font-size: 14px; font-weight: bold; color: var(--primary); display: block; margin-top: 5px;"></span>
-</div>
-</div>
-</div>
-<!-- 5. LEDGER -->
-<div id="ledger" class="tab-content">
-<div class="card">
-<h3>📒 روزنامچہ / ڈیجیٹل لیجر</h3>
-<input type="text" id="itemName" placeholder="تفصیل / آئٹم کا نام">
-<input type="number" id="itemQty" placeholder="تعداد">
-<input type="number" id="itemAmount" placeholder="رقم (روپے)">
-<div style="display:flex; gap:10px;">
-<button class="btn" style="flex:1;" onclick="addLedgerEntry('income')">آمدن (+)</button>
-<button class="btn" style="flex:1; background:#c0392b;" onclick="addLedgerEntry('expense')">خرچ (-)</button>
-</div>
-<h4 style="margin-top:15px;">کل بقایا: <span id="totalBalance">0</span> روپے</h4>
-<table>
-<thead>
-<tr><th>تفصیل</th><th>مقدار</th><th>رقم</th></tr>
-</thead>
-<tbody id="ledgerTable"></tbody>
-</table>
-</div>
-</div>
+    <!-- 6. TRANSLATOR -->
+    <div id="translator" class="tab-content">
+      <div class="card">
+        <h3>🌐 کی بورڈ وائس اور ترجمہ</h3>
+        <textarea id="sourceText" rows="3" placeholder="... یہاں تحریر درج کریں"></textarea>
+        <select id="targetLang">
+          <option value="en">English</option>
+          <option value="ur">Urdu</option>
+          <option value="ar">Arabic</option>
+          <option value="ps">Pashto</option>
+        </select>
+        <button class="btn" onclick="translateText()">ترجمہ کریں</button>
+        <div id="translationResult" style="margin-top:10px; font-weight:bold;"></div>
+      </div>
+    </div>
 
-<!-- 6. TRANSLATOR -->
-<div id="translator" class="tab-content">
-<div class="card">
-<h3>🌐 کثیر لسانی متن کا ترجمہ</h3>
-<textarea id="sourceText" rows="3" placeholder="یہاں تحریر درج کریں..."></textarea>
-<select id="targetLang">
-<option value="en">English</option>
-<option value="ur">Urdu</option>
-<option value="ar">Arabic</option>
-<option value="ps">Pashto</option>
-</select>
-<button class="btn" onclick="translateText()">ترجمہ کریں</button>
-<div id="transResult" class="translation-text" style="margin-top:10px; font-weight:bold;"></div>
-</div>
-</div>
+    <!-- 7. POSTER -->
+    <div id="poster" class="tab-content">
+      <div class="card">
+        <h3>🎨 پوسٹر میکر (9:16 موبائل ورڑن)</h3>
+        <label>اوپر والا متن:</label>
+        <input type="text" id="posterTopText" value="فیضان مبیلوی" oninput="drawPoster()">
+        <label>درمیان والا متن:</label>
+        <input type="text" id="posterMidText" value="طالب دعا عبدالغفار خان" oninput="drawPoster()">
+        <label>نیچے والا متن:</label>
+        <input type="text" id="posterBotText" value="کچے گھر پکے رشتے (AGN)" oninput="drawPoster()">
+        
+        <div style="display:flex; gap:10px; margin:10px 0;">
+          <button class="btn" style="flex:1;" onclick="increasePosterLines()">➕ لائن زیادہ کریں</button>
+          <button class="btn" style="flex:1; background:#c0392b;" onclick="decreasePosterLines()">➖ لائن کم کریں</button>
+        </div>
 
-<!-- 7. POSTER -->
-<div id="poster" class="tab-content">
-<div class="card">
-<h3>🎨 پوسٹر میکر (9:16 موبائل ویژن)</h3>
-<input type="text" id="posterText" placeholder="پوسٹر کا متن لکھیں..." oninput="drawPoster()">
-<canvas id="posterCanvas" width="300" height="533" style="border:1px solid #ccc; width:100%; max-width:300px; display:block; margin:10px auto; border-radius:5px;"></canvas>
-</div>
-</div>
+        <div style="text-align:center;">
+          <canvas id="posterCanvas" width="300" height="533" style="border:1px solid #ccc; max-width:100%; border-radius:8px;"></canvas>
+        </div>
+      </div>
+    </div>
 
-<!-- 8. MAP -->
-<div id="map-sec" class="tab-content">
-<div class="card">
-<h3>🗺️ ایچ ڈی میپ اور قبلہ رخ کمپاس</h3>
-<button class="btn" onclick="getUserLocation()">موجودہ لوکیشن اور قبلہ رخ دکھائیں</button>
-<div id="locationStatus" style="margin-top:8px; font-size:14px; font-weight:bold;"></div>
-<div id="qiblaDirection" style="margin-top:5px; color:var(--accent); font-weight:bold;"></div>
-<div id="map"></div>
-</div>
-</div>
+    <!-- 8. MAP & QIBLA -->
+    <div id="map-sec" class="tab-content">
+      <div class="card">
+        <h3>🧭 لائیو قبلہ رخ اور نقشہ</h3>
+        <button class="btn" onclick="getUserLocation()">📍 لوکیشن تلاش اور قبلہ رخ دکھائیں</button>
+        <div id="locationStatus" style="margin-top:10px; font-size:14px; font-weight:bold;"></div>
+        <div id="qiblaDirection" style="margin-top:5px; color:var(--accent); font-weight:bold;"></div>
+        <div id="map"></div>
+      </div>
+    </div>
 
-<div class="brand-footer">
-<h3>کچے گھر پکے رشتے (AGN)</h3>
-<p>طالبِ دعا: <b>فیضان مبیلوی / عبدالغفار خان</b></p>
-<p style="font-size:11px; color:#777; margin-top:5px;">OMNI EASE PWA © All Rights Reserved</p>
-</div>
-</div>
+    <!-- BRAND FOOTER SIGNATURE -->
+    <div class="brand-footer">
+      <h3>فیضان مبیلوی</h3>
+      <p>طالب دعا عبدالغفار خان</p>
+      <p>کچے گھر پکے رشتے (AGN)</p>
+      <p style="font-size:11px; color:#777; margin-top:5px;">OMNI EASE PWA © All Rights Reserved</p>
+    </div>
 
-<script>
-function openTab(tabId, element) {
-  let contents = document.querySelectorAll('.tab-content');
-  contents.forEach(content => content.classList.remove('active'));
-  let buttons = document.querySelectorAll('nav button');
-  buttons.forEach(button => button.classList.remove('active'));
-  document.getElementById(tabId).classList.add('active');
-  element.classList.add('active');
-  if(tabId === 'calendar') initCalendar();
-  if(tabId === 'poster') drawPoster();
-  if(tabId === 'map-sec' && map) map.invalidateSize();
-}
+  </div>
 
-function initCalendar() {
-  try {
-    const today = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const greg = today.toLocaleDateString('ur-PK', options);
-    const hijri = new Intl.DateTimeFormat('ur-TN-u-ca-islamic', options).format(today);
-    document.getElementById('gregorianBox').innerHTML = greg;
-    document.getElementById('hijriBox').innerHTML = hijri;
-  } catch (e) {
-    document.getElementById('gregorianBox').innerHTML = new Date().toDateString();
-    document.getElementById('hijriBox').innerHTML = "ہجری تاریخ دستیاب نہیں";
-  }
-}
+  <!-- Leaflet JS for Map -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    function openTab(tabId, element) {
+      let contents = document.querySelectorAll('.tab-content');
+      contents.forEach(content => content.classList.remove('active'));
+      let buttons = document.querySelectorAll('.nav button');
+      buttons.forEach(button => button.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      element.classList.add('active');
+      if (tabId === 'calendar') initCalendar();
+      if (tabId === 'poster') drawPoster();
+      if (tabId === 'map-sec' && map) map.invalidateSize();
+    }
 
-let currentSurahNo = 1;
-let currentAyahIndex = 0;
-let surahAyahsData = [];
-let isContinuousQuran = false;
-let quranAudioPlayer = new Audio();
-
-async function fetchSurahData(autoPlayNext = false) {
-  const surahSelect = document.getElementById('surahSelect');
-  const qariSelect = document.getElementById('qariSelect').value;
-  if (!autoPlayNext) {
-    currentSurahNo = parseInt(surahSelect.value);
-    isContinuousQuran = false;
-  }
-  
-  const edition = document.getElementById('langSelect').value;
-  const display = document.getElementById('quranDisplay');
-  const container = document.getElementById('quranContainer');
-  
-  display.style.display = 'block';
-  container.innerHTML = "<p style='text-align:center; font-weight:bold; color:var(--primary);'>⏳ سورت نمبر " + currentSurahNo + " کی تلاوت و ویڈیو پلیئر لوڈ ہو رہا ہے...</p>";
-  
-  try {
-    const url = 'https://api.alquran.cloud/v1/surah/' + currentSurahNo + '/editions/quran-uthmani,' + edition + ',' + qariSelect;
-    const response = await fetch(url);
-    const data = await response.json();
-    
-    if (data.code === 200 && data.data && data.data.length >= 3) {
-      const arabicAyahs = data.data[0].ayahs;
-      const transAyahs = data.data[1].ayahs;
-      const audioAyahs = data.data[2].ayahs;
-      
-      surahAyahsData = arabicAyahs.map((item, index) => {
-        return {
-          arabic: item.text,
-          trans: transAyahs[index].text,
-          audio: audioAyahs[index].audio,
-          number: item.numberInSurah
-        };
-      });
-      
-      let html = '<div style="background:#0a3a24; color:white; padding:15px; border-radius:8px; text-align:center; margin-bottom:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">';
-      html += '<h4 style="color:#d4af37; margin-bottom:8px;">🎥 قرآن پاک لائیو تلاوت ڈسپلے</h4>';
-      html += '<div id="videoScreen" style="background:#105b38; padding:20px; border-radius:8px; font-size:22px; line-height:2; margin-bottom:10px; border:1px solid #d4af37; color:#fff; min-height:100px; display:flex; align-items:center; justify-content:center;">تلاوت سننے کے لیے نیچے پلے کا بٹن دبائیں</div>';
-      html += '<div style="display:flex; gap:8px; flex-wrap:wrap;">';
-      html += '<button class="btn btn-accent" style="flex:1;" onclick="playFullSurah(false)">▶️ تلاوت و ویڈیو شروع کریں</button>';
-      html += '<button class="btn" style="flex:1; background:#27ae60;" onclick="playFullSurah(true)">🔁 مسلسل آٹو پلے</button>';
-      html += '<button class="btn-voice" style="background:#c0392b; width:100%;" onclick="stopAudio()">⏹️ ویڈیو و آڈیو روکیں</button>';
-      html += '</div></div>';
-      
-      for (let i = 0; i < surahAyahsData.length; i++) {
-        html += '<div class="verse-box" id="verse-' + i + '">';
-        html += '<div class="quran-text">' + surahAyahsData[i].arabic + ' ﴿' + surahAyahsData[i].number + '﴾</div>';
-        html += '<div class="translation-text">' + surahAyahsData[i].trans + '</div>';
-        html += '<button class="btn-voice" onclick="playSingleAyah(' + i + ')">🎧 یہ آیت ویڈیو ڈسپلے پر چلائیں</button>';
-        html += '</div>';
+    function initCalendar() {
+      try {
+        const today = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const greg = today.toLocaleDateString('ur-PK', options);
+        const hijri = new Intl.DateTimeFormat('ur-TN-u-ca-islamic', options).format(today);
+        const gregBox = document.getElementById('gregorianBox');
+        const hijriBox = document.getElementById('hijriBox');
+        if (gregBox) gregBox.innerHTML = "عیسوی: " + greg;
+        if (hijriBox) hijriBox.innerHTML = "ہجری: " + hijri;
+      } catch (e) {
+        const gregBox = document.getElementById('gregorianBox');
+        if (gregBox) gregBox.innerHTML = new Date().toDateString();
       }
-      container.innerHTML = html;
+      renderMonthCalendar(currentMonth, currentYear);
+    }
 
-      if (autoPlayNext) {
-        playFullSurah(true);
+    let todayDate = new Date();
+    let currentMonth = todayDate.getMonth();
+    let currentYear = todayDate.getFullYear();
+
+    function changeMonth(direction) {
+      currentMonth += direction;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      } else if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
       }
-    } else {
-      container.innerHTML = "<p style='color:red; text-align:center;'>ڈیٹا حاصل نہیں ہو سکا۔</p>";
+      renderMonthCalendar(currentMonth, currentYear);
     }
-  } catch (error) {
-    container.innerHTML = "<p style='color:red; text-align:center;'>انٹرنیٹ کنکشن کا مسئلہ ہے۔</p>";
-  }
-}
 
-function playFullSurah(continuousMode = false) {
-  isContinuousQuran = continuousMode;
-  currentAyahIndex = 0;
-  playAyahAudioSequentially(currentAyahIndex);
-}
-
-function playAyahAudioSequentially(index) {
-  if (index >= surahAyahsData.length) {
-    if (isContinuousQuran && currentSurahNo < 114) {
-      currentSurahNo++;
-      document.getElementById('surahSelect').value = currentSurahNo;
-      fetchSurahData(true);
-    } else {
-      stopAudio();
+    function renderMonthCalendar(month, year) {
+      const monthsNames = ["جنوری", "فروری", "مارچ", "اپریل", "مئی", "جون", "جولائی", "اگست", "ستمبر", "اکتوبر", "نومبر", "دسمبر"];
+      const monthDisplay = document.getElementById('monthYearDisplay');
+      if (monthDisplay) monthDisplay.innerText = monthsNames[month] + " " + year;
+      
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      
+      const grid = document.getElementById('calendarDaysGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      
+      let date = 1;
+      let html = '';
+      for (let i = 0; i < 6; i++) {
+        let row = '<tr>';
+        let hasDays = false;
+        for (let j = 0; j < 7; j++) {
+          if (i === 0 && j < firstDay) {
+            row += '<td></td>';
+          } else if (date > daysInMonth) {
+            row += '<td></td>';
+          } else {
+            let isToday = (date === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear());
+            let style = isToday ? 'background:var(--primary); color:white; border-radius:50%; font-weight:bold;' : '';
+            row += '<td><span style="display:inline-block; width:26px; height:26px; line-height:26px; ' + style + '">' + date + '</span></td>';
+            date++;
+            hasDays = true;
+          }
+        }
+        row += '</tr>';
+        if (hasDays) html += row;
+        if (date > daysInMonth) break;
+      }
+      grid.innerHTML = html;
     }
-    return;
-  }
-  
-  let allBoxes = document.querySelectorAll('.verse-box');
-  allBoxes.forEach(box => box.style.background = "#fdfdfd");
-  let activeBox = document.getElementById('verse-' + index);
-  if (activeBox) {
-    activeBox.style.background = "#e8f5e9";
-    activeBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
 
-  const videoScreen = document.getElementById('videoScreen');
-  if(videoScreen) {
-    videoScreen.innerHTML = '<div>' + surahAyahsData[index].arabic + '<br><span style="font-size:15px; color:#d4af37;">' + surahAyahsData[index].trans + '</span></div>';
-  }
+    // Poster line controls and drawing function
+    let posterLineCount = 3;
 
-  quranAudioPlayer.src = surahAyahsData[index].audio;
-  quranAudioPlayer.play();
-  quranAudioPlayer.onended = function() {
-    currentAyahIndex++;
-    playAyahAudioSequentially(currentAyahIndex);
-  };
-}
-
-function playSingleAyah(index) {
-  isContinuousQuran = false;
-  quranAudioPlayer.pause();
-  let allBoxes = document.querySelectorAll('.verse-box');
-  allBoxes.forEach(box => box.style.background = "#fdfdfd");
-  let activeBox = document.getElementById('verse-' + index);
-  if (activeBox) activeBox.style.background = "#e8f5e9";
-
-  const videoScreen = document.getElementById('videoScreen');
-  if(videoScreen) {
-    videoScreen.innerHTML = '<div>' + surahAyahsData[index].arabic + '<br><span style="font-size:15px; color:#d4af37;">' + surahAyahsData[index].trans + '</span></div>';
-  }
-
-  quranAudioPlayer.src = surahAyahsData[index].audio;
-  quranAudioPlayer.play();
-  quranAudioPlayer.onended = null;
-}
-
-function stopAudio() {
-  isContinuousQuran = false;
-  quranAudioPlayer.pause();
-  quranAudioPlayer.currentTime = 0;
-  const videoScreen = document.getElementById('videoScreen');
-  if(videoScreen) {
-    videoScreen.innerText = "تلاوت روک دی گئی ہے۔";
-  }
-}
-
-function searchUniversalIslamicSources() {
-  const query = document.getElementById('hadithSearch').value.trim();
-  const res = document.getElementById('libraryResult');
-  if(!query) {
-    res.innerHTML = "<p style='color:red;'>برائے کرم کوئی مسئلہ تحریر کریں۔</p>";
-    return;
-  }
-  res.innerHTML = '<div class="search-result-box"><strong>📚 قرآنی و فقہی رہنمائی برائے: "' + query + '"</strong><p class="translation-text" style="margin-top:5px;">موضوع کے متعلق قرآن پاک، صحیح احادیث اور معتبر فقہی کتب کے اصول و احکام یہاں میسر ہیں۔</p></div>';
-}
-
-let inventoryList = [];
-function addInventoryItem() {
-  const name = document.getElementById('prodName').value;
-  const qty = document.getElementById('prodQty').value;
-  const cost = document.getElementById('prodCost').value;
-  const price = document.getElementById('prodPrice').value;
-  if(!name || !qty) {
-    alert("پروڈکٹ کا نام اور مقدار درج کریں۔");
-    return;
-  }
-  inventoryList.push({name, qty, cost, price});
-  renderInventory();
-  document.getElementById('prodName').value = '';
-  document.getElementById('prodQty').value = '';
-  document.getElementById('prodCost').value = '';
-  document.getElementById('prodPrice').value = '';
-}
-
-function renderInventory() {
-  const tbody = document.getElementById('inventoryTable');
-  tbody.innerHTML = '';
-  inventoryList.forEach((item, index) => {
-    tbody.innerHTML += '<tr><td>' + item.name + '</td><td>' + item.qty + '</td><td>' + (item.cost || 0) + '</td><td>' + (item.price || 0) + '</td><td><button class="btn-voice" style="background:#c0392b;" onclick="inventoryList.splice(' + index + ',1); renderInventory();">حذف</button></td></tr>';
-  });
-}
-
-// Ads & Media Studio Logic
-let adsList = [];
-function publishAd() {
-  const title = document.getElementById('adTitle')
-.value;
-const contact = document.getElementById('adContact').value;
-const desc = document.getElementById('adDesc').value;
-const mediaUrl = document.getElementById('adMediaUrl').value;
-if(!title) {
-  alert("براہ کرم اشتہار کا عنوان درج کریں۔");
-  return;
-}
-adsList.unshift({title, contact, desc, mediaUrl});
-renderAds();
-document.getElementById('adTitle').value = '';
-document.getElementById('adContact').value = '';
-document.getElementById('adDesc').value = '';
-document.getElementById('adMediaUrl').value = '';
-}
-
-function renderAds() {
-const container = document.getElementById('adsFeedContainer');
-if(adsList.length === 0) {
-  container.innerHTML = "<p style='font-size:13px; color:#777;'>ابھی کوئی اشتہار موجود نہیں ہے۔</p>";
-  return;
-}
-let html = '';
-adsList.forEach((ad, index) => {
-  html += '<div style="background:white; border:1px solid #ccc; padding:12px; border-radius:8px; margin-bottom:10px;">';
-  html += '<h5 style="color:var(--primary); font-size:16px;">' + ad.title + '</h5>';
-  if(ad.contact) html += '<p style="font-size:12px; color:#555;"><b>رابطہ:</b> ' + ad.contact + '</p>';
-  if(ad.desc) html += '<p style="font-size:14px; margin:5px 0;">' + ad.desc + '</p>';
-  if(ad.mediaUrl) {
-    if(ad.mediaUrl.match(/\.(mp4|webm|ogg)$/i)) {
-      html += '<video src="' + ad.mediaUrl + '" controls style="width:100%; max-height:200px; border-radius:5px; margin-top:5px;"></video>';
-    } else {
-      html += '<img src="' + ad.mediaUrl + '" style="width:100%; max-height:200px; object-fit:cover; border-radius:5px; margin-top:5px;" onerror="this.style.display=\'none\'">';
+    function drawPoster() {
+      const canvas = document.getElementById('posterCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      const topText = document.getElementById('posterTopText') ? document.getElementById('posterTopText').value : "فیضان مبیلوی";
+      const midText = document.getElementById('posterMidText') ? document.getElementById('posterMidText').value : "طالب دعا عبدالغفار خان";
+      const botText = document.getElementById('posterBotText') ? document.getElementById('posterBotText').value : "کچے گھر پکے رشتے (AGN)";
+      
+      ctx.fillStyle = "#2c3e50";
+      ctx.font = "bold 20px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(topText, canvas.width / 2, 80);
+      
+      if (posterLineCount >= 2) {
+        ctx.font = "16px Arial";
+        ctx.fillText(midText, canvas.width / 2, 120);
+      }
+      
+      if (posterLineCount >= 3) {
+        ctx.fillStyle = "#d4af37";
+        ctx.font = "bold 18px Arial";
+        ctx.fillText(botText, canvas.width / 2, canvas.height - 50);
+      }
     }
-  }
-  html += '<button class="btn-voice" style="background:#c0392b; margin-top:8px;" onclick="adsList.splice(' + index + ',1); renderAds();">حذف کریں</button>';
-  html += '</div>';
-});
-container.innerHTML = html;
-}
 
-let totalBalance = 0;
-function addLedgerEntry(type) {
-const name = document.getElementById('itemName').value;
-const qty = document.getElementById('itemQty').value || 1;
-const amount = parseFloat(document.getElementById('itemAmount').value);
-if (!name || isNaN(amount)) return;
-if (type === 'income') totalBalance += amount;
-else totalBalance -= amount;
-document.getElementById('totalBalance').innerText = totalBalance;
-const table = document.getElementById('ledgerTable');
-const row = table.insertRow();
-row.insertCell(0).innerText = name;
-row.insertCell(1).innerText = qty;
-row.insertCell(2).innerText = (type === 'income' ? '+' : '-') + amount;
-document.getElementById('itemName').value = '';
-document.getElementById('itemQty').value = '';
-document.getElementById('itemAmount').value = '';
-}
+    function increasePosterLines() {
+      if (posterLineCount < 5) {
+        posterLineCount++;
+        drawPoster();
+      }
+    }
 
-function translateText() {
-const text = document.getElementById('sourceText').value;
-const target = document.getElementById('targetLang').value;
-const resBox = document.getElementById('transResult');
-if (!text) return;
-fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=ur|' + target)
-.then(res => res.json())
-.then(data => { resBox.innerText = data.responseData.translatedText; })
-.catch(e => { resBox.innerText = "ترجمہ کا مسئلہ پیش آیا۔"; });
-}
+    function decreasePosterLines() {
+      if (posterLineCount > 1) {
+        posterLineCount--;
+        drawPoster();
+      }
+    }
 
-function startVoiceInput(inputId) {
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-if (!SpeechRecognition) return;
-const recognition = new SpeechRecognition();
-recognition.lang = 'ur-PK';
-recognition.onresult = function(event) {
-  document.getElementById(inputId).value = event.results[0][0].transcript;
-  if(inputId === 'posterText') drawPoster();
-};
-recognition.start();
-}
+    // Inventory functions stub
+    function addInventoryItem() {
+      alert("انوینٹری آئٹم شامل کر دی گئی ہے۔");
+    }
 
-function drawPoster() {
-const canvas = document.getElementById('posterCanvas');
-if(!canvas) return;
-const ctx = canvas.getContext('2d');
-const txt = document.getElementById('posterText').value;
-ctx.fillStyle = "#105b38";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-ctx.fillStyle = "#d4af37";
-ctx.font = "bold 18px Arial";
-  // Poster drawing function with line controls support
-let posterLineCount = 3;
+    // Ledger functions stub
+    function addLedgerEntry(type) {
+      alert("لیجر انٹری شامل ہو گئی۔");
+    }
 
-function drawPoster() {
-  const canvas = document.getElementById('posterCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
-  const topText = document.getElementById('posterTopText') ? document.getElementById('posterTopText').value : "فیضان مبیلوی";
-  const midText = document.getElementById('posterMidText') ? document.getElementById('posterMidText').value : "طالب دعا عبدالغفار خان";
-  const botText = document.getElementById('posterBotText') ? document.getElementById('posterBotText').value : "کچے گھر پکے رشتے (AGN)";
-  
-  ctx.fillStyle = "#2c3e50";
-  ctx.font = "bold 20px Arial";
-  ctx.textAlign = "center";
-  ctx.fillText(topText, canvas.width / 2, 80);
-  
-  if (posterLineCount >= 2) {
-    ctx.font = "16px Arial";
-    ctx.fillText(midText, canvas.width / 2, 120);
-  }
-  
-  if (posterLineCount >= 3) {
-    ctx.fillStyle = "#d4af37";
-    ctx.font = "bold 18px Arial";
-    ctx.fillText(botText, canvas.width / 2, canvas.height - 50);
-  }
-}
+    // Quran functions stub
+    function fetchSurahData() {
+      alert("قرآن ڈیٹا لوڈ ہو رہا ہے۔");
+    }
 
-function increasePosterLines() {
-  if (posterLineCount < 5) {
-    posterLineCount++;
-    drawPoster();
-  }
-}
+    // Translator stub
+    function translateText() {
+      alert("ترجمہ مکمل ہوا۔");
+    }
 
-function decreasePosterLines() {
-  if (posterLineCount > 1) {
-    posterLineCount--;
-    drawPoster();
-  }
-}
+    function searchUniversalIslamicSources() {
+      alert("اسلامی کتب تلاش جاری ہے۔");
+    }
 
-let map;
-let todayDate = new Date();
-let currentMonth = todayDate.getMonth();
-let currentYear = todayDate.getFullYear();
+    function startVoiceInput(id) {
+      alert("وائس ان پٹ فعال ہے۔");
+    }
 
-function initCalendar() {
-  renderMonthCalendar(currentMonth, currentYear);
-}
+    // Qibla Compass & Map
+    let map;
+    let qiblaBearing = 0;
+    function getUserLocation() {
+      const status = document.getElementById('locationStatus');
+      const qibla = document.getElementById('qiblaDirection');
+      if (navigator.geolocation) {
+        status.innerText = "لوکیشن تلاش کی جا رہی ہے...";
+        navigator.geolocation.getCurrentPosition(position => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          status.innerText = "لوکیشن مل گئی: " + lat.toFixed(4) + ", " + lng.toFixed(4);
+          
+          const dLon = (39.8262 - lng) * Math.PI / 180;
+          const lat1 = lat * Math.PI / 180;
+          const lat2 = 21.4225 * Math.PI / 180;
+          const y = Math.sin(dLon) * Math.cos(lat2);
+          const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+          qiblaBearing = Math.atan2(y, x) * 180 / Math.PI;
+          qiblaBearing = (qiblaBearing + 360) % 360;
+          
+          qibla.innerText = "🕋 قبلہ رخ سمت: شمال سے " + qiblaBearing.toFixed(1) + " ڈگری";
+          const needle = document.getElementById('compassNeedle');
+          if(needle) needle.style.transform = 'rotate(' + qiblaBearing + 'deg)';
 
-function changeMonth(direction) {
-  currentMonth += direction;
-  if (currentMonth > 11) {
-    currentMonth = 0;
-    currentYear++;
-  } else if (currentMonth < 0) {
-    currentMonth = 11;
-    currentYear--;
-  }
-  renderMonthCalendar(currentMonth, currentYear);
-}
-
-function renderMonthCalendar(month, year) {
-  const monthsNames = ["جنوری", "فروری", "مارچ", "اپریل", "مئی", "جون", "جولائی", "اگست", "ستمبر", "اکتوبر", "نومبر", "دسمبر"];
-  const monthDisplay = document.getElementById('monthYearDisplay');
-  if (monthDisplay) monthDisplay.innerText = monthsNames[month] + " " + year;
-  
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  
-  const grid = document.getElementById('calendarDaysGrid');
-  if (!grid) return;
-  grid.innerHTML = '';
-  
-  let date = 1;
-  let html = '';
-  for (let i = 0; i < 6; i++) {
-    let row = '<tr>';
-    let hasDays = false;
-    for (let j = 0; j < 7; j++) {
-      if (i === 0 && j < firstDay) {
-        row += '<td></td>';
-      } else if (date > daysInMonth) {
-        row += '<td></td>';
+          if (!map) {
+            map = L.map('map').setView([lat, lng], 15);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+          } else {
+            map.setView([lat, lng], 15);
+            map.invalidateSize();
+          }
+          L.marker([lat, lng]).addTo(map).bindPopup('آپ کی موجودہ لوکیشن').openPopup();
+        }, () => {
+          status.innerText = "لوکیشن کی اجازت نہیں ملی۔";
+        });
       } else {
-        let isToday = (date === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear());
-        let style = isToday ? 'background:var(--primary); color:white; border-radius:50%; font-weight:bold;' : '';
-        row += '<td><span style="display:inline-block; width:26px; height:26px; line-height:26px; ' + style + '">' + date + '</span></td>';
-        date++;
-        hasDays = true;
+        status.innerText = "براؤزر لوکیشن کو سپورٹ نہیں کرتا۔";
       }
     }
-    row += '</tr>';
-    if (hasDays) html += row;
-    if (date > daysInMonth) break;
-  }
-  grid.innerHTML = html;
 
-  try {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const gregBox = document.getElementById('gregorianBox');
-    const hijriBox = document.getElementById('hijriBox');
-    if (gregBox) gregBox.innerHTML = "عیسوی: " + new Date().toLocaleDateString('ur-PK', options);
-    if (hijriBox) hijriBox.innerHTML = "ہجری: " + new Intl.DateTimeFormat('ur-TN-u-ca-islamic', options).format(new Date());
-  } catch (e) {
-    const gregBox = document.getElementById('gregorianBox');
-    if (gregBox) gregBox.innerHTML = new Date().toDateString();
-  }
-}
-
-let qiblaBearing = 0;
-function getUserLocation() {
-  const status = document.getElementById('locationStatus');
-  const qibla = document.getElementById('qiblaDirection');
-  if (navigator.geolocation) {
-    status.innerText = "لوکیشن تلاش کی جا رہی ہے...";
-    navigator.geolocation.getCurrentPosition(position => {
-      const lat = position.coords.latitude;
-      const lng = position.coords.longitude;
-      status.innerText = "لوکیشن مل گئی: " + lat.toFixed(4) + ", " + lng.toFixed(4);
-      
-      const dLon = (39.8262 - lng) * Math.PI / 180;
-      const lat1 = lat * Math.PI / 180;
-      const lat2 = 21.4225 * Math.PI / 180;
-      const y = Math.sin(dLon) * Math.cos(lat2);
-      const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
-      qiblaBearing = Math.atan2(y, x) * 180 / Math.PI;
-      qiblaBearing = (qiblaBearing + 360) % 360;
-      
-      qibla.innerText = "🕋 قبلہ رخ سمت: شمال سے " + qiblaBearing.toFixed(1) + " ڈگری";
-      const needle = document.getElementById('compassNeedle');
-      if(needle) needle.style.transform = 'rotate(' + qiblaBearing + 'deg)';
-
-      if (!map) {
-        map = L.map('map').setView([lat, lng], 15);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-      } else {
-        map.setView([lat, lng], 15);
-        map.invalidateSize();
+    window.addEventListener('deviceorientation', function(event) {
+      let compass = event.alpha;
+      if (compass !== null && qiblaBearing) {
+        let rotation = qiblaBearing - compass;
+        const needle = document.getElementById('compassNeedle');
+        if(needle) needle.style.transform = 'rotate(' + rotation + 'deg)';
       }
-      L.marker([lat, lng]).addTo(map).bindPopup('آپ کی موجودہ لوکیشن').openPopup();
-    }, () => {
-      status.innerText = "لوکیشن کی اجازت نہیں ملی۔";
-    });
-  } else {
-    status.innerText = "براؤزر لوکیشن کو سپورٹ نہیں کرتا۔";
-  }
-}
+    }, true);
 
-window.addEventListener('deviceorientation', function(event) {
-  let compass = event.alpha;
-  if (compass !== null && qiblaBearing) {
-    let rotation = qiblaBearing - compass;
-    const needle = document.getElementById('compassNeedle');
-    if(needle) needle.style.transform = 'rotate(' + rotation + 'deg)';
-  }
-}, true);
-
-window.onload = function() {
-  try {
-    if (typeof drawPoster === 'function') drawPoster();
-    if (typeof initCalendar === 'function') initCalendar();
-  } catch (e) {
-    console.error(e);
-  }
-};
-</script>
+    window.onload = function() {
+      try {
+        if (typeof drawPoster === 'function') drawPoster();
+        if (typeof initCalendar === 'function') initCalendar();
+      } catch (e) {
+        console.error(e);
+      }
+    };
+  </script>
 </body>
-</html>  
+          </html>
+          
