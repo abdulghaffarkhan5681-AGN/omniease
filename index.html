@@ -307,27 +307,29 @@
       </div>
     </div>
 
-    <!-- 5. CALENDAR -->
-    <div id="calendar" class="tab-content">
-      <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin:10px 0;">
-          <button class="btn" style="width:auto; padding:5px 10px;" onclick="changeMonth(-1)">◀ پچھلا</button>
-          <h3 id="monthYearDisplay" style="margin:0;"></h3>
-          <button class="btn" style="width:auto; padding:5px 10px;" onclick="changeMonth(1)">اگلا ▶</button>
+<!-- 5. CALENDAR -->
+<div id="calendar" class="tab-content">
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 10px 0;">
+            <button class="btn" style="width: auto; padding: 5px 10px;" onclick="changeMonth(-1)">⬅️ پچھلا</button>
+            <h3 id="monthYearDisplay" style="margin: 0;"></h3>
+            <button class="btn" style="width: auto; padding: 5px 10px;" onclick="changeMonth(1)">اگلا ➡️</button>
         </div>
         <table>
-          <thead>
-            <tr><th>اتوار</th><th>پیر</th><th>منگل</th><th>بدھ</th><th>جمعرات</th><th>جمعہ</th><th>ہفتہ</th></tr>
-          </thead>
-          <tbody id="calendarDaysGrid"></tbody>
+            <thead>
+                <tr><th>اتوار</th><th>پیر</th><th>منگل</th><th>بدھ</th><th>جمعرات</th><th>جمعہ</th><th>ہفتہ</th></tr>
+            </thead>
+            <tbody id="calendarDaysGrid"></tbody>
         </table>
         <div style="background:#f0f7f3; padding:10px; border-radius:8px; margin-top:10px; text-align:center;">
-          <span id="gregorianBox" style="font-size:14px; font-weight:bold; display:block;"></span>
-          <span id="hijriBox" style="font-size:14px; font-weight:bold; color:var(--accent); display:block; margin-top:5px;"></span>
+            <span id="gregorianBox" style="font-size:14px; display:block;"></span>
+            <span id="hijriBox" style="font-size:14px; font-weight:bold; color:var(--accent); display:block; margin-top:5px;"></span>
         </div>
-      </div>
-        <!-- 6. QIBLA & COMPASS SECTION -->
-<div id="map-sec" style="display: none; padding: 20px; background: #fff; border-radius: 10px; margin-top: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+    </div>
+</div>
+
+<!-- 6. QIBLA & COMPASS SECTION -->
+<div id="map-sec" class="tab-content" style="display: none; padding: 20px; background: #fff; border-radius: 10px; margin-top: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
     <h3 style="color: #1b4d3e; margin-bottom: 10px;">🧭 قبلہ رخ اور کمپاس</h3>
     <p style="color: #666; font-size: 14px;">موبাইল کی لوکیشن اور کمپاس کی مدد سے درست سمت معلوم کریں</p>
     
@@ -338,31 +340,28 @@
     </div>
     
     <button onclick="getUserLocation()" style="background: #1b4d3e; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top: 10px;">لوکیشن ریفریش کریں</button>
-    
-    </div>
+</div>
 
-    <!-- 6. LEDGER -->
-    <div id="ledger" class="tab-content">
-      <div class="card">
-        <h3>📒 روزنامچہ / ڈیجیٹل لیجر</h3>
-        <input type="text" id="itemName" placeholder="تفصیل / کام یا ذرائع">
+<!-- 6. LEDGER -->
+<div id="ledger" class="tab-content">
+    <div class="card">
+        <h3 id="ledgerTitle">📓 ڈیجیٹل لیجر / روزنامچہ</h3>
+        <input type="text" id="itemName" placeholder="تفصیل / کام یا رقم">
         <input type="number" id="itemQty" placeholder="مقدار">
         <input type="number" id="itemAmount" placeholder="رقم (روپے)">
-        <div style="display:flex; gap:10px;">
-          <button class="btn" style="flex:1;" onclick="addLedgerEntry('income')">➕ آمدن (جمع)</button>
-          <button class="btn" style="flex:1; background:#c0392b;" onclick="addLedgerEntry('expense')">➖ خرچ (بنام)</button>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn" style="flex: 1;" onclick="addLedgerEntry('income')">➕ آمدن (جمع)</button>
+            <button class="btn" style="flex: 1; background:#c0392b;" onclick="addLedgerEntry('expense')">➖ خرچ (نام)</button>
         </div>
-        <h4 style="margin-top:15px;">بقایا: <span id="totalBalance">0</span> روپے</h4>
+        <h4 style="margin-top: 15px;">بقایا: <span id="totalBalance">0</span> روپے</h4>
         <table>
-          <thead>
-            <tr><th>تاریخ</th><th>تفصیل</th><th>آمدن</th><th>بنام (خرچ)</th></tr>
-          </thead>
-          <tbody id="ledgerTable"></tbody>
+            <thead>
+                <tr><th>تاریخ</th><th>تفصیل</th><th>مقدار</th><th>رقم (جمع)</th><th>رقم (خرچ)</th></tr>
+            </thead>
+            <tbody id="ledgerTable"></tbody>
         </table>
-      </div>
     </div>
-
-    <!-- 7. GLOBAL LIVE CHAT & TRANSLATOR MODULE -->
+</div>
     <div id="translator" class="tab-content">
       <div class="card">
         <h3>🌐 لائیو ملٹی لسانی چیٹ اور ٹرانسلیٹر</h3>
