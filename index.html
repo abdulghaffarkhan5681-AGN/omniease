@@ -147,7 +147,246 @@ padding: 15px;
 margin-bottom: 12px;
 border-radius: 8px;
 }
-// Global Variables for Quran Video & Audio Player
+.search-result-box {
+background: #f9fbf9;
+border: 1px solid #cce0d5;
+padding: 12px;
+margin-top: 10px;
+border-radius: 6px;
+text-align: right;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 10px;
+}
+table, th, td {
+border: 1px solid #ddd;
+padding: 8px;
+text-align: center;
+font-size: 13px;
+}
+th {
+background-color: var(--primary);
+color: white;
+}
+.brand-footer {
+text-align: center;
+margin-top: 30px;
+padding: 15px;
+background: #e9f0ec;
+border-radius: 8px;
+border: 1px solid #cce0d5;
+}
+.brand-footer h3 {
+color: var(--primary);
+font-size: 16px;
+}
+.brand-footer p {
+font-size: 13px;
+color: #555;
+}
+#map {
+height: 280px;
+border-radius: 8px;
+margin-top: 10px;
+}
+</style>
+</head>
+<body>
+<header>
+<h1>☀ OMNI EASE - امنی ایز ☀</h1>
+<p>آپ کا اپنا ڈیجیٹل، بزنس اور روحانی مرکز</p>
+</header>
+
+<nav>
+<button class="active" onclick="openTab('quran', this)">📖 قرآن پاک</button>
+<button onclick="openTab('library', this)">📚 اسلامی کتب</button>
+<button onclick="openTab('business', this)">💼 بزنس حب (AGN)</button>
+<button onclick="openTab('calendar', this)">📅 کیلنڈر</button>
+<button onclick="openTab('ledger', this)">📒 لیجر</button>
+<button onclick="openTab('translator', this)">🌐 ترجمہ</button>
+<button onclick="openTab('poster', this)">🎨 پوسٹر</button>
+<button onclick="openTab('map-sec', this)">🗺️ ایچ ڈی میپ</button>
+</nav>
+
+<div class="container">
+
+<!-- 1. QURAN MODULE -->
+<div id="quran" class="tab-content active">
+<div class="card">
+<h3>📖 قرآن مجید و تلاوت (مختلف قراء اور تراجم)</h3>
+<label>سورت کا انتخاب کریں:</label>
+<select id="surahSelect">
+<option value="1">1. الفاتحة</option>
+<option value="2">2. البقرة</option>
+<option value="36">36. يس</option>
+<option value="55">55. الرحمن</option>
+<option value="67">67. الملك</option>
+<option value="112">112. الإخلاص</option>
+<option value="113">113. الفلق</option>
+<option value="114">114. الناس</option>
+</select>
+
+<label>قاری کا انتخاب کریں:</label>
+<select id="qariSelect">
+<option value="ar.alafasy">شیخ مشاری راشد العفاسی</option>
+<option value="ar.abdulbasit">قاری عبدالباسط عبدالصمد</option>
+<option value="ar.sudais">شيخ عبدالرحمن السدیس</option>
+<option value="ar.minshawi">قاری محمد صدیق المنشاوی</option>
+<option value="ar.shuraym">شيخ سعود الشريم</option>
+<option value="ar.ghamdi">سعد الغامدی</option>
+</select>
+
+<label>زبان اور مترجم منتخب کریں:</label>
+<select id="langSelect">
+<option value="ur.jalandhry">اردو - فتح محمد جالندھری</option>
+<option value="ur.junagarhi">اردو - مولانا جوناگڑھی</option>
+<option value="en.sahih">English - Sahih International</option>
+<option value="ps.abdulwali">پشتو - عبدالولی</option>
+<option value="ar.jalalayn">عربی - تفسير الجلالين</option>
+</select>
+
+<button class="btn" onclick="fetchSurahData(false)">تلاوت و ویڈیو لوڈ کریں</button>
+</div>
+<div id="quranDisplay" class="card" style="display:none;">
+<div id="quranContainer"></div>
+</div>
+</div>
+
+<!-- 2. ISLAMIC LIBRARY -->
+<div id="library" class="tab-content">
+<div class="card">
+<h3>📚 جامع اسلامی سرچ اور فقہی کتب</h3>
+<div style="display:flex; gap:5px;">
+<input type="text" id="hadithSearch" placeholder="مسئلہ درج کریں (مثلاً: نماز، زکوٰة، وضو)...">
+<button class="btn-voice" onclick="startVoiceInput('hadithSearch')">🎙️ بولیں</button>
+</div>
+<button class="btn btn-accent" onclick="searchUniversalIslamicSources()">🔍 قرآن و سنت اور فقہ میں تلاش کریں</button>
+<div id="libraryResult" style="margin-top:15px;"></div>
+</div>
+</div>
+
+<!-- 3. BUSINESS HUB -->
+<div id="business" class="tab-content">
+<div class="card" style="border-right-color: var(--accent);">
+<h3>💼 کچے گھر پکے رشتے (AGN) - بزنس اینڈ انوینٹری حب</h3>
+<p style="font-size:13px; color:#555; margin-bottom:10px;">کپڑے کا کاروبار، فوڈ کارٹ اسٹال، ملٹی پرائس اور اینٹی تھیفٹ اسٹاک مینجمنٹ سسٹمز۔</p>
+<label><b>نیا آئٹم / پروڈکٹ شامل کریں (انوینٹری):</b></label>
+<input type="text" id="prodName" placeholder="پروڈکٹ کا نام">
+<input type="number" id="prodQty" placeholder="تعداد / مقدار">
+<input type="number" id="prodCost" placeholder="خرید قیمت">
+<input type="number" id="prodPrice" placeholder="فروخت قیمت">
+<button class="btn" onclick="addInventoryItem()">➕ اسٹاک میں شامل کریں</button>
+<h4 style="margin-top:15px; color:var(--primary);">📦 موجودہ اسٹاک اور اینٹی تھیفٹ آڈٹ لسٹ:</h4>
+<table>
+<thead>
+<tr><th>آئٹم</th><th>تعداد</th><th>خرید قیمت</th><th>فروخت قیمت</th><th>عمل</th></tr>
+</thead>
+<tbody id="inventoryTable"></tbody>
+</table>
+</div>
+</div>
+
+<!-- 4. CALENDAR -->
+<div id="calendar" class="tab-content">
+<div class="card">
+<h3>📅 اسلامی و عیسوی کیلنڈر</h3>
+<div id="calendarBox" style="font-size: 18px; font-weight: bold; text-align: center; color: var(--primary); margin-bottom: 10px;">
+تاریخ لوڈ ہو رہی ہے...
+</div>
+</div>
+</div>
+
+<!-- 5. LEDGER -->
+<div id="ledger" class="tab-content">
+<div class="card">
+<h3>📒 روزنامچہ / ڈیجیٹل لیجر</h3>
+<input type="text" id="itemName" placeholder="تفصیل / آئٹم کا نام">
+<input type="number" id="itemQty" placeholder="تعداد">
+<input type="number" id="itemAmount" placeholder="رقم (روپے)">
+<div style="display:flex; gap:10px;">
+<button class="btn" style="flex:1;" onclick="addLedgerEntry('income')">آمدن (+)</button>
+<button class="btn" style="flex:1; background:#c0392b;" onclick="addLedgerEntry('expense')">خرچ (-)</button>
+</div>
+<h4 style="margin-top:15px;">کل بقایا: <span id="totalBalance">0</span> روپے</h4>
+<table>
+<thead>
+<tr><th>تفصیل</th><th>مقدار</th><th>رقم</th></tr>
+</thead>
+<tbody id="ledgerTable"></tbody>
+</table>
+</div>
+</div>
+
+<!-- 6. TRANSLATOR -->
+<div id="translator" class="tab-content">
+<div class="card">
+<h3>🌐 کثیر لسانی متن کا ترجمہ</h3>
+<textarea id="sourceText" rows="3" placeholder="یہاں تحریر درج کریں..."></textarea>
+<select id="targetLang">
+<option value="en">English</option>
+<option value="ur">Urdu</option>
+<option value="ar">Arabic</option>
+<option value="ps">Pashto</option>
+</select>
+<button class="btn" onclick="translateText()">ترجمہ کریں</button>
+<div id="transResult" class="translation-text" style="margin-top:10px; font-weight:bold;"></div>
+</div>
+</div>
+
+<!-- 7. POSTER -->
+<div id="poster" class="tab-content">
+<div class="card">
+<h3>🎨 پوسٹر میکر (9:16 موبائل ویژن)</h3>
+<input type="text" id="posterText" placeholder="پوسٹر کا متن لکھیں..." oninput="drawPoster()">
+<canvas id="posterCanvas" width="300" height="533" style="border:1px solid #ccc; width:100%; max-width:300px; display:block; margin:10px auto; border-radius:5px;"></canvas>
+</div>
+</div>
+
+<!-- 8. MAP -->
+<div id="map-sec" class="tab-content">
+<div class="card">
+<h3>🗺️ ایچ ڈی میپ اور قبلہ رخ کمپاس</h3>
+<button class="btn" onclick="getUserLocation()">موجودہ لوکیشن اور قبلہ رخ دکھائیں</button>
+<div id="locationStatus" style="margin-top:8px; font-size:14px; font-weight:bold;"></div>
+<div id="qiblaDirection" style="margin-top:5px; color:var(--accent); font-weight:bold;"></div>
+<div id="map"></div>
+</div>
+</div>
+
+<div class="brand-footer">
+<h3>کچے گھر پکے رشتے (AGN)</h3>
+<p>طالبِ دعا: <b>فیضان مبیلوی / عبدالغفار خان</b></p>
+<p style="font-size:11px; color:#777; margin-top:5px;">OMNI EASE PWA © All Rights Reserved</p>
+</div>
+</div>
+
+<script>
+function openTab(tabId, element) {
+let contents = document.querySelectorAll('.tab-content');
+contents.forEach(content => content.classList.remove('active'));
+let buttons = document.querySelectorAll('nav button');
+buttons.forEach(button => button.classList.remove('active'));
+document.getElementById(tabId).classList.add('active');
+element.classList.add('active');
+if(tabId === 'calendar') initCalendar();
+if(tabId === 'poster') drawPoster();
+if(tabId === 'map-sec' && map) map.invalidateSize();
+}
+
+function initCalendar() {
+try {
+const today = new Date();
+const options = { year: 'numeric', month: 'long', day: 'numeric' };
+const greg = today.toLocaleDateString('ur-PK', options);
+const hijri = new Intl.DateTimeFormat('ur-TN-u-ca-islamic', options).format(today);
+document.getElementById('calendarBox').innerHTML = "عیسوی: " + greg + "<br>ہجری: " + hijri;
+} catch (e) {
+document.getElementById('calendarBox').innerHTML = new Date().toDateString();
+}
+}
+
 let currentSurahNo = 1;
 let currentAyahIndex = 0;
 let surahAyahsData = [];
@@ -167,7 +406,7 @@ async function fetchSurahData(autoPlayNext = false) {
   const container = document.getElementById('quranContainer');
   
   display.style.display = 'block';
-  container.innerHTML = `<p style='text-align:center; font-weight:bold; color:var(--primary);'>⏳ سورت نمبر ${currentSurahNo} کی تلاوت و ویڈیو پلیئر لوڈ ہو رہا ہے...</p>`;
+  container.innerHTML = "<p style='text-align:center; font-weight:bold; color:var(--primary);'>⏳ سورت نمبر " + currentSurahNo + " کی تلاوت و ویڈیو پلیئر لوڈ ہو رہا ہے...</p>";
   
   try {
     const url = 'https://api.alquran.cloud/v1/surah/' + currentSurahNo + '/editions/quran-uthmani,' + edition + ',' + qariSelect;
@@ -188,13 +427,12 @@ async function fetchSurahData(autoPlayNext = false) {
         };
       });
       
-      // Video & Audio Display Player Box
       let html = '<div style="background:#0a3a24; color:white; padding:15px; border-radius:8px; text-align:center; margin-bottom:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">';
-      html += '<h4 style="color:var(--accent); margin-bottom:8px;">🎥 قرآن پاک لائیو تلاوت ڈسپلے</h4>';
-      html += '<div id="videoScreen" style="background:#105b38; padding:20px; border-radius:8px; font-size:22px; line-height:2; margin-bottom:10px; border:1px solid var(--accent); color:#fff; min-height:100px; display:flex; align-items:center; justify-content:center;">تلاوت سننے کے لیے نیچے پلے کا بٹن دبائیں</div>';
+      html += '<h4 style="color:#d4af37; margin-bottom:8px;">🎥 قرآن پاک لائیو تلاوت ڈسپلے</h4>';
+      html += '<div id="videoScreen" style="background:#105b38; padding:20px; border-radius:8px; font-size:22px; line-height:2; margin-bottom:10px; border:1px solid #d4af37; color:#fff; min-height:100px; display:flex; align-items:center; justify-content:center;">تلاوت سننے کے لیے نیچے پلے کا بٹن دبائیں</div>';
       html += '<div style="display:flex; gap:8px; flex-wrap:wrap;">';
       html += '<button class="btn btn-accent" style="flex:1;" onclick="playFullSurah(false)">▶️ تلاوت و ویڈیو شروع کریں</button>';
-      html += '<button class="btn" style="flex:1; background:#27ae60;" onclick="playFullSurah(true)">🔁 مسلسل اٹو پلے</button>';
+      html += '<button class="btn" style="flex:1; background:#27ae60;" onclick="playFullSurah(true)">🔁 مسلسل آٹو پلے</button>';
       html += '<button class="btn-voice" style="background:#c0392b; width:100%;" onclick="stopAudio()">⏹️ ویڈیو و آڈیو روکیں</button>';
       html += '</div></div>';
       
@@ -244,7 +482,6 @@ function playAyahAudioSequentially(index) {
     activeBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
-  // Update Video Screen Text Display
   const videoScreen = document.getElementById('videoScreen');
   if(videoScreen) {
     videoScreen.innerHTML = '<div>' + surahAyahsData[index].arabic + '<br><span style="font-size:15px; color:#d4af37;">' + surahAyahsData[index].trans + '</span></div>';
@@ -284,268 +521,6 @@ function stopAudio() {
   if(videoScreen) {
     videoScreen.innerText = "تلاوت روک دی گئی ہے۔";
   }
-  }
-<button class="btn" style="flex:1;" onclick="fetchSurahData(false)">تلاوت لوڈ کریں</button>
-</div>
-</div>
-<div id="quranDisplay" class="card" style="display:none;">
-<div id="quranContainer"></div>
-</div>
-</div>
-
-<!-- 2. ISLAMIC LIBRARY & FIQH -->
-<div id="library" class="tab-content">
-<div class="card">
-<h3>📚 جامع اسلامی سرچ اور فقہی کتب</h3>
-<div style="display:flex; gap:5px;">
-<input type="text" id="hadithSearch" placeholder="مسئلہ درج کریں (مثلاً: نماز، زکوٰة، وضو)...">
-<button class="btn-voice" onclick="startVoiceInput('hadithSearch')">🎙️ بولیں</button>
-</div>
-<button class="btn btn-accent" onclick="searchUniversalIslamicSources()">🔍 قرآن و سنت اور فقہ میں تلاش کریں</button>
-<div id="libraryResult" style="margin-top:15px;"></div>
-</div>
-</div>
-
-<!-- 3. BUSINESS & INVENTORY HUB (AGN Ventures) -->
-<div id="business" class="tab-content">
-<div class="card" style="border-right-color: var(--accent);">
-<h3>💼 کچے گھر پکے رشتے (AGN) - بزنس اینڈ انوینٹری حب</h3>
-<p style="font-size:13px; color:#555; margin-bottom:10px;">کپڑے کا کاروبار، فوڈ کارٹ اسٹال، ملٹی پرائس اور اینٹی تھیفٹ اسٹاک مینجمنٹ سسٹمز۔</p>
-
-<label><b>نیا آئٹم / پروڈکٹ شامل کریں (انوینٹری):</b></label>
-<input type="text" id="prodName" placeholder="پروڈکٹ کا نام (مثلاً: لان سوٹ / فرائز کارٹ)">
-<input type="number" id="prodQty" placeholder="تعداد / مقدار (Stock Qty)">
-<input type="number" id="prodCost" placeholder="خرید قیمت (Cost Price)">
-<input type="number" id="prodPrice" placeholder="فروخت قیمت (Retail / Wholesale Price)">
-<button class="btn" onclick="addInventoryItem()">➕ اسٹاک میں شامل کریں</button>
-
-<h4 style="margin-top:15px; color:var(--primary);">📦 موجودہ اسٹاک اور اینٹی تھیفٹ آڈٹ لسٹ:</h4>
-<table>
-<thead>
-<tr><th>آئٹم</th><th>تعداد</th><th>خرید قیمت</th><th>فروخت قیمت</th><th>عمل</th></tr>
-</thead>
-<tbody id="inventoryTable"></tbody>
-</table>
-</div>
-</div>
-
-<!-- 4. CALENDAR MODULE -->
-<div id="calendar" class="tab-content">
-<div class="card">
-<h3>📅 اسلامی و عیسوی کیلنڈر</h3>
-<div id="calendarBox" style="font-size: 18px; font-weight: bold; text-align: center; color: var(--primary); margin-bottom: 10px;">
-تاریخ لوڈ ہو رہی ہے...
-</div>
-</div>
-</div>
-
-<!-- 5. LEDGER MODULE -->
-<div id="ledger" class="tab-content">
-<div class="card">
-<h3>📒 روزنامچہ / ڈیجیٹل لیجر</h3>
-<input type="text" id="itemName" placeholder="تفصیل / آئٹم کا نام">
-<input type="number" id="itemQty" placeholder="تعداد">
-<input type="number" id="itemAmount" placeholder="رقم (روپے)">
-<div style="display:flex; gap:10px;">
-<button class="btn" style="flex:1;" onclick="addLedgerEntry('income')">آمدن (+)</button>
-<button class="btn" style="flex:1; background:#c0392b;" onclick="addLedgerEntry('expense')">خرچ (-)</button>
-</div>
-<h4 style="margin-top:15px;">کل بقایا: <span id="totalBalance">0</span> روپے</h4>
-<table>
-<thead>
-<tr><th>تفصیل</th><th>مقدار</th><th>رقم</th></tr>
-</thead>
-<tbody id="ledgerTable"></tbody>
-</table>
-</div>
-</div>
-
-<!-- 6. TRANSLATOR MODULE -->
-<div id="translator" class="tab-content">
-<div class="card">
-<h3>🌐 کثیر لسانی متن کا ترجمہ</h3>
-<textarea id="sourceText" rows="3" placeholder="یہاں تحریر درج کریں..."></textarea>
-<select id="targetLang">
-<option value="en">English</option>
-<option value="ur">Urdu</option>
-<option value="ar">Arabic</option>
-<option value="ps">Pashto</option>
-</select>
-<button class="btn" onclick="translateText()">ترجمہ کریں</button>
-<div id="transResult" class="translation-text" style="margin-top:10px; font-weight:bold;"></div>
-</div>
-</div>
-
-<!-- 7. POSTER MAKER MODULE -->
-<div id="poster" class="tab-content">
-<div class="card">
-<h3>🎨 پوسٹر میکر (9:16 موبائل ویژن)</h3>
-<input type="text" id="posterText" placeholder="پوسٹر کا متن لکھیں..." oninput="drawPoster()">
-<canvas id="posterCanvas" width="300" height="533" style="border:1px solid #ccc; width:100%; max-width:300px; display:block; margin:10px auto; border-radius:5px;"></canvas>
-</div>
-</div>
-
-<!-- 8. HD MAP & QIBLA COMPASS MODULE -->
-<div id="map-sec" class="tab-content">
-<div class="card">
-<h3>🗺️ ایچ ڈی میپ اور قبلہ رخ کمپاس</h3>
-<button class="btn" onclick="getUserLocation()">موجودہ لوکیشن اور قبلہ رخ دکھائیں</button>
-<div id="locationStatus" style="margin-top:8px; font-size:14px; font-weight:bold;"></div>
-<div id="qiblaDirection" style="margin-top:5px; color:var(--accent); font-weight:bold;"></div>
-<div id="map"></div>
-</div>
-</div>
-
-<!-- BRAND FOOTER -->
-<div class="brand-footer">
-<h3>کچے گھر پکے رشتے (AGN)</h3>
-<p>طالبِ دعا: <b>فیضان مبیلوی / عبدالغفار خان</b></p>
-<p style="font-size:11px; color:#777; margin-top:5px;">OMNI EASE PWA © All Rights Reserved</p>
-</div>
-</div>
-
-<script>
-function openTab(tabId, element) {
-let contents = document.querySelectorAll('.tab-content');
-contents.forEach(content => content.classList.remove('active'));
-let buttons = document.querySelectorAll('nav button');
-buttons.forEach(button => button.classList.remove('active'));
-document.getElementById(tabId).classList.add('active');
-element.classList.add('active');
-if(tabId === 'calendar') initCalendar();
-if(tabId === 'poster') drawPoster();
-}
-
-function initCalendar() {
-try {
-const today = new Date();
-const options = { year: 'numeric', month: 'long', day: 'numeric' };
-const greg = today.toLocaleDateString('ur-PK', options);
-const hijri = new Intl.DateTimeFormat('ur-TN-u-ca-islamic', options).format(today);
-document.getElementById('calendarBox').innerHTML = `عیسوی: ${greg} <br> ہجری: ${hijri}`;
-} catch (e) {
-document.getElementById('calendarBox').innerHTML = new Date().toDateString();
-}
-}
-
-// Quran Audio State with Multi-Qari Support
-let currentSurahNo = 1;
-let currentAyahIndex = 0;
-let surahAyahsData = [];
-let isContinuousQuran = false;
-let quranAudioPlayer = new Audio();
-
-async function fetchSurahData(autoPlayNext = false) {
-  const surahSelect = document.getElementById('surahSelect');
-  const qariSelect = document.getElementById('qariSelect').value;
-  if (!autoPlayNext) {
-    currentSurahNo = parseInt(surahSelect.value);
-    isContinuousQuran = false;
-  }
-  
-  const edition = document.getElementById('langSelect').value;
-  const display = document.getElementById('quranDisplay');
-  const container = document.getElementById('quranContainer');
-  
-  display.style.display = 'block';
-  container.innerHTML = `<p style='text-align:center; font-weight:bold; color:var(--primary);'>⏳ سورت نمبر ${currentSurahNo} کی تلاوت لوڈ ہو رہی ہے...</p>`;
-  
-  try {
-    const url = 'https://api.alquran.cloud/v1/surah/' + currentSurahNo + '/editions/quran-uthmani,' + edition + ',' + qariSelect;
-    const response = await fetch(url);
-    const data = await response.json();
-    
-    if (data.code === 200 && data.data && data.data.length >= 3) {
-      const arabicAyahs = data.data[0].ayahs;
-      const transAyahs = data.data[1].ayahs;
-      const audioAyahs = data.data[2].ayahs;
-      
-      surahAyahsData = arabicAyahs.map((item, index) => {
-        return {
-          arabic: item.text,
-          trans: transAyahs[index].text,
-          audio: audioAyahs[index].audio,
-          number: item.numberInSurah
-        };
-      });
-      
-      let html = '<div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:15px;">';
-      html += '<button class="btn btn-accent" style="flex:1;" onclick="playFullSurah(false)">▶️ تلاوت سنیں</button>';
-      html += '<button class="btn" style="flex:1; background:#27ae60;" onclick="playFullSurah(true)">🔁 مسلسل آٹو پلے</button>';
-      html += '<button class="btn-voice" style="background:#c0392b; width:100%;" onclick="stopAudio()">⏹️ آڈیو روکیں</button>';
-      html += '</div>';
-      
-      for (let i = 0; i < surahAyahsData.length; i++) {
-        html += '<div class="verse-box" id="verse-' + i + '">';
-        html += '<div class="quran-text">' + surahAyahsData[i].arabic + ' ﴿' + surahAyahsData[i].number + '﴾</div>';
-        html += '<div class="translation-text">' + surahAyahsData[i].trans + '</div>';
-        html += '<button class="btn-voice" onclick="playSingleAyah(' + i + ')">🎧 یہ آیت سنیں</button>';
-        html += '</div>';
-      }
-      container.innerHTML = html;
-
-      if (autoPlayNext) {
-        playFullSurah(true);
-      }
-    } else {
-      container.innerHTML = "<p style='color:red; text-align:center;'>ڈیٹا حاصل نہیں ہو سکا۔</p>";
-    }
-  } catch (error) {
-    container.innerHTML = "<p style='color:red; text-align:center;'>انٹرنیٹ کنکشن کا مسئلہ ہے۔</p>";
-  }
-}
-
-function playFullSurah(continuousMode = false) {
-  isContinuousQuran = continuousMode;
-  currentAyahIndex = 0;
-  playAyahAudioSequentially(currentAyahIndex);
-}
-
-function playAyahAudioSequentially(index) {
-  if (index >= surahAyahsData.length) {
-    if (isContinuousQuran && currentSurahNo < 114) {
-      currentSurahNo++;
-      document.getElementById('surahSelect').value = currentSurahNo;
-      fetchSurahData(true);
-    } else {
-      stopAudio();
-    }
-    return;
-  }
-  
-  let allBoxes = document.querySelectorAll('.verse-box');
-  allBoxes.forEach(box => box.style.background = "#fdfdfd");
-  let activeBox = document.getElementById('verse-' + index);
-  if (activeBox) {
-    activeBox.style.background = "#e8f5e9";
-    activeBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-
-  quranAudioPlayer.src = surahAyahsData[index].audio;
-  quranAudioPlayer.play();
-  quranAudioPlayer.onended = function() {
-    currentAyahIndex++;
-    playAyahAudioSequentially(currentAyahIndex);
-  };
-}
-
-function playSingleAyah(index) {
-  isContinuousQuran = false;
-  quranAudioPlayer.pause();
-  let allBoxes = document.querySelectorAll('.verse-box');
-  allBoxes.forEach(box => box.style.background = "#fdfdfd");
-  let activeBox = document.getElementById('verse-' + index);
-  if (activeBox) activeBox.style.background = "#e8f5e9";
-
-  quranAudioPlayer.src = surahAyahsData[index].audio;
-  quranAudioPlayer.play();
-  quranAudioPlayer.onended = null;
-}
-
-function stopAudio() {
-  isContinuousQuran = false;
-  quranAudioPlayer.pause();
-  quranAudioPlayer.currentTime = 0;
 }
 
 function searchUniversalIslamicSources() {
@@ -555,10 +530,9 @@ function searchUniversalIslamicSources() {
     res.innerHTML = "<p style='color:red;'>برائے کرم کوئی مسئلہ تحریر کریں۔</p>";
     return;
   }
-  res.innerHTML = `<div class="search-result-box"><strong>📚 قرآنی و فقہی رہنمائی برائے: "${query}"</strong><p class="translation-text" style="margin-top:5px;">موضوع "${query}" کے متعلق قرآن پاک، صحیح احادیث اور معتبر فقہی کتب (فقہ حنفی و دیگر) کے اصول و احکام یہاں میسر ہیں۔</p></div>`;
+  res.innerHTML = '<div class="search-result-box"><strong>📚 قرآنی و فقہی رہنمائی برائے: "' + query + '"</strong><p class="translation-text" style="margin-top:5px;">موضوع کے متعلق قرآن پاک، صحیح احادیث اور معتبر فقہی کتب کے اصول و احکام یہاں میسر ہیں۔</p></div>';
 }
 
-// Business Inventory Management
 let inventoryList = [];
 function addInventoryItem() {
   const name = document.getElementById('prodName').value;
@@ -581,7 +555,7 @@ function renderInventory() {
   const tbody = document.getElementById('inventoryTable');
   tbody.innerHTML = '';
   inventoryList.forEach((item, index) => {
-    tbody.innerHTML += `<tr><td>${item.name}</td><td>${item.qty}</td><td>${item.cost || 0}</td><td>${item.price || 0}</td><td><button class="btn-voice" style="background:#c0392b;" onclick="inventoryList.splice(${index},1); renderInventory();">حذف</button></td></tr>`;
+    tbody.innerHTML += '<tr><td>' + item.name + '</td><td>' + item.qty + '</td><td>' + (item.cost || 0) + '</td><td>' + (item.price || 0) + '</td><td><button class="btn-voice" style="background:#c0392b;" onclick="inventoryList.splice(' + index + ',1); renderInventory();">حذف</button></td></tr>';
   });
 }
 
@@ -634,12 +608,12 @@ function drawPoster() {
   const txt = document.getElementById('posterText').value;
   ctx.fillStyle = "#105b38";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#d4af37";
-  ctx.font = "bold 18px Arial";
-  ctx.textAlign = "center";
-  ctx.fillText(txt || "OMNI EASE Poster", canvas.width / 2, canvas.height / 2);
-  ctx.font = "12px Arial";
-  ctx.fillText("کچے گھر پکے رشتے (AGN)", canvas.width / 2, canvas.height - 30);
+ctx.fillStyle = "#d4af37";
+ctx.font = "bold 18px Arial";
+ctx.textAlign = "center";
+ctx.fillText(txt || "OMNI EASE Poster", canvas.width / 2, canvas.height / 2);
+ctx.font = "12px Arial";
+ctx.fillText("کچے گھر پکے رشتے (AGN)", canvas.width / 2, canvas.height - 30);
 }
 
 let map;
@@ -651,24 +625,23 @@ function getUserLocation() {
     navigator.geolocation.getCurrentPosition(position => {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
-      status.innerText = `لوکیشن مل گئی: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+      status.innerText = "لوکیشن مل گئی: " + lat.toFixed(4) + ", " + lng.toFixed(4);
       
-      // Approximate Qibla bearing calculation from North to Mecca (21.4225, 39.8262)
       const dLon = (39.8262 - lng) * Math.PI / 180;
-      const lat
-        const lat1 = lat * Math.PI / 180;
+      const lat1 = lat * Math.PI / 180;
       const lat2 = 21.4225 * Math.PI / 180;
       const y = Math.sin(dLon) * Math.cos(lat2);
       const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
       let brng = Math.atan2(y, x) * 180 / Math.PI;
       brng = (brng + 360) % 360;
-      qibla.innerText = `🕋 قبلہ رخ سمت: شمال سے ${brng.toFixed(1)} ڈگری`;
+      qibla.innerText = "🕋 قبلہ رخ سمت: شمال سے " + brng.toFixed(1) + " ڈگری";
 
       if (!map) {
         map = L.map('map').setView([lat, lng], 15);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
       } else {
         map.setView([lat, lng], 15);
+        map.invalidateSize();
       }
       L.marker([lat, lng]).addTo(map).bindPopup('آپ کی موجودہ ایچ ڈی لوکیشن').openPopup();
     }, () => {
