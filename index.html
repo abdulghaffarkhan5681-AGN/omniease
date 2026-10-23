@@ -270,7 +270,7 @@ margin-top: 10px;
 </thead>
 <tbody id="ledgerTable"></tbody>
 </table>
-</div>
+ضض</div>
 </div>
 <!-- 5. TRANSLATOR & VOICE MODULE -->
 <div id="translator" class="tab-content">
@@ -453,8 +453,7 @@ status.innerText = "آپ کا براؤزر لوکیشن کو سپورٹ نہیں
 }
 }
 window.onload = function() {
-initCalendar();
-drawPoster();
+if (typeof drawPoster === 'function') drawPoster();
 };
 </script>
 </body>
