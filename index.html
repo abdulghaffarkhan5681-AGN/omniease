@@ -967,10 +967,14 @@ function startQiblaAutoCompass() {
         alert("آپ کے ڈیوائس میں لوکیشن سروس دستیاب نہیں ہے۔");
     }
 }
-
-function getUserLocation() {
+    function getUserLocation() {
+    const mapSec = document.getElementById('map-sec');
+    if (mapSec) {
+        mapSec.style.display = 'block';
+        mapSec.scrollIntoView({ behavior: 'smooth' });
+    }
     startQiblaAutoCompass();
-}
+              }  
 
 function calculateQiblaAngle(lat, lng) {
     const kaabaLat = 21.422487;
