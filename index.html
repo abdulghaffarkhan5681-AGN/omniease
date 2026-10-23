@@ -452,8 +452,10 @@ status.innerText = "لوکیشن حاصل کرنے کی اجازت نہیں مل
 status.innerText = "آپ کا براؤزر لوکیشن کو سپورٹ نہیں کرتا۔";
 }
 }
-window.onload = function() {
-if (typeof drawPoster === 'function') drawPoster();
+  window.onload = function() {
+if (typeof drawPoster === 'function') {
+drawPoster();
+}
 };
 </script>
 </body>
