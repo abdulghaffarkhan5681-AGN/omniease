@@ -854,37 +854,50 @@ async function searchUniversalIslamicSources() {
     const res = document.getElementById('libraryResult');
     
     if (!q) {
-        res.innerHTML = '<div class="card" style="background:#fff3f3; text-align:center;"><strong>تلاش / Search:</strong> براہ کرم اپنا سوال درج کریں۔ / Please enter your question.</div>';
+        res.innerHTML = '<div class="card" style="background:#fff3f3; text-align:center;"><strong>تلاش / Search:</strong> براہ کرم اپنا اسلامی سوال یا موضوع درج کریں۔ / Please enter your Islamic query.</div>';
         return;
     }
 
-    res.innerHTML = '<div class="card" style="text-align:center;">⏳ تلاش جاری ہے... / Searching...</div>';
+    res.innerHTML = '<div class="card" style="text-align:center;">⏳ کتبِ احادیث و فقہ سے تلاش جاری ہے... / Searching authentic sources...</div>';
 
-    // 1. بنیادی حنفی فقہ کے جوابات (اردو میں)
     let baseAnswerUrdu = "";
     const lowerQ = q.toLowerCase();
 
-    if (q.includes("غسل") || lowerQ.includes("ghusl") || q.includes("نپھڑن") || q.includes("نہاوݨ")) {
-        baseAnswerUrdu = "<strong>حنفی فقہ کے مطابق غسل فرض ہونے کے اسباب:</strong><br>1. منی کا شہوت کے ساتھ جدا ہو کر نکلنا۔<br>2. احتلام (خواب میں انزال ہونا)۔<br>3. جماع (ہم بستری کرنا، چاہے انزال ہو یا نہ ہو)۔<br>4. خواتین کے لیے حیض اور نفاس سے فراغت۔";
-    } else if (q.includes("حلال") || q.includes("حرام") || lowerQ.includes("halal") || lowerQ.includes("haram") || q.includes("سود")) {
-        baseAnswerUrdu = "<strong>شرعی اصول (حلال و حرام):</strong> تجارت اور خوراک میں دیانت داری، سچائی اور حلال شرائط کا خیال رکھنا لازم ہے۔ سود، دھوکہ دہی، اور حرام و مشتبہ اجزاء سے مکمل پرہیز کریں۔";
-    } else {
-        baseAnswerUrdu = "<strong>مستند حنفی فقہ کی روشنی میں:</strong> آپ کا سوال <em>\"" + q + "\"</em> موصول ہوا۔ معتبر کتبِ فقہ (ہدایہ/فتاویٰ عالمگیری) اور علماءِ کرام سے اس مسئلے کی مزید تفصیل معلوم کی جا سکتی ہے۔";
+    // 1. قرآن و حدیث کے عمومی حوالہ جات
+    if (q.includes("حدیث") || q.includes("سنت") || lowerQ.includes("hadith") || lowerQ.includes("sunnah")) {
+        baseAnswerUrdu = "<strong>حجتِ حدیث اور سنتِ نبوی:</strong><br>1. قرآن مجید میں اللہ تعالیٰ کا ارشاد ہے: <em>'اور جو کچھ الرسول تمہیں دیں وہ لے لو اور جس سے منع کریں رک جاؤ'</em> (الحشر: 7)۔<br>2. احادیث مبارکہ کے لیے صحاح ستہ (صحیح بخاری، صحیح مسلم، سنن ابی داؤد، ترمذی، نسائی، ابن ماجه) بنیادی اور مستند مراجع ہیں۔ احکامِ شرعیہ میں حضور ﷺ کا اسوہ حسنہ ہمارے لیے مشعلِ راہ ہے۔";
+    } 
+    // 2. نماز اور رکعت کے مسائل / سجدہ سہو
+    else if (q.includes("نماز") || q.includes("رکعت") || q.includes("بھول") || q.includes("سجدہ سہو") || q.includes("قعدہ") || lowerQ.includes("prayer") || lowerQ.includes("rakah")) {
+        baseAnswerUrdu = "<strong>نماز کے احکام اور بھول چوک (حنفی فقہ اور حدیث):</strong><br>1. صحیح بخاری و مسلم کی متفق عليه حدیث ہے کہ اگر کوئی شخص نماز میں بھول جائے تو وہ سلام پھیرنے کے بعد دو سجدے (سجدہ سہو) کرے اور التحیات پڑھ کر سلام پھیر دے۔<br>2. اگر رکعتوں کی تعداد میں شک ہو جائے تو کم تعداد پر یقین کر کے نماز مکمل کی جائے۔ واجب چھوٹنے کی صورت میں سجدہ سہو لازم ہو جاتا ہے۔";
+    } 
+    // 3. طهارت، غسل اور وضو
+    else if (q.includes("غسل") || q.includes("وضو") || q.includes("پاك") || lowerQ.includes("ghusl") || lowerQ.includes("wudu")) {
+        baseAnswerUrdu = "<strong>طہارت، وضو اور غسل کے احکام:</strong><br>1. وضو کے فرض چار ہیں: چہرہ دھونا، دونوں بازو کہنیوں سمیت دھونا، چوتھائی سر کا مسح اور پاؤں ٹخنوں سمیت دھونا (سورۃ المائدہ: 6)۔<br>2. غسل اس وقت فرض ہوتا ہے جب منی شہوت سے نکلے، احتلام ہو، یا میاں بیوی کی صحبت (جماع) ہو، نیز خواتین کے لیے حیض و نفاس کی پاکی کے بعد۔";
+    } 
+    // 4. تجارت، حلال و حرام اور سود
+    else if (q.includes("تجارت") || q.includes("حلال") || q.includes("حرام") || q.includes("سود") || q.includes("کاروبار") || lowerQ.includes("business") || lowerQ.includes("halal") || lowerQ.includes("haram")) {
+        baseAnswerUrdu = "<strong>تجارت اور حلال و حرام کے شرعی اصول:</strong><br>1. قرآن مجید کا فرمان ہے: <em>'اور اللہ نے تجارت کو حلال کیا ہے اور سود کو حرام کیا ہے'</em> (البقرہ: 275)۔<br>2. تجارت میں سچائی، امانت، ناپ تول کی درستگی اور غرر (غیر یقینی دھوکے والے معاہدوں) سے پرہیز لازمی ہے۔ حضور ﷺ نے دیانت دار تاجر کو انبیاء کے ساتھ رکھا ہے۔";
+    } 
+    // 5. نکاح، طلاق اور خاندانی مسائل
+    else if (q.includes("نکاح") || q.includes("طلاق") || q.includes("رشتہ") || q.includes("مہر") || lowerQ.includes("nikah") || lowerQ.includes("marriage")) {
+        baseAnswerUrdu = "<strong>نکاح و خاندانی زندگی کے احکام (فقہ حنفی):</strong><br>1. نکاح سنتِ مؤکدہ اور انبیاء کا طریقہ ہے۔ اس کے لیے ایجاب و قبول (گواہوں کی موجودگی میں) اور مہر کی ادائیگی بنیادی شرط ہے۔<br>2. خاندانی تنازعات اور طلاق کے معاملات میں قرآن و سنت کے احکام کے ساتھ ساتھ دار الافتاء یا بااختیار شرعی عدالت سے رجوع کرنا ضروری ہے تاکہ حقوق العباد ضائع نہ ہوں۔";
+    } 
+    // 6. دیگر تمام پیچیدہ یا عام مسائل کے لیے جامع ریفرنس گائیڈ
+    else {
+        baseAnswerUrdu = "<strong>مستند اسلامی شریعت اور حنفی فقہ (ہدایہ، فتاویٰ عالمگیری) کی روشنی میں:</strong><br>آپ کا سوال: <em>\"" + q + "\"</em> موصول ہوا۔ اسلام میں ہر معاملے (عبادات، معاملات، اخلاقیات) کے لیے اصول موجود ہیں۔ چونکہ یہ مسئلہ تفصیلی تحقیق کا متقاضی ہے، لہٰذا قرآن و سنت اور معتبر کتبِ فقہ کے تناظر میں مستند دار الافتاء یا کسی باصلاحیت عالمِ دین سے ذاتی طور پر رجوع فرمائیں تاکہ مکمل اور تسلی بخش فتویٰ حاصل ہو سکے۔";
     }
 
-    // 2. اگر سوال اردو/عربی رسم الخط میں نہ ہو تو خودکار ترجمہ
     const isUrduScript = /[\u0600-\u06FF]/.test(q);
 
     if (isUrduScript) {
-        // اگر اردو/سندھی/پنجابی/پشتو (عربی رسم الخط) ہے تو براہ راست اردو میں دکھائیں
         res.innerHTML = '<div class="card" style="background:#f9f9f9; line-height:1.8; text-align:right;">' +
             '<h4>تلاش کا نتیجہ (' + q + '):</h4>' +
             '<p style="margin-top:10px;">' + baseAnswerUrdu + '</p>' +
             '</div>';
     } else {
-        // کسی بھی دوسری زبان (چینی، انگریزی، فلپائنی وغیرہ) کے لیے خودکار عالمی ترجمہ
         try {
-            const cleanText = baseAnswerUrdu.replace(/<[^>]*>/g, ' '); // HTML ہٹا کر ترجمہ کے لیے ٹیکسٹ بنانا
+            const cleanText = baseAnswerUrdu.replace(/<[^>]*>/g, ' ');
             const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=ur&tl=auto&dt=t&q=${encodeURIComponent(cleanText)}`;
             
             const response = await fetch(apiUrl);
@@ -902,14 +915,13 @@ async function searchUniversalIslamicSources() {
                 '<p style="margin-top:10px; font-weight:bold;">' + (translatedAnswer || baseAnswerUrdu) + '</p>' +
                 '</div>';
         } catch (error) {
-            // اگر آن لائن ترجمہ میں کوئی مسئلہ ہو تو انگریزی/اردو بیک اپ
             res.innerHTML = '<div class="card" style="background:#f9f9f9; line-height:1.8; text-align:right;">' +
                 '<h4>تلاش کا نتیجہ (' + q + '):</h4>' +
                 '<p style="margin-top:10px;">' + baseAnswerUrdu + '</p>' +
                 '</div>';
         }
     }
-      }
+      }      
 // AI Islamic System Instruction (Multilingual & Hanafi Fiqh)
 const systemInstruction = {
     role: "system",
