@@ -271,4 +271,195 @@ margin-top: 10px;
 <tbody id="ledgerTable"></tbody>
 </table>
 </div>
-  </div>
+</div>
+<!-- 5. TRANSLATOR & VOICE MODULE -->
+<div id="translator" class="tab-content">
+<div class="card">
+<h3>🌐 متن کا ترجمہ اور آواز</h3>
+<textarea id="sourceText" rows="3" placeholder="یہاں تحریر درج کریں یا بولیں..."></textarea>
+<select id="targetLang">
+<option value="en">English</option>
+<option value="ur">Urdu</option>
+<option value="ar">Arabic</option>
+<option value="ps">Pashto</option>
+</select>
+<button class="btn" onclick="translateText()">ترجمہ کریں</button>
+<button class="btn btn-accent" onclick="speakText()">🔊 آواز میں سنیں</button>
+<div id="transResult" class="translation-text" style="margin-top:10px; font-weight:bold;"></div>
+</div>
+</div>
+<!-- 6. POSTER MAKER MODULE -->
+<div id="poster" class="tab-content">
+<div class="card">
+<h3>🎨 پوسٹر میکر</h3>
+<input type="text" id="posterText" placeholder="پوسٹر کی تحریر لکھیں..." oninput="drawPoster()">
+<canvas id="posterCanvas" width="300" height="150" style="border:1px solid #ccc; width:100%; border-radius:5px; margin-top:10px;"></canvas>
+</div>
+</div>
+<!-- 7. MAP & LOCATION MODULE -->
+<div id="map-sec" class="tab-content">
+<div class="card">
+<h3>🗺️ لائیو لوکیشن اور میپ</h3>
+<button class="btn" onclick="getUserLocation()">میری لوکیشن دکھاؤ</button>
+<div id="locationStatus" style="margin-top:5px; font-size:12px;"></div>
+<div id="map"></div>
+</div>
+</div>
+<!-- BRAND FOOTER -->
+<div class="brand-footer">
+<h3>کچے گھر پکے رشتے (AGN)</h3>
+<p>طالبِ دعا: <b>فیضان میبلوی / عبدالغفار خان</b></p>
+<p style="font-size:11px; color:#777; margin-top:5px;">OMNI EASE PWA © All Rights Reserved</p>
+</div>
+</div>
+<script>
+function openTab(tabId, element) {
+let contents = document.querySelectorAll('.tab-content');
+contents.forEach(content => content.classList.remove('active'));
+let buttons = document.querySelectorAll('nav button');
+buttons.forEach(button => button.classList.remove('active'));
+document.getElementById(tabId).classList.add('active');
+element.classList.add('active');
+if(tabId === 'calendar') initCalendar();
+}
+function initCalendar() {
+try {
+const today = new Date();
+const options = { year: 'numeric', month: 'long', day: 'numeric' };
+const greg = today.toLocaleDateString('ur-PK', options);
+const hijri = new Intl.DateTimeFormat('ur-TN-u-ca-islamic', options).format(today);
+document.getElementById('calendarBox').innerHTML = `عیسوی: ${greg} <br> ہجری: ${hijri}`;
+} catch (e) {
+document.getElementById('calendarBox').innerHTML = new Date().toDateString();
+}
+}
+async function fetchSurahData() {
+const surah = document.getElementById('surahSelect').value;
+const edition = document.getElementById('langSelect').value;
+const display = document.getElementById('quranDisplay');
+const container = document.getElementById('quranContainer');
+display.style.display = 'block';
+container.innerHTML = "<p style='text-align:center;'>⏳ سورت کا متن اور ترجمہ لوڈ ہو رہا ہے...</p>";
+try {
+const url = 'https://api.alquran.cloud/v1/surah/' + surah + '/editions/quran-uthmani,' + edition;
+const response = await fetch(url);
+const data = await response.json();
+if (data.code === 200 && data.data.length >= 2) {
+const arabicAyahs = data.data[0].ayahs;
+const transAyahs = data.data[1].ayahs;
+let html = '';
+for (let i = 0; i < arabicAyahs.length; i++) {
+html += '<div class="verse-box">';
+html += '<div class="quran-text">' + arabicAyahs[i].text + ' ﴿' + arabicAyahs[i].numberInSurah + '﴾</div>';
+html += '<div class="translation-text">' + transAyahs[i].text + '</div>';
+html += '</div>';
+}
+container.innerHTML = html;
+} else {
+container.innerHTML = "<p style='color:red; text-align:center;'>ڈیٹا حاصل نہیں ہو سکا۔ برائے کرم دوبارہ کوشش کریں۔</p>";
+}
+} catch (error) {
+container.innerHTML = "<p style='color:red; text-align:center;'>انٹرنیٹ کنکشن کی خرابی یا سرور رسپانس نہیں دے رہا۔</p>";
+}
+}
+function searchLibrary() {
+const book = document.getElementById('bookSelect').value;
+const query = document.getElementById('hadithSearch').value;
+const res = document.getElementById('libraryResult');
+if(!query) {
+res.innerText = "برائے کرم سرچ باکس میں کچھ تحریر کریں۔";
+return;
+}
+res.innerText = `کتاب (${book}) میں "${query}" کے نتائج تلاش کیے جا رہے ہیں...`;
+}
+let totalBalance = 0;
+function addLedgerEntry(type) {
+const name = document.getElementById('itemName').value;
+const qty = document.getElementById('itemQty').value || 1;
+const amount = parseFloat(document.getElementById('itemAmount').value);
+if (!name || isNaN(amount)) {
+alert("برائے کرم نام اور رقم درست درج کریں۔");
+return;
+}
+if (type === 'income') totalBalance += amount;
+else totalBalance -= amount;
+document.getElementById('totalBalance').innerText = totalBalance;
+const table = document.getElementById('ledgerTable');
+const row = table.insertRow();
+row.insertCell(0).innerText = name;
+row.insertCell(1).innerText = qty;
+row.insertCell(2).innerText = (type === 'income' ? '+' : '-') + amount;
+document.getElementById('itemName').value = '';
+document.getElementById('itemQty').value = '';
+document.getElementById('itemAmount').value = '';
+}
+function translateText() {
+const text = document.getElementById('sourceText').value;
+const target = document.getElementById('targetLang').value;
+const resBox = document.getElementById('transResult');
+if (!text) {
+alert("برائے کرم کچھ تحریر کریں۔");
+return;
+}
+resBox.innerText = "ترجمہ ہو رہا ہے...";
+fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=ur|' + target)
+.then(res => res.json())
+.then(data => {
+resBox.innerText = data.responseData.translatedText;
+})
+.catch(e => {
+resBox.innerText = "ترجمہ کرنے میں مسئلہ پیش آیا۔";
+});
+}
+function speakText() {
+const text = document.getElementById('transResult').innerText || document.getElementById('sourceText').value;
+if(!text) return;
+const utterance = new SpeechSynthesisUtterance(text);
+window.speechSynthesis.speak(utterance);
+}
+function drawPoster() {
+const canvas = document.getElementById('posterCanvas');
+const ctx = canvas.getContext('2d');
+const txt = document.getElementById('posterText').value;
+ctx.fillStyle = "#105b38";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+ctx.fillStyle = "#d4af37";
+ctx.font = "bold 16px Arial";
+ctx.textAlign = "center";
+ctx.fillText(txt || "OMNI EASE Poster", canvas.width / 2, canvas.height / 2);
+}
+let map;
+function getUserLocation() {
+const status = document.getElementById('locationStatus');
+if (navigator.geolocation) {
+status.innerText = "لوکیشن تلاش کی جا رہی ہے...";
+navigator.geolocation.getCurrentPosition(position => {
+const lat = position.coords.latitude;
+const lng = position.coords.longitude;
+status.innerText = `لوکیشن مل گئی: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+if (!map) {
+map = L.map('map').setView([lat, lng], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+} else {
+map.setView([lat, lng], 13);
+}
+L.marker([lat, lng]).addTo(map).bindPopup('آپ کی موجودہ لوکیشن').openPopup();
+}, () => {
+status.innerText = "لوکیشن حاصل کرنے کی اجازت نہیں ملی۔";
+});
+} else {
+status.innerText = "آپ کا براؤزر لوکیشن کو سپورٹ نہیں کرتا۔";
+}
+}
+window.onload = function() {
+try {
+if (typeof drawPoster === 'function') {
+drawPoster();
+}
+} catch (e) {
+console.error(e);
+}
+};
+</script>
+</body>
+  </html>
