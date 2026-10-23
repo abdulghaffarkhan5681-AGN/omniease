@@ -147,107 +147,144 @@ padding: 15px;
 margin-bottom: 12px;
 border-radius: 8px;
 }
-.search-result-box {
-background: #f9fbf9;
-border: 1px solid #cce0d5;
-padding: 12px;
-margin-top: 10px;
-border-radius: 6px;
-text-align: right;
-}
-table {
-width: 100%;
-border-collapse: collapse;
-margin-top: 10px;
-}
-table, th, td {
-border: 1px solid #ddd;
-padding: 8px;
-text-align: center;
-font-size: 13px;
-}
-th {
-background-color: var(--primary);
-color: white;
-}
-.brand-footer {
-text-align: center;
-margin-top: 30px;
-padding: 15px;
-background: #e9f0ec;
-border-radius: 8px;
-border: 1px solid #cce0d5;
-}
-.brand-footer h3 {
-color: var(--primary);
-font-size: 16px;
-}
-.brand-footer p {
-font-size: 13px;
-color: #555;
-}
-#map {
-height: 280px;
-border-radius: 8px;
-margin-top: 10px;
-}
-</style>
-</head>
-<body>
-<header>
-<h1>☀ OMNI EASE - امنی ایز ☀</h1>
-<p>آپ کا اپنا ڈیجیٹل، بزنس اور روحانی مرکز</p>
-</header>
+// Global Variables for Quran Video & Audio Player
+let currentSurahNo = 1;
+let currentAyahIndex = 0;
+let surahAyahsData = [];
+let isContinuousQuran = false;
+let quranAudioPlayer = new Audio();
 
-<nav>
-<button class="active" onclick="openTab('quran', this)">📖 قرآن پاک</button>
-<button onclick="openTab('library', this)">📚 اسلامی کتب</button>
-<button onclick="openTab('business', this)">💼 بزنس حب (AGN)</button>
-<button onclick="openTab('calendar', this)">📅 کیلنڈر</button>
-<button onclick="openTab('ledger', this)">📒 لیجر</button>
-<button onclick="openTab('translator', this)">🌐 ترجمہ</button>
-<button onclick="openTab('poster', this)">🎨 پوسٹر</button>
-<button onclick="openTab('map-sec', this)">🗺️ ایچ ڈی میپ</button>
-</nav>
+async function fetchSurahData(autoPlayNext = false) {
+  const surahSelect = document.getElementById('surahSelect');
+  const qariSelect = document.getElementById('qariSelect').value;
+  if (!autoPlayNext) {
+    currentSurahNo = parseInt(surahSelect.value);
+    isContinuousQuran = false;
+  }
+  
+  const edition = document.getElementById('langSelect').value;
+  const display = document.getElementById('quranDisplay');
+  const container = document.getElementById('quranContainer');
+  
+  display.style.display = 'block';
+  container.innerHTML = `<p style='text-align:center; font-weight:bold; color:var(--primary);'>⏳ سورت نمبر ${currentSurahNo} کی تلاوت و ویڈیو پلیئر لوڈ ہو رہا ہے...</p>`;
+  
+  try {
+    const url = 'https://api.alquran.cloud/v1/surah/' + currentSurahNo + '/editions/quran-uthmani,' + edition + ',' + qariSelect;
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    if (data.code === 200 && data.data && data.data.length >= 3) {
+      const arabicAyahs = data.data[0].ayahs;
+      const transAyahs = data.data[1].ayahs;
+      const audioAyahs = data.data[2].ayahs;
+      
+      surahAyahsData = arabicAyahs.map((item, index) => {
+        return {
+          arabic: item.text,
+          trans: transAyahs[index].text,
+          audio: audioAyahs[index].audio,
+          number: item.numberInSurah
+        };
+      });
+      
+      // Video & Audio Display Player Box
+      let html = '<div style="background:#0a3a24; color:white; padding:15px; border-radius:8px; text-align:center; margin-bottom:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">';
+      html += '<h4 style="color:var(--accent); margin-bottom:8px;">🎥 قرآن پاک لائیو تلاوت ڈسپلے</h4>';
+      html += '<div id="videoScreen" style="background:#105b38; padding:20px; border-radius:8px; font-size:22px; line-height:2; margin-bottom:10px; border:1px solid var(--accent); color:#fff; min-height:100px; display:flex; align-items:center; justify-content:center;">تلاوت سننے کے لیے نیچے پلے کا بٹن دبائیں</div>';
+      html += '<div style="display:flex; gap:8px; flex-wrap:wrap;">';
+      html += '<button class="btn btn-accent" style="flex:1;" onclick="playFullSurah(false)">▶️ تلاوت و ویڈیو شروع کریں</button>';
+      html += '<button class="btn" style="flex:1; background:#27ae60;" onclick="playFullSurah(true)">🔁 مسلسل اٹو پلے</button>';
+      html += '<button class="btn-voice" style="background:#c0392b; width:100%;" onclick="stopAudio()">⏹️ ویڈیو و آڈیو روکیں</button>';
+      html += '</div></div>';
+      
+      for (let i = 0; i < surahAyahsData.length; i++) {
+        html += '<div class="verse-box" id="verse-' + i + '">';
+        html += '<div class="quran-text">' + surahAyahsData[i].arabic + ' ﴿' + surahAyahsData[i].number + '﴾</div>';
+        html += '<div class="translation-text">' + surahAyahsData[i].trans + '</div>';
+        html += '<button class="btn-voice" onclick="playSingleAyah(' + i + ')">🎧 یہ آیت ویڈیو ڈسپلے پر چلائیں</button>';
+        html += '</div>';
+      }
+      container.innerHTML = html;
 
-<div class="container">
+      if (autoPlayNext) {
+        playFullSurah(true);
+      }
+    } else {
+      container.innerHTML = "<p style='color:red; text-align:center;'>ڈیٹا حاصل نہیں ہو سکا۔</p>";
+    }
+  } catch (error) {
+    container.innerHTML = "<p style='color:red; text-align:center;'>انٹرنیٹ کنکشن کا مسئلہ ہے۔</p>";
+  }
+}
 
-<!-- 1. QURAN MODULE (Multi-Qari & Auto-Play) -->
-<div id="quran" class="tab-content active">
-<div class="card">
-<h3>📖 قرآن مجید و تلاوت (مختلف قراء اور تراجم)</h3>
-<label>سورت کا انتخاب کریں:</label>
-<select id="surahSelect">
-<option value="1">1. الفاتحة</option>
-<option value="2">2. البقرة</option>
-<option value="36">36. يس</option>
-<option value="55">55. الرحمن</option>
-<option value="67">67. الملك</option>
-<option value="112">112. الإخلاص</option>
-<option value="113">113. الفلق</option>
-<option value="114">114. الناس</option>
-</select>
+function playFullSurah(continuousMode = false) {
+  isContinuousQuran = continuousMode;
+  currentAyahIndex = 0;
+  playAyahAudioSequentially(currentAyahIndex);
+}
 
-<label>قاری کا انتخاب کریں:</label>
-<select id="qariSelect">
-<option value="ar.alafasy">شیخ مشاری راشد العفاسی</option>
-<option value="ar.abdulbasit">قاری عبدالباسط عبدالصمد</option>
-<option value="ar.sudais">شيخ عبدالرحمن السدیس</option>
-<option value="ar.minshawi">قاری محمد صدیق المنشاوی</option>
-<option value="ar.shuraym">شيخ سعود الشريم</option>
-<option value="ar.ghamdi">سعد الغامدی</option>
-</select>
+function playAyahAudioSequentially(index) {
+  if (index >= surahAyahsData.length) {
+    if (isContinuousQuran && currentSurahNo < 114) {
+      currentSurahNo++;
+      document.getElementById('surahSelect').value = currentSurahNo;
+      fetchSurahData(true);
+    } else {
+      stopAudio();
+    }
+    return;
+  }
+  
+  let allBoxes = document.querySelectorAll('.verse-box');
+  allBoxes.forEach(box => box.style.background = "#fdfdfd");
+  let activeBox = document.getElementById('verse-' + index);
+  if (activeBox) {
+    activeBox.style.background = "#e8f5e9";
+    activeBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 
-<label>زبان اور مترجم منتخب کریں:</label>
-<select id="langSelect">
-<option value="ur.jalandhry">اردو - فتح محمد جالندھری</option>
-<option value="ur.junagarhi">اردو - مولانا جوناگڑھی</option>
-<option value="en.sahih">English - Sahih International</option>
-<option value="ps.abdulwali">پشتو - عبدالولی</option>
-<option value="ar.jalalayn">عربی - تفسير الجلالين</option>
-</select>
+  // Update Video Screen Text Display
+  const videoScreen = document.getElementById('videoScreen');
+  if(videoScreen) {
+    videoScreen.innerHTML = '<div>' + surahAyahsData[index].arabic + '<br><span style="font-size:15px; color:#d4af37;">' + surahAyahsData[index].trans + '</span></div>';
+  }
 
-<div style="display:flex; gap:10px; margin-top:10px;">
+  quranAudioPlayer.src = surahAyahsData[index].audio;
+  quranAudioPlayer.play();
+  quranAudioPlayer.onended = function() {
+    currentAyahIndex++;
+    playAyahAudioSequentially(currentAyahIndex);
+  };
+}
+
+function playSingleAyah(index) {
+  isContinuousQuran = false;
+  quranAudioPlayer.pause();
+  let allBoxes = document.querySelectorAll('.verse-box');
+  allBoxes.forEach(box => box.style.background = "#fdfdfd");
+  let activeBox = document.getElementById('verse-' + index);
+  if (activeBox) activeBox.style.background = "#e8f5e9";
+
+  const videoScreen = document.getElementById('videoScreen');
+  if(videoScreen) {
+    videoScreen.innerHTML = '<div>' + surahAyahsData[index].arabic + '<br><span style="font-size:15px; color:#d4af37;">' + surahAyahsData[index].trans + '</span></div>';
+  }
+
+  quranAudioPlayer.src = surahAyahsData[index].audio;
+  quranAudioPlayer.play();
+  quranAudioPlayer.onended = null;
+}
+
+function stopAudio() {
+  isContinuousQuran = false;
+  quranAudioPlayer.pause();
+  quranAudioPlayer.currentTime = 0;
+  const videoScreen = document.getElementById('videoScreen');
+  if(videoScreen) {
+    videoScreen.innerText = "تلاوت روک دی گئی ہے۔";
+  }
+  }
 <button class="btn" style="flex:1;" onclick="fetchSurahData(false)">تلاوت لوڈ کریں</button>
 </div>
 </div>
