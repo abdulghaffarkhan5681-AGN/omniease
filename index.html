@@ -24,7 +24,7 @@ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 body {
 background-color: var(--bg);
 color: var(--text);
-line-height: 1.6;
+line-height: 1.6; کہ
 padding-bottom: 40px;
 }
 header {
@@ -687,6 +687,51 @@ ctx.fillStyle = "#105b38";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 ctx.fillStyle = "#d4af37";
 ctx.font = "bold 18px Arial";
+  // Poster drawing function with line controls support
+let posterLineCount = 3;
+
+function drawPoster() {
+  const canvas = document.getElementById('posterCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  const topText = document.getElementById('posterTopText') ? document.getElementById('posterTopText').value : "فیضان مبیلوی";
+  const midText = document.getElementById('posterMidText') ? document.getElementById('posterMidText').value : "طالب دعا عبدالغفار خان";
+  const botText = document.getElementById('posterBotText') ? document.getElementById('posterBotText').value : "کچے گھر پکے رشتے (AGN)";
+  
+  ctx.fillStyle = "#2c3e50";
+  ctx.font = "bold 20px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText(topText, canvas.width / 2, 80);
+  
+  if (posterLineCount >= 2) {
+    ctx.font = "16px Arial";
+    ctx.fillText(midText, canvas.width / 2, 120);
+  }
+  
+  if (posterLineCount >= 3) {
+    ctx.fillStyle = "#d4af37";
+    ctx.font = "bold 18px Arial";
+    ctx.fillText(botText, canvas.width / 2, canvas.height - 50);
+  }
+}
+
+function increasePosterLines() {
+  if (posterLineCount < 5) {
+    posterLineCount++;
+    drawPoster();
+  }
+}
+
+function decreasePosterLines() {
+  if (posterLineCount > 1) {
+    posterLineCount--;
+    drawPoster();
+  }
+}
+
 let map;
 let todayDate = new Date();
 let currentMonth = todayDate.getMonth();
@@ -803,6 +848,7 @@ window.addEventListener('deviceorientation', function(event) {
     if(needle) needle.style.transform = 'rotate(' + rotation + 'deg)';
   }
 }, true);
+
 window.onload = function() {
   try {
     if (typeof drawPoster === 'function') drawPoster();
