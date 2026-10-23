@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OMNI EASE - امنی ایز</title>
-<!-- PWA & Mobile Settings -->
 <meta name="theme-color" content="#105b38">
 <link rel="stylesheet" href="[https://unpkg.com/leaflet@1.9.4/dist/leaflet.css](https://unpkg.com/leaflet@1.9.4/dist/leaflet.css)" />
 <script src="[https://unpkg.com/leaflet@1.9.4/dist/leaflet.js](https://unpkg.com/leaflet@1.9.4/dist/leaflet.js)"></script>
@@ -43,7 +42,6 @@ header p {
 font-size: 13px;
 opacity: 0.9;
 }
-/* Nav Tabs */
 nav {
 display: flex;
 overflow-x: auto;
@@ -93,13 +91,15 @@ border-right: 4px solid var(--primary);
 display: inline-block;
 background: var(--primary);
 color: white;
-padding: 8px 16px;
+padding: 10px 18px;
 border-radius: 5px;
 text-decoration: none;
 border: none;
 cursor: pointer;
-font-size: 14px;
-margin-top: 5px;
+font-size: 15px;
+margin-top: 8px;
+width: 100%;
+font-weight: bold;
 }
 .btn-accent {
 background: var(--accent);
@@ -113,20 +113,21 @@ border: 1px solid #ccc;
 border-radius: 5px;
 font-size: 14px;
 }
-/* Quran & Library Style */
 .quran-text {
-font-size: 22px;
+font-size: 24px;
 text-align: right;
-line-height: 2;
+line-height: 2.2;
 color: #105b38;
-margin-bottom: 10px;
+margin-bottom: 15px;
+direction: rtl;
 }
 .translation-text {
-font-size: 15px;
-color: #444;
-text-align: justify;
+font-size: 16px;
+color: #333;
+text-align: right;
+line-height: 1.8;
+direction: rtl;
 }
-/* Ledger Table */
 table {
 width: 100%;
 border-collapse: collapse;
@@ -185,7 +186,7 @@ margin-top: 10px;
 <div class="card">
 <h3>📖 قرآن مجید و عالمی تراجم</h3>
 <label>سورت کا انتخاب کریں:</label>
-<select id="surahSelect" onchange="fetchSurahData()">
+<select id="surahSelect">
 <option value="1">1. الفاتحة</option>
 <option value="2">2. البقرة</option>
 <option value="36">36. يس</option>
@@ -196,7 +197,7 @@ margin-top: 10px;
 <option value="114">114. الناس</option>
 </select>
 <label>زبان اور مترجم منتخب کریں:</label>
-<select id="langSelect" onchange="fetchSurahData()">
+<select id="langSelect">
 <option value="ur.jalandhry">اردو - فتح محمد جالندھری</option>
 <option value="ur.junagarhi">اردو - مولانا جوناگڑھی</option>
 <option value="en.sahih">English - Sahih International</option>
@@ -209,7 +210,7 @@ margin-top: 10px;
 </div>
 <div id="quranDisplay" class="card" style="display:none;">
 <div id="arabicText" class="quran-text"></div>
-<hr style="margin: 10px 0;">
+<hr style="margin: 15px 0;">
 <div id="translationText" class="translation-text"></div>
 </div>
 </div>
@@ -303,13 +304,11 @@ margin-top: 10px;
 <!-- BRAND FOOTER -->
 <div class="brand-footer">
 <h3>کچے گھر پکے رشتے (AGN)</h3>
-<p>طالبِ دعا: <b>فیضان مبیلوی / عبدالغفار خان</b></p>
+<p>طالبِ دعا: <b>فیضان میبلوی / عبدالغفار خان</b></p>
 <p style="font-size:11px; color:#777; margin-top:5px;">OMNI EASE PWA © All Rights Reserved</p>
 </div>
 </div>
-<!-- JAVASCRIPT LOGIC -->
 <script>
-// Tab Navigation
 function openTab(tabId, element) {
 let contents = document.querySelectorAll('.tab-content');
 contents.forEach(content => content.classList.remove('active'));
@@ -319,7 +318,6 @@ document.getElementById(tabId).classList.add('active');
 element.classList.add('active');
 if(tabId === 'calendar') initCalendar();
 }
-// Calendar Loader (Safe Execution)
 function initCalendar() {
 try {
 const today = new Date();
@@ -331,31 +329,45 @@ document.getElementById('calendarBox').innerHTML = عیسوی: ${greg} <br> ہج
 document.getElementById('calendarBox').innerHTML = new Date().toDateString();
 }
 }
-// Quran API Fetching
-async function fetchSurahData() {
+// Updated Direct Quran API Logic
+function fetchSurahData() {
 const surah = document.getElementById('surahSelect').value;
 const lang = document.getElementById('langSelect').value;
 const display = document.getElementById('quranDisplay');
 const arabicDiv = document.getElementById('arabicText');
 const transDiv = document.getElementById('translationText');
 display.style.display = 'block';
-arabicDiv.innerText = "عربی متن لوڈ ہو رہا ہے...";
-transDiv.innerText = "ترجمہ لوڈ ہو رہا ہے...";
-try {
-// Arabic
-const resAr = await fetch([https://api.alquran.cloud/v1/surah/$](https://api.alquran.cloud/v1/surah/$){surah});
-const dataAr = await resAr.json();
-arabicDiv.innerText = dataAr.data.ayahs.map(a => a.text).join(" ﴿۝﴾ ");
-// Translation
-const resTr = await fetch([https://api.alquran.cloud/v1/surah/$](https://api.alquran.cloud/v1/surah/$){surah}/${lang});
-const dataTr = await resTr.json();
-transDiv.innerText = dataTr.data.ayahs.map(a => a.text).join(" ");
-} catch (e) {
-arabicDiv.innerText = "ڈیٹا لوڈ کرنے میں دشواری پیش آئی۔ برائے کرم انٹرنیٹ چیک کریں۔";
-transDiv.innerText = "";
+arabicDiv.innerHTML = "<b>عربی متن لوڈ ہو رہا ہے...</b>";
+transDiv.innerHTML = "<b>ترجمہ لوڈ ہو رہا ہے...</b>";
+// Fetch Arabic
+fetch('https://api.alquran.cloud/v1/surah/' + surah)
+.then(response => response.json())
+.then(dataAr => {
+if (dataAr.code === 200) {
+let arabicContent = dataAr.data.ayahs.map(a => a.text + ' ﴿' + a.numberInSurah + '﴾').join(' ');
+arabicDiv.innerText = arabicContent;
+} else {
+arabicDiv.innerText = "عربی متن نہ مل سکا۔";
 }
+})
+.catch(err => {
+arabicDiv.innerText = "انٹرنیٹ کنکشن کی خرابی کی وجہ سے ڈیٹا لوڈ نہیں ہو سکا۔";
+});
+// Fetch Translation
+fetch('https://api.alquran.cloud/v1/surah/' + surah + '/' + lang)
+.then(response => response.json())
+.then(dataTr => {
+if (dataTr.code === 200) {
+let translationContent = dataTr.data.ayahs.map(a => '(' + a.numberInSurah + ') ' + a.text).join(' ');
+transDiv.innerText = translationContent;
+} else {
+transDiv.innerText = "ترجمہ دستیاب نہیں ہے۔";
 }
-// Library Search Mock
+})
+.catch(err => {
+transDiv.innerText = "ترجمہ لوڈ نہیں ہو سکا۔";
+});
+}
 function searchLibrary() {
 const book = document.getElementById('bookSelect').value;
 const query = document.getElementById('hadithSearch').value;
@@ -364,9 +376,8 @@ if(!query) {
 res.innerText = "برائے کرم سرچ باکس میں کچھ تحریر کریں۔";
 return;
 }
-res.innerText = کتاب (${book}) میں "${query}" کے نتائج لوڈ کیے جا رہے ہیں...;
+res.innerText = کتاب (${book}) میں "${query}" کے نتائج تلاش کیے جا رہے ہیں...;
 }
-// Ledger Functionality
 let totalBalance = 0;
 function addLedgerEntry(type) {
 const name = document.getElementById('itemName').value;
@@ -388,8 +399,7 @@ document.getElementById('itemName').value = '';
 document.getElementById('itemQty').value = '';
 document.getElementById('itemAmount').value = '';
 }
-// Translation Mock / API
-async function translateText() {
+function translateText() {
 const text = document.getElementById('sourceText').value;
 const target = document.getElementById('targetLang').value;
 const resBox = document.getElementById('transResult');
@@ -398,22 +408,21 @@ alert("برائے کرم کچھ تحریر کریں۔");
 return;
 }
 resBox.innerText = "ترجمہ ہو رہا ہے...";
-try {
-const res = await fetch([https://api.mymemory.translated.net/get?q=$](https://api.mymemory.translated.net/get?q=$){encodeURIComponent(text)}&langpair=ur|${target});
-const data = await res.json();
+fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=ur|' + target)
+.then(res => res.json())
+.then(data => {
 resBox.innerText = data.responseData.translatedText;
-} catch (e) {
+})
+.catch(e => {
 resBox.innerText = "ترجمہ کرنے میں مسئلہ پیش آیا۔";
+});
 }
-}
-// Text To Speech
 function speakText() {
 const text = document.getElementById('transResult').innerText || document.getElementById('sourceText').value;
 if(!text) return;
 const utterance = new SpeechSynthesisUtterance(text);
 window.speechSynthesis.speak(utterance);
 }
-// Poster Canvas Maker
 function drawPoster() {
 const canvas = document.getElementById('posterCanvas');
 const ctx = canvas.getContext('2d');
@@ -425,7 +434,6 @@ ctx.font = "bold 16px Arial";
 ctx.textAlign = "center";
 ctx.fillText(txt || "OMNI EASE Poster", canvas.width / 2, canvas.height / 2);
 }
-// Map & Location
 let map;
 function getUserLocation() {
 const status = document.getElementById('locationStatus');
@@ -449,7 +457,6 @@ status.innerText = "لوکیشن حاصل کرنے کی اجازت نہیں مل
 status.innerText = "آپ کا براؤزر لوکیشن کو سپورٹ نہیں کرتا۔";
 }
 }
-// Init on Load
 window.onload = function() {
 initCalendar();
 drawPoster();
@@ -457,4 +464,4 @@ drawPoster();
 </script>
 </body>
   </html>
-  
+                            
