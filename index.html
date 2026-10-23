@@ -388,29 +388,29 @@ margin-top: 10px;
 
 <script>
 function openTab(tabId, element) {
-let contents = document.querySelectorAll('.tab-content');
-contents.forEach(content => content.classList.remove('active'));
-let buttons = document.querySelectorAll('nav button');
-buttons.forEach(button => button.classList.remove('active'));
-document.getElementById(tabId).classList.add('active');
-element.classList.add('active');
-if(tabId === 'calendar') initCalendar();
-if(tabId === 'poster') drawPoster();
-if(tabId === 'map-sec' && map) map.invalidateSize();
+  let contents = document.querySelectorAll('.tab-content');
+  contents.forEach(content => content.classList.remove('active'));
+  let buttons = document.querySelectorAll('nav button');
+  buttons.forEach(button => button.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  element.classList.add('active');
+  if(tabId === 'calendar') initCalendar();
+  if(tabId === 'poster') drawPoster();
+  if(tabId === 'map-sec' && map) map.invalidateSize();
 }
 
 function initCalendar() {
-try {
-const today = new Date();
-const options = { year: 'numeric', month: 'long', day: 'numeric' };
-const greg = today.toLocaleDateString('ur-PK', options);
-const hijri = new Intl.DateTimeFormat('ur-TN-u-ca-islamic', options).format(today);
-document.getElementById('gregorianBox').innerHTML = greg;
-document.getElementById('hijriBox').innerHTML = hijri;
-} catch (e) {
-document.getElementById('gregorianBox').innerHTML = new Date().toDateString();
-document.getElementById('hijriBox').innerHTML = "ہجری تاریخ دستیاب نہیں";
-}
+  try {
+    const today = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const greg = today.toLocaleDateString('ur-PK', options);
+    const hijri = new Intl.DateTimeFormat('ur-TN-u-ca-islamic', options).format(today);
+    document.getElementById('gregorianBox').innerHTML = greg;
+    document.getElementById('hijriBox').innerHTML = hijri;
+  } catch (e) {
+    document.getElementById('gregorianBox').innerHTML = new Date().toDateString();
+    document.getElementById('hijriBox').innerHTML = "ہجری تاریخ دستیاب نہیں";
+  }
 }
 
 let currentSurahNo = 1;
@@ -588,9 +588,10 @@ function renderInventory() {
 // Ads & Media Studio Logic
 let adsList = [];
 function publishAd() {
-  const title = document.getElementById('adTitle').value;
-  const contact = document.getElementById('adCon
-                                          const desc = document.getElementById('adDesc').value;
+  const title = document.getElementById('adTitle')
+.value;
+const contact = document.getElementById('adContact').value;
+const desc = document.getElementById('adDesc').value;
 const mediaUrl = document.getElementById('adMediaUrl').value;
 if(!title) {
   alert("براہ کرم اشتہار کا عنوان درج کریں۔");
@@ -599,8 +600,7 @@ if(!title) {
 adsList.unshift({title, contact, desc, mediaUrl});
 renderAds();
 document.getElementById('adTitle').value = '';
-document.getElementById
-'adContact').value = '';
+document.getElementById('adContact').value = '';
 document.getElementById('adDesc').value = '';
 document.getElementById('adMediaUrl').value = '';
 }
@@ -722,13 +722,12 @@ if (navigator.geolocation) {
   status.innerText = "براؤزر لوکیشن کو سپورٹ نہیں کرتا۔";
 }
 }
-
-window.onload = function() {
-try {
-  if (typeof drawPoster === 'function') drawPoster();
-} catch (e) {
-  console.error(e);
-}
+  window.onload = function() {
+  try {
+    if (typeof drawPoster === 'function') drawPoster();
+  } catch (e) {
+    console.error(e);
+  }
 };
 </script>
 </body>
