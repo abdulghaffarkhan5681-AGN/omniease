@@ -308,20 +308,26 @@ margin-top: 10px;
 <!-- 4. CALENDAR -->
 <div id="calendar" class="tab-content">
 <div class="card">
-<h3>📅 اسلامی و عیسوی کیلنڈر</h3>
-<div style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
-  <div style="background: #f0f7f3; padding: 15px; border-radius: 8px; border-right: 4px solid var(--primary); text-align: right;">
-    <span style="font-size: 13px; color: #555; display: block; margin-bottom: 4px;">عیسوی تاریخ (Gregorian Date):</span>
-    <span id="gregorianBox" style="font-size: 17px; font-weight: bold; color: var(--text);">تاریخ لوڈ ہو رہی ہے...</span>
-  </div>
-  <div style="background: #fdf8e2; padding: 15px; border-radius: 8px; border-right: 4px solid var(--accent); text-align: right;">
-    <span style="font-size: 13px; color: #555; display: block; margin-bottom: 4px;">ہجری تاریخ (Islamic Hijri Date):</span>
-    <span id="hijriBox" style="font-size: 17px; font-weight: bold; color: var(--primary);">تاریخ لوڈ ہو رہی ہے...</span>
-  </div>
+<h3>📅 مکمل اسلامی و عیسوی ماہانہ کیلنڈر</h3>
+<div style="display:flex; justify-content:space-between; align-items:center; margin:10px 0;">
+<button class="btn-voice" onclick="changeMonth(-1)">◀ پچھلا مہینہ</button>
+<h4 id="monthYearDisplay" style="color:var(--primary);">مہینہ</h4>
+<button class="btn-voice" onclick="changeMonth(1)">اگلا مہینہ ▶</button>
+</div>
+<table>
+<thead>
+<tr>
+  <th>اتوار</th><th>سوموار</th><th>منگل</th><th>بدھ</th><th>جمعرات</th><th>جمعہ</th><th>ہفتہ</th>
+</tr>
+</thead>
+<tbody id="calendarDaysGrid"></tbody>
+</table>
+<div style="background: #f0f7f3; padding: 10px; border-radius: 8px; margin-top: 10px; text-align: center;">
+  <span id="gregorianBox" style="font-size: 14px; font-weight: bold; display: block;"></span>
+  <span id="hijriBox" style="font-size: 14px; font-weight: bold; color: var(--primary); display: block; margin-top: 5px;"></span>
 </div>
 </div>
 </div>
-
 <!-- 5. LEDGER -->
 <div id="ledger" class="tab-content">
 <div class="card">
@@ -681,50 +687,126 @@ ctx.fillStyle = "#105b38";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 ctx.fillStyle = "#d4af37";
 ctx.font = "bold 18px Arial";
-ctx.textAlign = "center";
-ctx.fillText(txt || "OMNI EASE Poster", canvas.width / 2, canvas.height / 2);
-ctx.font = "12px Arial";
-ctx.fillText("کچے گھر پکے رشتے (AGN)", canvas.width / 2, canvas.height - 30);
-}
-
 let map;
-function getUserLocation() {
-const status = document.getElementById('locationStatus');
-const qibla = document.getElementById('qiblaDirection');
-if (navigator.geolocation) {
-  status.innerText = "ایچ ڈی لوکیشن تلاش کی جا رہی ہے...";
-  navigator.geolocation.getCurrentPosition(position => {
-    const lat = position.coords.latitude;
-    const lng = position.coords.longitude;
-    status.innerText = "لوکیشن مل گئی: " + lat.toFixed(4) + ", " + lng.toFixed(4);
-    
-    const dLon = (39.8262 - lng) * Math.PI / 180;
-    const lat1 = lat * Math.PI / 180;
-    const lat2 = 21.4225 * Math.PI / 180;
-    const y = Math.sin(dLon) * Math.cos(lat2);
-    const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
-    let brng = Math.atan2(y, x) * 180 / Math.PI;
-    brng = (brng + 360) % 360;
-    qibla.innerText = "🕋 قبلہ رخ سمت: شمال سے " + brng.toFixed(1) + " ڈگری";
+let todayDate = new Date();
+let currentMonth = todayDate.getMonth();
+let currentYear = todayDate.getFullYear();
 
-    if (!map) {
-      map = L.map('map').setView([lat, lng], 15);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-    } else {
-      map.setView([lat, lng], 15);
-      map.invalidateSize();
+function initCalendar() {
+  renderMonthCalendar(currentMonth, currentYear);
+}
+
+function changeMonth(direction) {
+  currentMonth += direction;
+  if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear++;
+  } else if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear--;
+  }
+  renderMonthCalendar(currentMonth, currentYear);
+}
+
+function renderMonthCalendar(month, year) {
+  const monthsNames = ["جنوری", "فروری", "مارچ", "اپریل", "مئی", "جون", "جولائی", "اگست", "ستمبر", "اکتوبر", "نومبر", "دسمبر"];
+  const monthDisplay = document.getElementById('monthYearDisplay');
+  if (monthDisplay) monthDisplay.innerText = monthsNames[month] + " " + year;
+  
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  
+  const grid = document.getElementById('calendarDaysGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  
+  let date = 1;
+  let html = '';
+  for (let i = 0; i < 6; i++) {
+    let row = '<tr>';
+    let hasDays = false;
+    for (let j = 0; j < 7; j++) {
+      if (i === 0 && j < firstDay) {
+        row += '<td></td>';
+      } else if (date > daysInMonth) {
+        row += '<td></td>';
+      } else {
+        let isToday = (date === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear());
+        let style = isToday ? 'background:var(--primary); color:white; border-radius:50%; font-weight:bold;' : '';
+        row += '<td><span style="display:inline-block; width:26px; height:26px; line-height:26px; ' + style + '">' + date + '</span></td>';
+        date++;
+        hasDays = true;
+      }
     }
-    L.marker([lat, lng]).addTo(map).bindPopup('آپ کی موجودہ ایچ ڈی لوکیشن').openPopup();
-  }, () => {
-    status.innerText = "لوکیشن کی اجازت نہیں ملی۔";
-  });
-} else {
-  status.innerText = "براؤزر لوکیشن کو سپورٹ نہیں کرتا۔";
+    row += '</tr>';
+    if (hasDays) html += row;
+    if (date > daysInMonth) break;
+  }
+  grid.innerHTML = html;
+
+  try {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const gregBox = document.getElementById('gregorianBox');
+    const hijriBox = document.getElementById('hijriBox');
+    if (gregBox) gregBox.innerHTML = "عیسوی: " + new Date().toLocaleDateString('ur-PK', options);
+    if (hijriBox) hijriBox.innerHTML = "ہجری: " + new Intl.DateTimeFormat('ur-TN-u-ca-islamic', options).format(new Date());
+  } catch (e) {
+    const gregBox = document.getElementById('gregorianBox');
+    if (gregBox) gregBox.innerHTML = new Date().toDateString();
+  }
 }
+
+let qiblaBearing = 0;
+function getUserLocation() {
+  const status = document.getElementById('locationStatus');
+  const qibla = document.getElementById('qiblaDirection');
+  if (navigator.geolocation) {
+    status.innerText = "لوکیشن تلاش کی جا رہی ہے...";
+    navigator.geolocation.getCurrentPosition(position => {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+      status.innerText = "لوکیشن مل گئی: " + lat.toFixed(4) + ", " + lng.toFixed(4);
+      
+      const dLon = (39.8262 - lng) * Math.PI / 180;
+      const lat1 = lat * Math.PI / 180;
+      const lat2 = 21.4225 * Math.PI / 180;
+      const y = Math.sin(dLon) * Math.cos(lat2);
+      const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+      qiblaBearing = Math.atan2(y, x) * 180 / Math.PI;
+      qiblaBearing = (qiblaBearing + 360) % 360;
+      
+      qibla.innerText = "🕋 قبلہ رخ سمت: شمال سے " + qiblaBearing.toFixed(1) + " ڈگری";
+      const needle = document.getElementById('compassNeedle');
+      if(needle) needle.style.transform = 'rotate(' + qiblaBearing + 'deg)';
+
+      if (!map) {
+        map = L.map('map').setView([lat, lng], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+      } else {
+        map.setView([lat, lng], 15);
+        map.invalidateSize();
+      }
+      L.marker([lat, lng]).addTo(map).bindPopup('آپ کی موجودہ لوکیشن').openPopup();
+    }, () => {
+      status.innerText = "لوکیشن کی اجازت نہیں ملی۔";
+    });
+  } else {
+    status.innerText = "براؤزر لوکیشن کو سپورٹ نہیں کرتا۔";
+  }
 }
-  window.onload = function() {
+
+window.addEventListener('deviceorientation', function(event) {
+  let compass = event.alpha;
+  if (compass !== null && qiblaBearing) {
+    let rotation = qiblaBearing - compass;
+    const needle = document.getElementById('compassNeedle');
+    if(needle) needle.style.transform = 'rotate(' + rotation + 'deg)';
+  }
+}, true);
+window.onload = function() {
   try {
     if (typeof drawPoster === 'function') drawPoster();
+    if (typeof initCalendar === 'function') initCalendar();
   } catch (e) {
     console.error(e);
   }
