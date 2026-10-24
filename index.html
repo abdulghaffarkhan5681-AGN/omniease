@@ -963,14 +963,26 @@ function startQiblaAutoCompass() {
         alert("آپ کے ڈیوائس میں لوکیشن سروس دستیاب نہیں ہے۔");
     }
 }
-    function getUserLocation() {
+function getUserLocation() {
     const mapSec = document.getElementById('map-sec');
     if (mapSec) {
         mapSec.style.display = 'block';
         mapSec.scrollIntoView({ behavior: 'smooth' });
     }
-    startQiblaAutoCompass();
-              }  
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                startQiblaAutoCompass();
+            },
+            (error) => {
+                alert("براہ کرم GPS/لوکیشن کی اجازت دیں۔");
+            },
+            { enableHighAccuracy: true }
+        );
+    } else {
+        alert("آپ کے ڈیوائس میں لوکیشن سروس دستیاب نہیں ہے۔");
+    }
+      }
 
 function calculateQiblaAngle(lat, lng) {
     const kaabaLat = 21.422487;
