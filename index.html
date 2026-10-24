@@ -78,7 +78,6 @@
                     </select>
                 </div>
                 <div>
-                                          <div>
                     <label>قاری منتخب کریں:</label>
                     <select id="comprehensiveQariSelect">
                         <option value="Abdurrahmaan_As-Sudais_192kbps">الشيخ عبدالرحمن السديس</option>
@@ -94,10 +93,11 @@
                         <option value="Ali_Al-Hudhaify_128kbps">الشيخ علي الحذيفي</option>
                         <option value="Muhammad_Ayyoub_128kbps">الشيخ محمد أيوب</option>
                     </select>
-    </div>        
-     <button class="btn" onclick="fetchComprehensiveQuranData()">▶️ تلاوت پلے کریں اور ترجمہ لوڈ کریں</button>
-<audio id="comprehensiveQuranAudio" controls style="width: 100%; margin-top: 15px;"></audio>
-<div id="comprehensiveQuranOutput" style="width:100%; box-sizing:border-box; margin-top:15px; direction:rtl; text-align:right;"></div>           
+                </div>
+            </div>        
+            <button class="btn" onclick="fetchComprehensiveQuranData()">▶️ تلاوت پلے کریں اور ترجمہ لوڈ کریں</button>
+            <audio id="comprehensiveQuranAudio" controls style="width: 100%; margin-top: 15px;"></audio>
+            <div id="comprehensiveQuranOutput" style="width:100%; box-sizing:border-box; margin-top:15px; direction:rtl; text-align:right;"></div>           
         </section>
 
         <!-- 2. Hadith Module -->
@@ -113,7 +113,7 @@
             <div id="comprehensiveBookOutput" class="output-box">مواد یہاں شو ہوگا۔</div>
         </section>
 
-               <!-- 3. POS & Business Module with Image & Video Support -->
+        <!-- 3. POS & Business Module -->
         <section id="sec-pos" class="module-section">
             <h2>💰 3. مکمل بزنس POS، اسٹاک، پروڈکٹ تصویر اور ویڈیو اسٹوڈیو</h2>
             <div class="finance-grid">
@@ -143,7 +143,7 @@
             <div id="compBusinessReport" class="output-box" style="display:none; margin-top:15px;"></div>
         </section> 
 
-                <!-- 4. Maps & Prayer Times Module -->
+        <!-- 4. Maps & Prayer Times Module -->
         <section id="sec-maps" class="module-section">
             <h2>🗺️ 4. لائیو جی پی ایس اوقاتِ نماز (آٹو لوکیشن)</h2>
             <button class="btn" onclick="loadCompPrayerTimesAndGPS()">⏰ لائیو جی پی ایس اوقات لوڈ کریں</button>
@@ -157,13 +157,17 @@
                 قبلہ سمت: 255° مغرب (مکہ مکرمہ) — لائیو سینسر ایکٹیویٹ کرنے کے لیے نیچے بٹن دبائیں۔
             </div>
             <button class="btn" onclick="initCompQiblaCompass()" style="margin-top:12px;">🧭 لائیو کمپاس سینسر آن کریں</button>
-    </section>
+        </section>
 
-        <!-- 6. Translator Module -->
+        <!-- 6. Translator & AI Voice Module -->
         <section id="sec-translator" class="module-section">
-            <h2>🌐 6. ٹرانسلیٹر</h2>
-            <input type="text" id="compTransText" placeholder="متن لکھیں...">
-            <button class="btn" onclick="executeCompTranslation()">ترجمہ کریں</button>
+            <h2>🌐 6. ٹرانسلیٹر اور اے آئی وائس ٹائپنگ (بول کر لکھیں)</h2>
+            <input type="text" id="compTransText" placeholder="یہاں خود لکھیے یا نیچے والا مائیک بٹن دبا کر بولیں...">
+            
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
+                <button class="btn" onclick="executeCompTranslation()">ترجمہ کریں</button>
+                <button class="btn" style="background:#7c3aed;" onclick="startCompSpeechRecognition()">🎙️ بول کر لکھیں (AI Voice)</button>
+            </div>
             <div id="compTransOutput" class="output-box" style="display:none;"></div>
         </section>
 
@@ -201,8 +205,8 @@
 
     <footer>
         <p>فیضان مبیلوی • طالب دعا: عبدالغفار خان • کچے گھر پکے رشتے (AGN)</p>
-                </footer>
-               <script>
+    </footer>
+        <script>
         function switchTab(tabId) {
             document.querySelectorAll('.module-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
@@ -282,7 +286,7 @@
             renderComprehensiveBookContent();
         };
 
-                      async function fetchComprehensiveQuranData() {
+        async function fetchComprehensiveQuranData() {
             let surahNum = document.getElementById('comprehensiveSurahSelect').value;
             let langCode = document.getElementById('comprehensiveLangSelect').value;
             let qariName = document.getElementById('comprehensiveQariSelect').value;
@@ -290,7 +294,6 @@
             let paddedNum = String(surahNum).padStart(3, '0');
             let audioPlayer = document.getElementById('comprehensiveQuranAudio');
             
-            // لائیو آڈیو لنک (بیک ٹِکس کے ساتھ)
             audioPlayer.src = `https://everyayah.com/data/${qariName}/${paddedNum}.mp3`;
             audioPlayer.play().catch(e => console.log("Audio play error:", e));
             
@@ -302,8 +305,6 @@
                 let jsonResult = await response.json();
                 if(jsonResult.code === 200) {
                     let data = jsonResult.data;
-                    
-                    // پیراگراف فارمیٹ (پوری اسکرین پر خوبصورت اور واضح)
                     let paragraphHTML = `<div style='width:100%; text-align:center; margin-bottom:15px;'>
                         <h3 style='color:var(--primary); margin:0;'>${data.englishName} (${data.name}) - ${data.englishNameTranslation}</h3>
                     </div>
@@ -321,7 +322,8 @@
             } catch (err) {
                 outputBox.innerHTML = "<b>⚠️ نیٹ ورک کا مسئلہ ہے۔ انٹرنیٹ کنکشن چیک کریں۔</b>";
             }
-                   }  
+        }
+
         function renderComprehensiveBookContent() {
             let bookKey = document.getElementById('comprehensiveBookSelect').value;
             let displayBox = document.getElementById('comprehensiveBookOutput');
@@ -340,7 +342,6 @@
         let compBankBalanceAmount = 100000;
         let compTotalSalesRevenue = 0;
 
-                // 4. لائیو جی پی ایس لوکیشن اور آٹو نماز کے اوقات (Auto GPS & Prayer Times API)
         function loadCompPrayerTimesAndGPS() {
             let box = document.getElementById('compMapOutput');
             box.style.display = 'block';
@@ -365,7 +366,7 @@
                                 `• عصر (Asr): ${t.Asr}<br>` +
                                 `• مغرب (Maghrib): ${t.Maghrib}<br>` +
                                 `• عشاء (Isha): ${t.Isha}<br>` +
-                                `<hr style='margin:10px 0;'><b>لائیو کوآرڈینیٹس:</b> Lat: ${lat.toFixed(3)}, Lon: ${lon.toFixed(3)} (فوری آٹو سنک)`;
+                                `<hr style='margin:10px 0;'><b>لائیو کوآرڈینیٹس:</b> Lat: ${lat.toFixed(3)}, Lon: ${lon.toFixed(3)}`;
                         } else {
                             fallbackPrayerTimes(box);
                         }
@@ -382,11 +383,9 @@
 
         function fallbackPrayerTimes(box) {
             box.innerHTML = "<b>📍 لاہور (ڈیفالٹ لوکیشن) کے مستند اوقاتِ نماز:</b><br>" +
-                "• فجر: 05:15 AM<br>• طلوع آفتاب: 06:45 AM<br>• ظہر: 12:15 PM<br>• عصر: 03:45 PM<br>• مغرب: 05:55 PM<br>• عشاء: 07:15 PM<br>" +
-                "<small style='color:#0284c7;'>نوٹ: جی پی ایس لوکیشن کی اجازت نہ ملنے پر ڈیفالٹ اوقات دکھائے جا رہے ہیں۔</small>";
+                "• فجر: 05:15 AM<br>• طلوع آفتاب: 06:45 AM<br>• ظہر: 12:15 PM<br>• عصر: 03:45 PM<br>• مغرب: 05:55 PM<br>• عشاء: 07:15 PM";
         }
 
-        // 5. لائیو قبلہ کمپاس (Sensor Based)
         function initCompQiblaCompass() {
             let qiblaBox = document.getElementById('compQiblaDisplay');
             if (!qiblaBox) return;
@@ -399,26 +398,12 @@
                         qiblaBox.innerHTML = `<b style='font-size:17px; color:var(--primary);'>🧭 لائیو قبلہ ڈائریکشن سینسر:</b><br>` +
                             `موبایل کی سمت: ${Math.round(alpha)}°<br>` +
                             `<div style='font-size:32px; transform: rotate(${qiblaAngle}deg); transition: transform 0.3s; margin:10px 0;'>🧭</div>` +
-                            `<small>فون کو گھمائیں جب تک سمت درست نہ ہو جائے (سمت: 255° مغرب)</small>`;
+                            `<small>سمت: 255° مغرب</small>`;
                     }
                 }, true);
             } else {
-                qiblaBox.innerHTML = "<b>🧭 قبلہ سمت:</b> 255° مغرب (مکہ مکرمہ) — آپ کا براؤزر لائیو ڈیوائس سینسر سپورٹ نہیں کرتا۔";
+                qiblaBox.innerHTML = "<b>🧭 قبلہ سمت:</b> 255° مغرب (مکہ مکرمہ)";
             }
-                   }
-
-        function initCompCameraScanner() {
-            let container = document.getElementById('compScannerContainer');
-            container.style.display = 'block';
-            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(stream => {
-                document.getElementById('compCameraVideo').srcObject = stream;
-            }).catch(e => alert("کیمرہ کی اجازت درکار ہے۔"));
-        }
-
-        function loadCompPrayerTimesAndGPS() {
-            let box = document.getElementById('compMapOutput');
-            box.style.display = 'block';
-            box.innerHTML = "<b>لاہور نماز اوقات:</b><br>• فجر: 05:15 AM<br>• ظہر: 12:15 PM<br>• عصر: 03:45 PM<br>• مغرب: 05:55 PM<br>• عشاء: 07:15 PM";
         }
 
         function executeCompTranslation() {
@@ -426,6 +411,45 @@
             let o = document.getElementById('compTransOutput');
             o.style.display = 'block';
             o.innerHTML = t ? "ترجمہ کامیاب: " + t : "براہ کرم کچھ لکھیں۔";
+        }
+
+        // اے آئی اسپیچ ٹو ٹیکسٹ (جو بولیں گے وہ خود بخود لکھا جائے گا)
+        function startCompSpeechRecognition() {
+            let outputBox = document.getElementById('compTransOutput');
+            outputBox.style.display = 'block';
+            
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                outputBox.innerHTML = "<b>⚠️ معذرت! آپ کا براؤزر اے آئی وائس ٹائپنگ (Speech Recognition) سپورٹ نہیں کرتا۔ گوگل کروم استعمال کریں۔</b>";
+                return;
+            }
+            
+            let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            let recognition = new SpeechRecognition();
+            
+            recognition.lang = 'ur-PK'; 
+            recognition.interimResults = true;
+            recognition.continuous = false;
+            
+            outputBox.innerHTML = "<b>🎙️ سن رہے ہیں... اب آپ بولنا شروع کریں (مائیک آن ہے)...</b>";
+            
+            recognition.onresult = function(event) {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    transcript += event.results[i][0].transcript;
+                }
+                document.getElementById('compTransText').value = transcript;
+                outputBox.innerHTML = `<b>🗣️ آپ نے جو بولا وہ یہ ہے:</b><br><p style='font-size:18px; color:var(--primary); font-weight:bold;'>${transcript}</p>`;
+            };
+            
+            recognition.onerror = function(event) {
+                outputBox.innerHTML = "<b>⚠️ آواز پہچاننے میں خرابی پیش آئی۔ براہ کرم دوبارہ کوشش کریں۔</b>";
+            };
+            
+            recognition.onend = function() {
+                console.log("Voice recognition ended.");
+            };
+            
+            recognition.start();
         }
 
         function executeCompPropertyCalculator() {
@@ -451,4 +475,4 @@
         }
     </script>
 </body>
-</html>     
+</html>
