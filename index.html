@@ -925,12 +925,21 @@ const systemInstruction = {
         text: "You are an authentic Islamic Jurisprudence & Scholar Assistant for OMNI EASE - AGN. Answer user queries accurately based on Quran, Sunnah, and Hanafi Fiqh (Fatawa Alamgiri, Radd al-Muhtar, Al-Hedaya). Respond automatically in whatever language the user asks their question in (Urdu, English, Arabic, Pashto, Hindi, French, Spanish, etc.) with scholarly precision." 
     }]
 };
-// قبلہ نما اور لوکیشن کے درست فنکشنز
+
+   // گلوبل ویری ایبل
 let qiblaAngle = 0;
 
 function getUserLocation() {
+    // نقشہ اور قبلہ سیکشن کو سکرین پر ظاہر کریں اور وہاں اسکرول کریں
+    const mapSec = document.getElementById('map-sec');
+    if (mapSec) {
+        mapSec.style.display = 'block';
+        mapSec.scrollIntoView({ behavior: 'smooth' });
+    }
+    
     const qiblaSec = document.getElementById('qibla-sec');
     if (qiblaSec) {
+        qiblaSec.style.display = 'block';
         qiblaSec.scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -958,21 +967,27 @@ function getUserLocation() {
 
 function startQiblaAutoCompass() {
     if (window.DeviceOrientationEvent) {
+        let lastHeading = 0;
         const handleOrientation = (event) => {
             let compassHeading = null;
             
-            if (event.webkitCompassHeading) {
+            if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
                 compassHeading = event.webkitCompassHeading; // iOS کے لیے
             } else if (event.alpha !== null) {
                 compassHeading = 360 - event.alpha; // Android کے لیے
             }
             
             if (compassHeading !== null) {
-                const needleRotation = qiblaAngle - compassHeading;
+                let diff = compassHeading - lastHeading;
+                if (diff > 180) compassHeading -= 360;
+                if (diff < -180) compassHeading += 360;
+                lastHeading += (compassHeading - lastHeading) * 0.2;
+                
+                const needleRotation = qiblaAngle - lastHeading;
                 const needle = document.getElementById('compassNeedle');
                 if (needle) {
                     needle.style.transform = `rotate(${needleRotation}deg)`;
-                    needle.style.transition = 'transform 0.2s ease-out';
+                    needle.style.transition = 'transform 0.1s ease-out';
                 }
             }
         };
@@ -1013,4 +1028,4 @@ window.onload = function() {
 };
 </script>
 </body>
-</html>
+</html>   
