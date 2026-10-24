@@ -604,7 +604,7 @@ function renderMonthCalendar(month, year) {
     if (date > daysInMonth) break;
   }
 }
-    // --- QURAN MODULE FUNCTION ---
+    // --- QURAN MODULE WITH AUTO-PLAY, MEMORIZATION LOOP & MANUAL MODES ---
     async function fetchSurahData() {
       const surahNum = document.getElementById('surahSelect').value;
       const qari = document.getElementById('qariSelect').value;
@@ -613,7 +613,7 @@ function renderMonthCalendar(month, year) {
       const container = document.getElementById('quranContainer');
 
       displayCard.style.display = 'block';
-      container.innerHTML = '<p style="text-align:center; color:var(--primary); font-weight:bold;">⏳ تلاوت اور ترجمہ لوڈ ہو رہا ہے، براہ کرم انتظار کریں...</p>';
+      container.innerHTML = '<p style="text-align:center; color:var(--primary); font-weight:bold;">⏳ تلاوت، تراجم اور حفظ مود لوڈ ہو رہے ہیں...</p>';
 
       try {
         const response = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/editions/${qari},${translationLang}`);
@@ -624,32 +624,140 @@ function renderMonthCalendar(month, year) {
           const translationData = data.data[1];
 
           let htmlContent = `<h3 style="text-align:center; color:var(--primary);">${audioData.name} (${audioData.englishName})</h3>`;
-          htmlContent += `<p style="text-align:center; font-size:13px; color:#666;">آیات کی تعداد: ${audioData.numberOfAyahs}</p><hr>`;
+          htmlContent += `<p style="text-align:center; font-size:13px; color:#666;">کل آیات: ${audioData.numberOfAyahs} | آٹو پلے اور حفظ/ریپیٹ موڈ فعال</p><hr>`;
+
+          let audioSources = [];
 
           audioData.ayahs.forEach((ayah, index) => {
             const transAyah = translationData.ayahs[index];
-            const audioUrl = ayah.audio || ayah.audioSecondary[0];
+            const audioUrl = ayah.audio || (ayah.audioSecondary ? ayah.audioSecondary[0] : '');
+            audioSources.push(audioUrl);
 
             htmlContent += `
-              <div class="verse-box" style="margin-bottom:15px; padding:10px; border-bottom:1px solid #eee;">
+              <div class="verse-box" id="verse-${index}" style="margin-bottom:15px; padding:12px; border:1px solid #ddd; border-bottom:2px solid var(--primary); border-radius:8px; background:#fff; transition: 0.3s;">
                 <p style="font-size:20px; font-family:'Traditional Arabic', serif; direction:rtl; text-align:right; color:#1b4d3e; font-weight:bold; line-height:1.8;">
                   ${ayah.text} <span style="font-size:14px; color:var(--accent);">﴿${ayah.numberInSurah}﴾</span>
                 </p>
                 <p style="font-size:14px; color:#333; direction:rtl; text-align:right; margin:5px 0 10px;">
                   ${transAyah.text}
                 </p>
-                ${audioUrl ? `<audio controls style="width:100%; height:35px;"><source src="${audioUrl}" type="audio/mpeg"></audio>` : ''}
+                
+                <!-- Audio Controls & Memorization Loop Options -->
+                <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; margin-top:8px;">
+                  ${audioUrl ? `<audio id="audio-${index}" controls style="flex:1; min-width:200px; height:35px;" onended="handleAudioEnded(${index})"><source src="${audioUrl}" type="audio/mpeg"></audio>` : ''}
+                  <button onclick="toggleMemorizationLoop(${index})" id="loop-btn-${index}" style="background:#f39c12; color:#fff; border:none; padding:5px 10px; border-radius:4px; font-size:12px; cursor:pointer;" title="اس آیت کو حفظ کے لیے بار بار دہرائیں (Loop)">🔄 حفظ ریپیٹ: بند</button>
+                </div>
               </div>
             `;
           });
 
-          container.innerHTML = htmlContent;
+          // Master Controls for Auto-Play & Mode Selection
+          let masterPlayHtml = `
+            <div style="text-align:center; margin-bottom:20px; background:#f9f9f9; padding:12px; border-radius:8px; border:1px solid #ccc;">
+              <p style="font-weight:bold; color:#333; margin-bottom:8px; font-size:14px;">🎧 تلاوت کے موڈز (Modes):</p>
+              <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+                <button class="btn" style="background:var(--accent); color:#000; padding:8px 15px; font-weight:bold; border-radius:5px;" onclick="startContinuousPlay(0)">▶️ پوری سورت آٹو پلے</button>
+                <button class="btn" style="background:#c0392b; color:#fff; padding:8px 15px; font-weight:bold; border-radius:5px;" onclick="stopAllAudio()">⏹️ تمام آڈیو بند کریں</button>
+              </div>
+            </div>
+          `;
+
+          container.innerHTML = masterPlayHtml + htmlContent;
+          window.currentSurahAudioList = audioSources;
+          window.memorizationLoopState = {}; // Tracks loop status for each verse
+
         } else {
-          container.innerHTML = '<p style="text-align:center; color:#c0392b;">❌ ڈیٹا لوڈ کرنے میں ناکامی ہوئی۔ دوبارہ کوشش کریں۔</p>';
+          container.innerHTML = '<p style="text-align:center; color:#c0392b;">❌ ڈیٹا لوڈ کرنے میں ناکامی ہوئی۔</p>';
         }
       } catch (error) {
         console.error(error);
-        container.innerHTML = '<p style="text-align:center; color:#c0392b;">❌ انٹرنیٹ یا سرور کی خرابی کی وجہ سے تلاوت لوڈ نہیں ہو سکی۔</p>';
+        container.innerHTML = '<p style="text-align:center; color:#c0392b;">❌ انٹرنیٹ یا سرور کی خرابی۔</p>';
+      }
+    }
+
+    // Continuous Auto-Play Function
+    function startContinuousPlay(index) {
+      // Turn off all loops during general continuous play
+      if (window.memorizationLoopState) {
+        Object.keys(window.memorizationLoopState).forEach(k => window.memorizationLoopState[k] = false);
+      }
+      playVerseByIndex(index);
+    }
+
+    function playVerseByIndex(index) {
+      if (window.currentSurahAudioList && index < window.currentSurahAudioList.length) {
+        let audioElement = document.getElementById(`audio-${index}`);
+        if (audioElement) {
+          document.querySelectorAll('.verse-box').forEach(box => box.style.background = '#fff');
+          let activeBox = document.getElementById(`verse-${index}`);
+          if (activeBox) {
+            activeBox.style.background = '#f0f7f3';
+            activeBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          audioElement.currentTime = 0;
+          audioElement.play().catch(e => console.log("Auto-play blocked:", e));
+        }
+      }
+    }
+
+    // Handle when an audio ends (Checks for Loop or Auto-Play next)
+    function handleAudioEnded(currentIndex) {
+      // Check if this specific verse is set to Memorization Loop
+      if (window.memorizationLoopState && window.memorizationLoopState[currentIndex]) {
+        let audioElement = document.getElementById(`audio-${currentIndex}`);
+        if (audioElement) {
+          audioElement.currentTime = 0;
+          audioElement.play();
+          return;
+        }
+      }
+
+      // Otherwise, move to the next verse automatically
+      let nextIndex = currentIndex + 1;
+      let nextAudio = document.getElementById(`audio-${nextIndex}`);
+      if (nextAudio) {
+        playVerseByIndex(nextIndex);
+      }
+    }
+
+    // Toggle Memorization Loop for a single verse
+    function toggleMemorizationLoop(index) {
+      if (!window.memorizationLoopState) window.memorizationLoopState = {};
+      window.memorizationLoopState[index] = !window.memorizationLoopState[index];
+      
+      let btn = document.getElementById(`loop-btn-${index}`);
+      let audioElement = document.getElementById(`audio-${index}`);
+
+      if (window.memorizationLoopState[index]) {
+        btn.style.background = '#27ae60';
+        btn.innerText = '🔄 حفظ ریپیٹ: چالو';
+        if (audioElement) {
+          audioElement.loop = true; // Native loop backup
+        }
+      } else {
+        btn.style.background = '#f39c12';
+        btn.innerText = '🔄 حفظ ریپیٹ: بند';
+        if (audioElement) {
+          audioElement.loop = false;
+        }
+      }
+    }
+
+    // Stop all playing audios
+    function stopAllAudio() {
+      if (window.currentSurahAudioList) {
+        window.currentSurahAudioList.forEach((_, index) => {
+          let audio = document.getElementById(`audio-${index}`);
+          if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
+          }
+        });
+      }
+      if (window.memorizationLoopState) {
+        Object.keys(window.memorizationLoopState).forEach(k => window.memorizationLoopState[k] = false);
+      }
+      document.querySelectorAll('.verse-box').forEach(box => box.style.background = '#fff');
       }
       }
 // --- Poster Maker Canvas ---
