@@ -925,13 +925,15 @@ const systemInstruction = {
         text: "You are an authentic Islamic Jurisprudence & Scholar Assistant for OMNI EASE - AGN. Answer user queries accurately based on Quran, Sunnah, and Hanafi Fiqh (Fatawa Alamgiri, Radd al-Muhtar, Al-Hedaya). Respond automatically in whatever language the user asks their question in (Urdu, English, Arabic, Pashto, Hindi, French, Spanish, etc.) with scholarly precision." 
     }]
 };
+// قبلہ نما اور لوکیشن کے درست فنکشنز
+let qiblaAngle = 0;
 
-   function getUserLocation() {
-    const mapSec = document.getElementById('map-sec');
-    if (mapSec) {
-        mapSec.style.display = 'block';
-        mapSec.scrollIntoView({ behavior: 'smooth' });
+function getUserLocation() {
+    const qiblaSec = document.getElementById('qibla-sec');
+    if (qiblaSec) {
+        qiblaSec.scrollIntoView({ behavior: 'smooth' });
     }
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             position => {
@@ -956,7 +958,7 @@ const systemInstruction = {
 
 function startQiblaAutoCompass() {
     if (window.DeviceOrientationEvent) {
-        window.addEventListener('deviceorientation', event => {
+        const handleOrientation = (event) => {
             let compassHeading = null;
             
             if (event.webkitCompassHeading) {
@@ -965,43 +967,50 @@ function startQiblaAutoCompass() {
                 compassHeading = 360 - event.alpha; // Android کے لیے
             }
             
-            if (compassHeading !== null && typeof qiblaAngle !== 'undefined') {
+            if (compassHeading !== null) {
                 const needleRotation = qiblaAngle - compassHeading;
                 const needle = document.getElementById('compassNeedle');
                 if (needle) {
                     needle.style.transform = `rotate(${needleRotation}deg)`;
+                    needle.style.transition = 'transform 0.2s ease-out';
                 }
             }
-        }, true);
+        };
+
+        window.removeEventListener('deviceorientation', handleOrientation);
+        window.addEventListener('deviceorientation', handleOrientation, true);
     } else {
         alert('آپ کے فون میں ڈیوائس اورینٹیشن سینسر دستیاب نہیں ہے۔');
     }
-        } 
+}
+
 function calculateQiblaAngle(lat, lng) {
     const kaabaLat = 21.422487;
     const kaabaLng = 39.826206;
-
+    
     const phiK = kaabaLat * Math.PI / 180;
     const lambdaK = kaabaLng * Math.PI / 180;
     const phi = lat * Math.PI / 180;
     const lambda = lng * Math.PI / 180;
-
+    
     const qibla = Math.atan2(
         Math.sin(lambdaK - lambda),
         Math.cos(phi) * Math.tan(phiK) - Math.sin(phi) * Math.cos(lambdaK - lambda)
     );
-
+    
     return (qibla * 180 / Math.PI + 360) % 360;
-        }
-  if (typeof renderLedger === 'function') renderLedger();    
-  window.onload = function() {
+}
+
+if (typeof renderledger === 'function') renderledger();
+
+window.onload = function() {
     try {
-      if (typeof drawPoster === 'function') drawPoster();
-      if (typeof initCalendar === 'function') initCalendar();
+        if (typeof drawPoster === 'function') drawPoster();
+        if (typeof initCalendar === 'function') initCalendar();
     } catch (e) {
-      console.error(e);
+        console.error(e);
     }
-  };
+};
 </script>
 </body>
-</html>                             
+</html>
