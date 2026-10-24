@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omni Ease AGN Super App Pro - Master Edition (Part 1)</title>
+    <title>Omni Ease AGN Super App Pro - Final Master Edition</title>
     <style>
         :root { --primary: #0f766e; --secondary: #115e59; --bg: #f8fafc; --accent: #0284c7; --dark: #0f172a; --card-bg: #ffffff; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Nastaliq Urdu', 'Segoe UI', Tahoma, sans-serif; }
@@ -185,8 +185,8 @@
 
     <footer>
         <p>فیضان مبیلوی • طالب دعا: عبدالغفار خان • کچے گھر پکے رشتے (AGN)</p>
-                                                           </footer>
-                                                               <script>
+                </footer>
+               <script>
         function switchTab(tabId) {
             document.querySelectorAll('.module-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
@@ -271,12 +271,10 @@
             let langCode = document.getElementById('comprehensiveLangSelect').value;
             let qariName = document.getElementById('comprehensiveQariSelect').value;
             let outputBox = document.getElementById('comprehensiveQuranOutput');
-            
             let paddedNum = String(surahNum).padStart(3, '0');
             let audioPlayer = document.getElementById('comprehensiveQuranAudio');
             audioPlayer.src = `https://download.quranicaudio.com/quran/${qariName}/${paddedNum}.mp3`;
             audioPlayer.play().catch(e => console.log("Audio error"));
-
             outputBox.innerHTML = "<b>ترجمہ لوڈ ہو رہا ہے...</b>";
             try {
                 let response = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/${langCode}`);
@@ -319,15 +317,12 @@
             let itemPrice = Number(document.getElementById('compItemPrice').value);
             let itemQty = Number(document.getElementById('compItemQty').value);
             if(!itemName || !itemPrice || !itemQty) { alert("تمام خانے پر کریں!"); return; }
-
             let totalAmount = itemPrice * itemQty;
             if(type === 'purchase') compBankBalanceAmount -= totalAmount;
             else { compBankBalanceAmount += totalAmount; compTotalSalesRevenue += totalAmount; }
-
             compTransactionRecords.push({ itemName, itemPrice, itemQty, type, totalAmount });
             let reportBox = document.getElementById('compBusinessReport');
             reportBox.style.display = 'block';
-
             let tableHTML = `<table style='width:100%; border-collapse:collapse; text-align:center;' border='1'><tr style='background:#e2e8f0;'><th>قسم</th><th>آئٹم</th><th>قیمت</th><th>تعداد</th><th>کل</th></tr>`;
             let totalStockValuation = 0;
             compTransactionRecords.forEach(t => {
@@ -336,7 +331,6 @@
                 if(t.type === 'purchase') totalStockValuation += t.totalAmount;
             });
             tableHTML += `</table>`;
-
             document.getElementById('compBankBalance').innerText = compBankBalanceAmount.toLocaleString() + " روپے";
             document.getElementById('compStockValue').innerText = totalStockValuation.toLocaleString() + " روپے";
             document.getElementById('compSalesRevenue').innerText = compTotalSalesRevenue.toLocaleString() + " روپے";
@@ -390,4 +384,4 @@
         }
     </script>
 </body>
-</html>
+</html>     
