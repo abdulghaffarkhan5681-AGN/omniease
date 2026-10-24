@@ -19,14 +19,17 @@
         header h1 { font-size: 20px; margin-bottom: 3px; }
         header p { font-size: 11px; opacity: 0.9; }
 
-        /* Top Icon/Tab Navigation Bar */
-        nav { display: flex; background: #0284c7; overflow-x: auto; padding: 8px; gap: 6px; white-space: nowrap; box-shadow: inset 0 -2px 5px rgba(0,0,0,0.1); }
-        nav button { background: rgba(255,255,255,0.15); border: none; color: white; padding: 8px 12px; font-size: 13px; cursor: pointer; border-radius: 6px; font-weight: bold; transition: background 0.3s, transform 0.2s; flex-shrink: 0; }
+        /* Modern Grid Icon/Tab Navigation Bar (5 top, 4 bottom layout) */
+        nav { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; padding: 10px; background: #0284c7; box-shadow: inset 0 -2px 5px rgba(0,0,0,0.1); }
+        @media(max-width: 600px) {
+            nav { grid-template-columns: repeat(3, 1fr); }
+        }
+        nav button { background: rgba(255,255,255,0.15); border: none; color: white; padding: 10px 5px; font-size: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; transition: background 0.3s, transform 0.2s; text-align: center; }
         nav button:hover, nav button.active { background: #ffffff; color: #0284c7; transform: translateY(-2px); }
 
         main { flex: 1; padding: 15px; max-width: 900px; margin: 0 auto; width: 100%; }
 
-        /* Module Sections (Hidden by default, shown when active) */
+        /* Module Sections */
         .module-section { display: none; background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-right: 6px solid var(--primary); }
         .module-section.active { display: block; }
 
@@ -65,10 +68,10 @@
 
     <header>
         <h1>Omni Ease AGN Super App Pro</h1>
-        <p>موبائل ٹیبڈ ڈیزائن • AI اسسٹنٹ • لائیو آڈیو وائس آؤٹ پٹ</p>
+        <p>موبائل گرڈ آئیکنز ڈیزائن • AI اسسٹنٹ • لائیو آڈیو وائس آؤٹ پٹ</p>
     </header>
 
-    <!-- Top Icon/Tab Bar -->
+    <!-- Grid Icon/Tab Bar (Small Buttons) -->
     <nav>
         <button onclick="switchTab('quran')" id="tab-quran" class="active">📖 قرآن</button>
         <button onclick="switchTab('hadith')" id="tab-hadith">📚 احادیث</button>
@@ -236,7 +239,7 @@
                 </div>
             </div>
             <button class="btn" onclick="loadHistoricalEventsData()">اہم تاریخی واقعات دیکھیں</button>
-            <button class="btn audio-btn" onclick="speakText('اسلامی ہجری سال 1447 اور عیسوی سال 2026 کے اہم تاریخی واقعات لوڈ कर दिए गए हैं।')">🔊 کلینڈر آڈیو سنیں</button>
+            <button class="btn audio-btn" onclick="speakText('اسلامی ہجری سال 1447 اور عیسوی سال 2026 کے اہم تاریخی واقعات لوڈ کر دیے گئے ہیں۔')">🔊 کلینڈر آڈیو سنیں</button>
             <div class="ai-action-box">
                 <label style="color:#b45309;">✨ تاریخ ساز واقعات AI جنریٹر:</label>
                 <button class="btn ai-btn" onclick="runAiModule('calendar')">📅 AI تاریخی ڈیٹا لوڈ کریں</button>
@@ -336,9 +339,12 @@
             let targetBtn = document.getElementById('tab-' + tabId);
             
             if(targetSec) targetSec.classList.add('active');
+                if(targetSec) targetSec.classList.add('active');
             if(targetBtn) targetBtn.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-             // Audio Text-to-Speech Function
+        }
+
+        // Audio Text-to-Speech Function
         function speakText(message) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -380,7 +386,7 @@
 
         function fetchQuranWithTafseerAndAudio() {
             let surah = document.getElementById('surahSelect').value;
-            let lang = document.getElementById('quranLangSelect').value;
+            let lang = document.getElementById('quranLangSelect'.value;
             let box = document.getElementById('quranDisplay');
             box.style.display = 'block';
             box.innerHTML = "تلاوت اور ترجمہ لوڈ ہو رہا ہے...";
