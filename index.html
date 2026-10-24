@@ -282,7 +282,7 @@
             renderComprehensiveBookContent();
         };
 
-                async function fetchComprehensiveQuranData() {
+                        async function fetchComprehensiveQuranData() {
             let surahNum = document.getElementById('comprehensiveSurahSelect').value;
             let langCode = document.getElementById('comprehensiveLangSelect').value;
             let qariName = document.getElementById('comprehensiveQariSelect').value;
@@ -290,7 +290,7 @@
             let paddedNum = String(surahNum).padStart(3, '0');
             let audioPlayer = document.getElementById('comprehensiveQuranAudio');
             
-            // लाइव ऑडियो लिंक सेट करें
+            // یہاں بیک ٹِکس (`) کا درست استعمال کیا گیا ہے
             audioPlayer.src = `https://everyayah.com/data/${qariName}/${paddedNum}.mp3`;
             audioPlayer.play().catch(e => console.log("Audio play error:", e));
             
@@ -302,7 +302,6 @@
                 let jsonResult = await response.json();
                 if(jsonResult.code === 200) {
                     let data = jsonResult.data;
-                    // पैराग्राफ की शक्ल में खूबसूरत متن
                     let paragraphHTML = `<h3 style='color:var(--primary); margin-bottom:15px; text-align:center;'>${data.englishName} (${data.name}) - ${data.englishNameTranslation}</h3><p style='line-height:2.4; font-size:19px; text-align:right; direction:rtl; padding:10px;'>`;
                     
                     data.ayahs.forEach(ayah => {
