@@ -926,44 +926,7 @@ const systemInstruction = {
     }]
 };
 
-      // قبلہ نما اور لوکیشن کا درست فنکشن
-function startQiblaAutoCompass() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-            const qiblaAngle = calculateQiblaAngle(lat, lng);
-
-            const needle = document.getElementById('compassNeedle');
-            if (needle) {
-                needle.style.transform = `rotate(${qiblaAngle}deg)`;
-            }
-
-            if (window.DeviceOrientationEvent) {
-                window.addEventListener('deviceorientation', function(event) {
-                    let compassHeading = null;
-                    if (event.webkitCompassHeading) {
-                        compassHeading = event.webkitCompassHeading;
-                    } else if (event.alpha !== null) {
-                        compassHeading = 360 - event.alpha;
-                    }
-
-                    if (compassHeading !== null) {
-                        const needleRotation = qiblaAngle - compassHeading;
-                        if (needle) {
-                            needle.style.transform = `rotate(${needleRotation}deg)`;
-                        }
-                    }
-                }, true);
-            }
-        }, error => {
-            alert("براہ کرم لوکیشن (GPS) کی اجازت دیں۔");
-        }, { enableHighAccuracy: true });
-    } else {
-        alert("آپ کے ڈیوائس میں لوکیشن سروس دستیاب نہیں ہے۔");
-    }
-}
-  function getUserLocation() {
+   function getUserLocation() {
     const mapSec = document.getElementById('map-sec');
     if (mapSec) {
         mapSec.style.display = 'block';
@@ -971,24 +934,49 @@ function startQiblaAutoCompass() {
     }
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-            (position) => {
+            position => {
                 const lat = position.coords.latitude;
                 const lng = position.coords.longitude;
+                
                 if (typeof calculateQiblaAngle === 'function') {
                     qiblaAngle = calculateQiblaAngle(lat, lng);
                 }
+                
                 startQiblaAutoCompass();
             },
-            (error) => {
-                alert("براہ کرم GPS/لوکیشن کی اجازت دیں۔");
+            error => {
+                alert('براہ مہربانی اپنے فون کا GPS اور لوکیشن آن کریں');
             },
-            { enableHighAccuracy: true }
+            { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
         );
     } else {
-        alert("آپ کے ڈیوائس میں لوکیشن سروس دستیاب نہیں ہے۔");
+        alert('آپ کا براؤزر لوکیشن کو سپورٹ نہیں کرتا۔');
     }
-      }    
+}
 
+function startQiblaAutoCompass() {
+    if (window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientation', event => {
+            let compassHeading = null;
+            
+            if (event.webkitCompassHeading) {
+                compassHeading = event.webkitCompassHeading; // iOS کے لیے
+            } else if (event.alpha !== null) {
+                compassHeading = 360 - event.alpha; // Android کے لیے
+            }
+            
+            if (compassHeading !== null && typeof qiblaAngle !== 'undefined') {
+                const needleRotation = qiblaAngle - compassHeading;
+                const needle = document.getElementById('compassNeedle');
+                if (needle) {
+                    needle.style.transform = `rotate(${needleRotation}deg)`;
+                }
+            }
+        }, true);
+    } else {
+        alert('آپ کے فون میں ڈیوائس اورینٹیشن سینسر دستیاب نہیں ہے۔');
+    }
+        } 
 function calculateQiblaAngle(lat, lng) {
     const kaabaLat = 21.422487;
     const kaabaLng = 39.826206;
