@@ -922,40 +922,40 @@ async function searchUniversalIslamicSources() {
 
 let qiblaAngle = 0;
 
-function getUserLocation() {    
+function getUserLocation() {
     const mapSec = document.getElementById('map-sec');
     if (mapSec) {
         mapSec.style.display = 'block';
         mapSec.scrollIntoView({ behavior: 'smooth' });
     }
-    
+
     const qiblaSec = document.getElementById('qibla-sec');
     if (qiblaSec) {
         qiblaSec.style.display = 'block';
         qiblaSec.scrollIntoView({ behavior: 'smooth' });
-    
+    }
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             position => {
                 const lat = position.coords.latitude;
                 const lng = position.coords.longitude;
-                
+
                 if (typeof calculateQiblaAngle === 'function') {
                     qiblaAngle = calculateQiblaAngle(lat, lng);
                 }
-                
+
                 startQiblaAutoCompass();
             },
             error => {
-                alert('براہ مہربانی اپنے فون کا GPS اور لوکیشن آن کریں');
+                alert('اور لوکیشن آن کریں براہ مہربانی اپنے فون کا۔');
             },
             { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
         );
     } else {
         alert('آپ کا براؤزر لوکیشن کو سپورٹ نہیں کرتا۔');
     }
-}
+      }
 
 function startQiblaAutoCompass() {
     if (window.DeviceOrientationEvent) {
