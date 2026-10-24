@@ -988,6 +988,7 @@ function calculateQiblaAngle(lat, lng) {
 
     return (qibla * 180 / Math.PI + 360) % 360;
         }
+  if (typeof renderLedger === 'function') renderLedger();    
   window.onload = function() {
     try {
       if (typeof drawPoster === 'function') drawPoster();
