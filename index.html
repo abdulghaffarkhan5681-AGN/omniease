@@ -199,7 +199,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 2. Quran Audio Playback
+             // 2. Quran Audio Playback
         function startInstantQuranPlayback() {
             let audioUrl = document.getElementById('qariSelect').value;
             let audioPlayer = document.getElementById('quranAudioPlayer');
@@ -207,7 +207,7 @@
             audioPlayer.play().catch(e => console.log("Audio Playback Enabled"));
         }
 
-        // 3. Audio Volume Control
+        // 3. Audio & Video Volume Control
         function changeVolume(val) {
             let audioPlayer = document.getElementById('quranAudioPlayer');
             if(audioPlayer) audioPlayer.volume = val;
@@ -215,9 +215,50 @@
             if(videoPlayer) videoPlayer.volume = val;
         }
 
-        // 4. Voice Studio & Recording Handler
+        // 4. Real Working Audio/Voice Recording Engine (فُل فنکشنل ریکارڈنگ)
+        let mediaRecorder;
+        let audioChunks = [];
+
         function handleRecording(moduleName) {
-            alert("مطلوبہ ماڈیول (" + moduleName + ") کا ریکارڈنگ اسٹوڈیو فعال ہو چکا ہے۔ مائیکروفون تیار ہے!");
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                alert("آپ کا براؤزر مائیکروفون ریکارڈنگ کو سپورٹ نہیں کرتا!");
+                return;
+            }
+
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+
+                    mediaRecorder.ondataavailable = event => {
+                        audioChunks.push(event.data);
+                    };
+
+                    mediaRecorder.onstop = () => {
+                        let audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+                        let audioUrl = URL.createObjectURL(audioBlob);
+                        let audioPlayer = document.getElementById('quranAudioPlayer');
+                        audioPlayer.src = audioUrl;
+                        audioPlayer.controls = true;
+                        alert("وائس ریکارڈنگ کامیابی سے مکمل ہو گئی ہے! اب آپ پلے بٹن سے سن سکتے ہیں۔");
+                    };
+
+                    mediaRecorder.start();
+                    alert("🎙️ ریکارڈنگ شروع ہو چکی ہے... بات چیت مکمل کر کے دوبارہ کلک کریں تاکہ رکے!");
+                    
+                    let recordBtn = document.querySelector('.btn-record');
+                    if(recordBtn) {
+                        recordBtn.innerText = "⏹️ ریکارڈنگ روکیں";
+                        recordBtn.onclick = function() {
+                            mediaRecorder.stop();
+                            recordBtn.innerText = "🎙️ وائس ریکارڈ";
+                            recordBtn.onclick = () => handleRecording(moduleName);
+                        };
+                    }
+                })
+                .catch(err => {
+                    alert("مائیکروفون کی اجازت نہیں ملی یا کوئی خرابی ہے: " + err);
+                });
         }
 
         // 5. Hadith Library Engine
@@ -274,7 +315,7 @@
                 if(!s.classList.contains('active')) s.style.display = 'none';
                 else s.style.display = 'block';
             });
-        };
+        };   
     </script>
 </body>
 </html>
