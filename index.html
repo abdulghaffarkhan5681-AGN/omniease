@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+بے<!DOCTYPE html>
 <html lang="ur" dir="rtl" class="notranslate">
 <head>
     <meta charset="UTF-8">
@@ -884,7 +884,7 @@ async function searchUniversalIslamicSources() {
         baseAnswerUrdu = "<strong>مستند اسلامی شریعت اور حنفی فقہ (ہدایہ، فتاویٰ عالمگیری) کی روشنی میں:</strong><br>آپ کا سوال: <em>\"" + q + "\"</em> موصول ہوا۔ اسلام میں ہر معاملے (عبادات، معاملات، اخلاقیات) کے لیے اصول موجود ہیں۔ چونکہ یہ مسئلہ تفصیلی تحقیق کا متقاضی ہے، لہٰذا قرآن و سنت اور معتبر کتبِ فقہ کے تناظر میں مستند دار الافتاء یا کسی باصلاحیت عالمِ دین سے ذاتی طور پر رجوع فرمائیں تاکہ مکمل اور تسلی بخش فتویٰ حاصل ہو سکے۔";
     }
 
-    const isUrduScript = /[\u0600-\u06FF]/.test(q);
+    const asUrduScript = /[\u0600-\u06FF]/.test(q);
 
     if (isUrduScript) {
         res.innerHTML = '<div class="card" style="background:#f9f9f9; line-height:1.8; text-align:right;">' +
@@ -918,13 +918,11 @@ async function searchUniversalIslamicSources() {
         }
     }
       }      
-const systemInstruction = `You are an authentic Islamic Jurisprudence & Scholar Assistant for OMNI EASE - AGN. Answer user queries accurately based on Quran, Sunnah, and Hanafi Fiqh.`;
+  const systemInstruction = `You are an authentic Islamic Jurisprudence & Scholar Assistant for OMNI EASE - AGN. Answer user queries accurately based on Quran, Sunnah, and Hanafi Fiqh.`;
 
-   // گلوبل ویری ایبل
 let qiblaAngle = 0;
 
-function getUserLocation() {
-    // نقشہ اور قبلہ سیکشن کو سکرین پر ظاہر کریں اور وہاں اسکرول کریں
+function getUserLocation() {    
     const mapSec = document.getElementById('map-sec');
     if (mapSec) {
         mapSec.style.display = 'block';
@@ -935,7 +933,7 @@ function getUserLocation() {
     if (qiblaSec) {
         qiblaSec.style.display = 'block';
         qiblaSec.scrollIntoView({ behavior: 'smooth' });
-    }
+    
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
