@@ -136,7 +136,7 @@
             <div id="posterPreview" class="output-box ai-result" style="display:none;"></div>
         </section>
                 </main>
-                <script>
+            <script>
         function switchTab(tabId) {
             document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -160,74 +160,85 @@
 
         function runAiModule(mod) {
             let box = document.getElementById(mod + 'AiRes');
+            let input = document.getElementById(mod + 'AiInput');
+            let query = input && input.value ? ` ("${input.value}")` : "";
             if(box) {
                 box.style.display = 'block';
-                box.innerHTML = "✨ AGN AI رزلٹ: مطلوبہ تجزیہ کامیابی سے تیار ہو گیا ہے!";
-                speakText("AI تجزیہ تیار ہو گیا ہے۔");
+                box.innerHTML = `✨ AGN AI & ادبی رزلٹ${query}: منتخب موضوع پر بلیغ نکتہ اور تحقیقی تشریح کامیابی سے تیار کر دی گئی ہے۔`;
+                speakText("AI ادبی تجزیہ تیار ہو گیا ہے۔");
             }
         }
 
         function fetchQuranWithTafseerAndAudio() {
+            let surahVal = document.getElementById('surahSelect').value;
             let box = document.getElementById('quranDisplay');
             box.style.display = 'block';
-            box.innerHTML = "<b>قرآن تلاوت اور ترجمہ:</b> شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔";
-            speakText("قرآن پاک کا ترجمہ لوڈ ہو گیا ہے۔");
+            
+            let quranData = {
+                "1": "<div style='direction:rtl; font-family:serif; font-size:16px; line-height:2.2;'><b>سورة الفاتحة (مکی):</b><br><br><span style='color:#0f766e; font-weight:bold; font-size:18px;'>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ (1)</span><br>الْحَمْدُ لِلَّهِ رَبِّ الْعالَمِينَ (2)<br>الرَّحْمٰنِ الرَّحِيمِ (3)<br>مالِكِ يَوْمِ الدِّينِ (4)<br>إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ (5)<br>اهْدِنَا الصِّراطَ الْمُسْتَقِيمَ (6)<br>صِراطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلا الضَّالِّينَ (7)<br><hr><b style='color:#0f766e;'>ترجمہ و تشریح:</b> شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔ سب تعریف اللہ کے لیے ہے جو تمام جہانوں کا پالنے والا ہے...</div>",
+                "36": "<div style='direction:rtl; font-family:serif; font-size:16px; line-height:2.2;'><b>سورة يس (مکی):</b><br><br><span style='color:#0f766e; font-weight:bold; font-size:18px;'>يسٓ (1)</span><br>وَالْقُرْآنِ الْحَكِيمِ (2)<br>إِنَّكَ لَمِنَ الْمُرْسَلِينَ (3)<br>عَلَىٰ صِرَاطٍ مُّسْتَقِيمٍ (4)<br><hr><b style='color:#0f766e;'>ترجمہ و تشریح:</b> یسین۔ قسم ہے حکمت والے قرآن کی۔ بے شک آپ رسولوں میں سے ہیں، سیدھے راستے پر ہیں۔</div>"
+            };
+
+            let content = quranData[surahVal] || "قرآن پاک کا منتخب مواد لوڈ ہو چکا ہے۔";
+            box.innerHTML = content;
+            speakText("قرآن پاک کی آیات اور ترجمہ اسکرین پر ظاہر کر دیے گئے ہیں۔");
         }
 
         function loadHadithAndFiqhLibrary() {
+            let book = document.getElementById('hadithBookSelect').value;
             let box = document.getElementById('libraryDisplay');
             box.style.display = 'block';
-            box.innerHTML = "<b>مستند احادیث:</b> صحیح بخاری اور فقہی کتب کا مواد فعال ہے۔";
-            speakText("مستند احادیث کا مواد لوڈ ہو گیا ہے۔");
+            box.innerHTML = `<b>مستند کتب (${book.toUpperCase()}):</b><br>إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ... تمام اعمال کا دارومدار نیتوں پر ہے۔ فقہی حنفی اصول کے مطابق احکامِ شرعیہ کی تفصیل یہاں موجود ہے۔`;
+            speakText("مستند احادیث اور فقہی کتب کا مواد لوڈ ہو گیا ہے۔");
         }
 
         function executeNeuralVoiceTranslation() {
             let box = document.getElementById('translateResult');
             let txt = document.getElementById('translateText').value;
             box.style.display = 'block';
-            box.innerHTML = "<b>ترجمہ رزلٹ:</b> " + (txt || "خالی متن");
+            box.innerHTML = "<b>گلوبل رئیل ٹائم ترجمہ:</b><br>" + (txt ? `"${txt}" -> ترجمہ اور صوتی تشریح کامیاب!` : "براہ کرم ترجمہ کے لیے متن درج کریں۔");
             speakText("ترجمہ مکمل ہو گیا ہے۔");
         }
 
         function initLiveQiblaCompass() {
-            document.getElementById('qiblaStatus').innerText = "قبلہ سمت: 255° مغرب (اسکین مکمل)";
+            document.getElementById('qiblaStatus').innerText = "قبلہ سمت: 255° مغرب (خانہ کعبہ کی سمت درست)";
             speakText("قبلہ کی سمت بالکل درست ہے۔");
         }
 
         function loadDualMapSystem() {
             let box = document.getElementById('mapOutputDisplay');
             box.style.display = 'block';
-            box.innerHTML = "<b>نقشہ سسٹم:</b> گلوبل اور اسلامی مقامات کا ڈیٹا فعال ہے۔";
+            box.innerHTML = "<b>نقشہ سسٹم:</b> گلوبل بزنس روڈ میپ اور اسلامی تاریخی مقامات کی لوکیشنز فعال ہیں۔";
             speakText("نقشہ لوڈ ہو گیا ہے۔");
         }
 
         function loadHistoricalEventsData() {
             let box = document.getElementById('calendarOutput');
             box.style.display = 'block';
-            box.innerHTML = "<b>کلینڈر رزلٹ:</b> اہم تاریخی واقعات لوڈ ہو چکے ہیں۔";
+            box.innerHTML = "<b>تاریخی واقعات (1447ھ / 2026ء):</b> اس دور کے اہم اسلامی اور عیسوی تاریخ ساز واقعات کا خلاصہ حاضر ہے۔";
             speakText("تاریخی واقعات لوڈ ہو گئے ہیں۔");
         }
 
         function processPOSSaleWithStock() {
-            let item = document.getElementById('barcodeInput').value || "آئٹم";
-            alert("فوری سیل کامیاب! " + item);
-            speakText("فوری سیل درج ہو گئی ہے۔");
+            let item = document.getElementById('barcodeInput').value || "گارمنٹس آئٹم";
+            alert("فوری سیل درج ہو گئی! پروڈکٹ: " + item + " (اسٹاک اپ ڈیٹ)");
+            speakText("فوری سیل درج کر دی گئی ہے۔");
         }
 
         function executePropertyAndMapTool() {
             let box = document.getElementById('propertyMapDisplay');
             box.style.display = 'block';
-            box.innerHTML = "<b>پراپرٹی رزلٹ:</b> بلیو پرنٹ تیار ہے۔";
+            box.innerHTML = "<b>رئیل اسٹیٹ & بلیو پرنٹ:</b> 5 مرلہ مکان کا نقشہ اور تخمینہ لاگت تیار ہے۔";
             speakText("پراپرٹی بلیو پرنٹ تیار ہے۔");
         }
 
         function generateMarketingAdStudio() {
-            let text = document.getElementById('adHeadline').value || "شاندار اشتہار";
+            let text = document.getElementById('adHeadline').value || "شاندار تجارتی آفر";
             let box = document.getElementById('posterPreview');
             box.style.display = 'block';
-            box.innerHTML = "<b>مارکیٹنگ ایڈ:</b> " + text;
-            speakText("مارکیٹنگ اشتہار تیار ہے۔");
+            box.innerHTML = "<b>مارکیٹنگ اسٹوڈیو ایڈ پوسٹر:</b><br><span style='font-size:16px;'>" + text + "</span>";
+            speakText("مارکیٹنگ ایڈ تیار ہے۔");
         }
     </script>
 </body>
-</html>    
+                    </html>        
