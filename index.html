@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+وہ<!DOCTYPE html>
 <html lang="ur" dir="rtl" class="notranslate">
 <head>
     <meta charset="UTF-8">
@@ -700,7 +700,7 @@ function renderMonthCalendar(month, year) {
       }
     }
 
-    // Handle when an audio ends (Checks for Loop or Auto-Play next)
+        // Handle when an audio ends (Auto-play next verse)
     function handleAudioEnded(currentIndex) {
       // Check if this specific verse is set to Memorization Loop
       if (window.memorizationLoopState && window.memorizationLoopState[currentIndex]) {
@@ -712,12 +712,9 @@ function renderMonthCalendar(month, year) {
         }
       }
 
-      // Otherwise, move to the next verse automatically
+      // Otherwise, move to the next verse smoothly
       let nextIndex = currentIndex + 1;
-      let nextAudio = document.getElementById(`audio-${nextIndex}`);
-      if (nextAudio) {
-        playVerseByIndex(nextIndex);
-      }
+      playVerseByIndex(nextIndex);
     }
 
     // Toggle Memorization Loop for a single verse
