@@ -30,7 +30,7 @@
 
     <header>
         <h1>Omni Ease AGN Super App Pro</h1>
-        <p>موبائل گرڈ سپر ایپ • 12 قاری آڈیو • لائیو AI & ترجمہ</p>
+        <p>موبائل گرڈ سپر ایپ • بار بار سننے والا (Loop) آڈیو پلیئر</p>
     </header>
 
     <nav>
@@ -46,9 +46,9 @@
     </nav>
 
     <main>
-        <!-- 1. Quran Module with 12 Qaris -->
+        <!-- 1. Quran Module with Repeat/Loop Audio Player -->
         <section id="sec-quran" class="module-section active">
-            <h2>📖 1. قرآن پاک (آیات، ترجمہ & 12 قاری آڈیو)</h2>
+            <h2>📖 1. قرآن پاک (آیات، ترجمہ & بار بار سننے کا موڈ)</h2>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
                 <div>
                     <label>سورت منتخب کریں:</label>
@@ -60,23 +60,22 @@
                 <div>
                     <label>مشہور قاری منتخب کریں:</label>
                     <select id="qariSelect">
-                        <option value="sudais">الشيخ عبدالرحمن السديس</option>
-                        <option value="shuraim">الشيخ سعود الشريم</option>
-                        <option value="basit">الشيخ عبدالباسط عبدالصمد</option>
-                        <option value="minshawi">الشيخ محمد صديق المنشاوي</option>
-                        <option value="mishary">الشيخ مشاري راشد العفاسي</option>
-                        <option value="ajamy">الشيخ أحمد العجمي</option>
-                        <option value="dosari">الشيخ ياسر الدوسري</option>
-                        <option value="maher">الشيخ ماهر المعيقلي</option>
-                        <option value="hudhaify">الشيخ علي الحذيفي</option>
-                        <option value="ghamdi">الشيخ سعد الغامدي</option>
-                        <option value="sodes">الشيخ عبدالباري الثبيتي</option>
-                        <option value="ayyoub">الشيخ محمد أيوب</option>
+                        <option value="https://download.quranicaudio.com/quran/abdul_rahman_al-sudais/001.mp3">الشيخ عبدالرحمن السديس</option>
+                        <option value="https://download.quranicaudio.com/quran/abdul_basit_murattal/001.mp3">الشيخ عبدالباسط عبدالصمد</option>
+                        <option value="https://download.quranicaudio.com/quran/mishary_rashid_al_afasy/001.mp3">الشيخ مشاري راشد العفاسي</option>
+                        <option value="https://download.quranicaudio.com/quran/saad_al-ghamdi/001.mp3">الشيخ سعد الغامدي</option>
+                        <option value="https://download.quranicaudio.com/quran/maher_almuaiqly/001.mp3">الشيخ ماهر المعيقلي</option>
                     </select>
                 </div>
             </div>
-            <button class="btn" onclick="fetchQuranWithTafseerAndAudio()">قرآن تلاوت اور ترجمہ لوڈ کریں</button>
-            <button class="btn btn-audio" onclick="playQariAudio()">🔊 منتخب قاری کی تلاوت سنیں</button>
+            <button class="btn" onclick="fetchQuranWithTafseerAndAudio()">تلاوت لوڈ کریں & بار بار چلائیں (Loop)</button>
+            
+            <!-- Audio Player with Loop Attribute for repeating -->
+            <div style="margin-top: 10px; background: #e2e8f0; padding: 10px; border-radius: 6px; text-align: center;">
+                <label style="margin-bottom: 5px; color: #0f766e;">🎧 آڈیو پلیئر (یہ خود بخود بار بار بجتا رہے گا):</label>
+                <audio id="quranAudioPlayer" controls loop style="width: 100%; margin-top: 5px;"></audio>
+            </div>
+
             <div style="margin-top:10px; background:#fef3c7; padding:10px; border-radius:6px;">
                 <input type="text" id="quranAiInput" placeholder="قرآن AI سے کچھ پوچھیں..." style="margin-bottom:6px;">
                 <button class="btn btn-ai" onclick="runAiModule('quran')">🤖 AI قرآن تجزیہ</button>
@@ -159,8 +158,8 @@
             <button class="btn btn-audio" onclick="speakText('مارکیٹنگ اسٹوڈیو کا ایڈ پوسٹر تیار ہو چکا ہے۔')">🔊 مارکیٹنگ آڈیو سنیں</button>
             <div id="posterPreview" class="output-box ai-result" style="display:none;"></div>
         </section>
-                                               </main>
-                                              <script>
+    </main>
+        <script>
         function switchTab(tabId) {
             document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -182,11 +181,26 @@
             }
         }
 
-        function playQariAudio() {
-            let qari = document.getElementById('qariSelect').value;
-            let msg = `منتخب قاری کی تلاوت آڈیو پلے کی جا رہی ہے۔`;
-            speakText(msg);
-            alert("تلاوت آڈیو پلیئر فعال ہے (" + qari + ")");
+        function fetchQuranWithTafseerAndAudio() {
+            let surahVal = document.getElementById('surahSelect').value;
+            let qariUrl = document.getElementById('qariSelect').value;
+            let audioPlayer = document.getElementById('quranAudioPlayer');
+            let box = document.getElementById('quranDisplay');
+            
+            box.style.display = 'block';
+            
+            // Play audio with repeat/loop enabled
+            audioPlayer.src = qariUrl;
+            audioPlayer.loop = true; // Auto repeat for learning
+            audioPlayer.play().catch(e => console.log("Auto-play restricted."));
+
+            let quranData = {
+                "1": "<div style='direction:rtl; font-family:serif; font-size:16px; line-height:2.2;'><b>سورة الفاتحة (مکی):</b><br><br><span style='color:#0f766e; font-weight:bold; font-size:18px;'>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ (1)</span><br>الْحَمْدُ لِلَّهِ رَبِّ الْعالَمِينَ (2)<br>الرَّحْمٰنِ الرَّحِيمِ (3)<br>مالِكِ يَوْمِ الدِّينِ (4)<br>إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ (5)<br>اهْدِنَا الصِّراطَ الْمُسْتَقِيمَ (6)<br>صِراطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلا الضَّالِّينَ (7)<br><hr><b style='color:#0f766e;'>ترجمہ و تشریح:</b> شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔ سب تعریف اللہ کے لیے ہے جو تمام جہانوں کا پالنے والا ہے...</div>",
+                "36": "<div style='direction:rtl; font-family:serif; font-size:16px; line-height:2.2;'><b>سورة يس (مکی):</b><br><br><span style='color:#0f766e; font-weight:bold; font-size:18px;'>يسٓ (1)</span><br>وَالْقُرْآنِ الْحَكِيمِ (2)<br>إِنَّكَ لَمِنَ الْمُرْسَلِينَ (3)<br>عَلَىٰ صِرَاطٍ مُّسْتَقِيمٍ (4)<br><hr><b style='color:#0f766e;'>ترجمہ و تشریح:</b> یسین۔ قسم ہے حکمت والے قرآن کی۔ بے شک آپ رسولوں میں سے ہیں، سیدھے راستے پر ہیں۔</div>"
+            };
+
+            box.innerHTML = quranData[surahVal] || "قرآن پاک کا منتخب مواد لوڈ ہو چکا ہے۔";
+            speakText("تلاوت کو بار بار دہرانے (Loop) والے موڈ کے ساتھ شروع کر دیا گیا ہے۔");
         }
 
         function runAiModule(mod) {
@@ -200,26 +214,10 @@
             }
         }
 
-        function fetchQuranWithTafseerAndAudio() {
-            let surahVal = document.getElementById('surahSelect').value;
-            let box = document.getElementById('quranDisplay');
-            box.style.display = 'block';
-            
-            let quranData = {
-                "1": "<div style='direction:rtl; font-family:serif; font-size:16px; line-height:2.2;'><b>سورة الفاتحة (مکی):</b><br><br><span style='color:#0f766e; font-weight:bold; font-size:18px;'>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ (1)</span><br>الْحَمْدُ لِلَّهِ رَبِّ الْعالَمِينَ (2)<br>الرَّحْمٰنِ الرَّحِيمِ (3)<br>مالِكِ يَوْمِ الدِّينِ (4)<br>إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ (5)<br>اهْدِنَا الصِّراطَ الْمُسْتَقِيمَ (6)<br>صِراطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلا الضَّالِّينَ (7)<br><hr><b style='color:#0f766e;'>ترجمہ و تشریح:</b> شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔ سب تعریف اللہ کے لیے ہے جو تمام جہانوں کا پالنے والا ہے...</div>",
-                "36": "<div style='direction:rtl; font-family:serif; font-size:16px; line-height:2.2;'><b>سورة يس (مکی):</b><br><br><span style='color:#0f766e; font-weight:bold; font-size:18px;'>يسٓ (1)</span><br>وَالْقُرْآنِ الْحَكِيمِ (2)<br>إِنَّكَ لَمِنَ الْمُرْسَلِينَ (3)<br>عَلَىٰ صِرَاطٍ مُّسْتَقِيمٍ (4)<br><hr><b style='color:#0f766e;'>ترجمہ و تشریح:</b> یسین۔ قسم ہے حکمت والے قرآن کی۔ بے شک آپ رسولوں میں سے ہیں، سیدھے راستے پر ہیں۔</div>"
-            };
-
-            let content = quranData[surahVal] || "قرآن پاک کا منتخب مواد لوڈ ہو چکا ہے۔";
-            box.innerHTML = content;
-            speakText("قرآن پاک کی آیات اور ترجمہ اسکرین پر ظاہر کر دیے گئے ہیں۔");
-        }
-
         function loadHadithAndFiqhLibrary() {
-            let book = document.getElementById('hadithBookSelect').value;
             let box = document.getElementById('libraryDisplay');
             box.style.display = 'block';
-            box.innerHTML = `<b>مستند کتب (${book.toUpperCase()}):</b><br>إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ... تمام اعمال کا دارومدار نیتوں پر ہے۔ فقہی حنفی اصول کے مطابق احکامِ شرعیہ کی تفصیل یہاں موجود ہے۔`;
+            box.innerHTML = `<b>مستند کتب:</b> تمام اعمال کا دارومدار نیتوں پر ہے۔ فقہی حنفی اصول کے مطابق احکامِ شرعیہ کی تفصیل یہاں موجود ہے۔`;
             speakText("مستند احادیث اور فقہی کتب کا مواد لوڈ ہو گیا ہے۔");
         }
 
@@ -252,7 +250,7 @@
 
         function processPOSSaleWithStock() {
             let item = document.getElementById('barcodeInput').value || "گارمنٹس آئٹم";
-            alert("فوری سیل درج ہو گئی! پروڈکٹ: " + item + " (اسٹاک اپ ڈیٹ)");
+            alert("فوری سیل درج ہو گئی! پروڈکٹ: " + item);
             speakText("فوری سیل درج کر دی گئی ہے۔");
         }
 
@@ -272,4 +270,4 @@
         }
     </script>
 </body>
-</html>     
+</html>
