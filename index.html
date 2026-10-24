@@ -78,23 +78,23 @@
                     </select>
                 </div>
                 <div>
-                                <div>
+                                          <div>
                     <label>قاری منتخب کریں:</label>
                     <select id="comprehensiveQariSelect">
-                        <option value="abdul_rahman_al-sudais">الشيخ عبدالرحمن السديس</option>
-                        <option value="saud_al-shuraim">الشيخ سعود الشريم</option>
-                        <option value="mishary_rashid_al_afasy">الشيخ مشاري راشد العفاسي</option>
-                        <option value="abdul_basit_murattal">الشيخ عبدالباسط عبدالصمد (مرتل)</option>
-                        <option value="abdul_basit_mujawwad">الشيخ عبدالباسط عبدالصمد (مجود)</option>
-                        <option value="minshawi">الشيخ محمد صديق المنشاوي</option>
-                        <option value="husary">الشيخ محمود خليل الحصري</option>
-                        <option value="maher_almuaiqly">الشيخ ماهر المعيقلي</option>
-                        <option value="saad_al-ghamdi">الشيخ سعد الغامدي</option>
-                        <option value="ahmed_ajamy">الشيخ أحمد العجمي</option>
-                        <option value="hudhaify">الشيخ علي الحذيفي</option>
-                        <option value="muhammad_ayyoub">الشيخ محمد أيوب</option>
+                        <option value="Abdurrahmaan_As-Sudais_192kbps">الشيخ عبدالرحمن السديس</option>
+                        <option value="Saud_Ash-Shuraym_192kbps">الشيخ سعود الشريم</option>
+                        <option value="Mishary_Rashid_Alafasy_128kbps">الشيخ مشاري راشد العفاسي</option>
+                        <option value="Abdul_Basit_Murattal_192kbps">الشيخ عبدالباسط عبدالصمد (مرتل)</option>
+                        <option value="Abdul_Basit_Mujawwad_128kbps">الشيخ عبدالباسط عبدالصمد (مجود)</option>
+                        <option value="Minshawy_Murattal_128kbps">الشيخ محمد صديق المنشاوي</option>
+                        <option value="Mahmoud_Khalil_Al-Husary_128kbps">الشيخ محمود خليل الحصري</option>
+                        <option value="Maher_AlMuaiqly_64kbps">الشيخ ماهر المعيقلي</option>
+                        <option value="Saad_Al-Ghamdi_128kbps">الشيخ سعد الغامدي</option>
+                        <option value="Ahmed_Al_Ajamy_128kbps">الشيخ أحمد العجمي</option>
+                        <option value="Ali_Al-Hudhaify_128kbps">الشيخ علي الحذيفي</option>
+                        <option value="Muhammad_Ayyoub_128kbps">الشيخ محمد أيوب</option>
                     </select>
-                                </div>    
+    </div>        
             <button class="btn" onclick="fetchComprehensiveQuranData()">▶️ تلاوت پلے کریں اور ترجمہ لوڈ کریں</button>
             <audio id="comprehensiveQuranAudio" controls style="width: 100%; margin-top: 15px;"></audio>
             <div id="comprehensiveQuranOutput" class="output-box">ترجمہ یہاں ظاہر ہوگا۔</div>
@@ -282,33 +282,41 @@
             renderComprehensiveBookContent();
         };
 
-        async function fetchComprehensiveQuranData() {
+                async function fetchComprehensiveQuranData() {
             let surahNum = document.getElementById('comprehensiveSurahSelect').value;
             let langCode = document.getElementById('comprehensiveLangSelect').value;
             let qariName = document.getElementById('comprehensiveQariSelect').value;
             let outputBox = document.getElementById('comprehensiveQuranOutput');
             let paddedNum = String(surahNum).padStart(3, '0');
             let audioPlayer = document.getElementById('comprehensiveQuranAudio');
-            audioPlayer.src = `https://download.quranicaudio.com/quran/${qariName}/${paddedNum}.mp3`;
-            audioPlayer.play().catch(e => console.log("Audio error"));
-            outputBox.innerHTML = "<b>ترجمہ لوڈ ہو رہا ہے...</b>";
+            
+            // लाइव ऑडियो लिंक सेट करें
+            audioPlayer.src = `https://everyayah.com/data/${qariName}/${paddedNum}.mp3`;
+            audioPlayer.play().catch(e => console.log("Audio play error:", e));
+            
+            outputBox.style.display = 'block';
+            outputBox.innerHTML = "<b>📖 تلاوت اور ترجمہ لوڈ ہو رہا ہے، براہ کرم انتظار کریں...</b>";
+            
             try {
                 let response = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/${langCode}`);
                 let jsonResult = await response.json();
                 if(jsonResult.code === 200) {
                     let data = jsonResult.data;
-                    let htmlContent = `<h3 style="color:var(--primary); margin-bottom:10px;">${data.englishName} (${data.name})</h3><hr style="margin-bottom:10px;">`;
+                    // पैराग्राफ की शक्ल में खूबसूरत متن
+                    let paragraphHTML = `<h3 style='color:var(--primary); margin-bottom:15px; text-align:center;'>${data.englishName} (${data.name}) - ${data.englishNameTranslation}</h3><p style='line-height:2.4; font-size:19px; text-align:right; direction:rtl; padding:10px;'>`;
+                    
                     data.ayahs.forEach(ayah => {
-                        htmlContent += `<div style="padding:8px 0; border-bottom:1px solid #e2e8f0;"><b>(${ayah.numberInSurah})</b> ${ayah.text}</div>`;
+                        paragraphHTML += `${ayah.text} <span style='color:var(--primary); font-weight:bold; font-size:15px;'>(${ayah.numberInSurah})</span> `;
                     });
-                    outputBox.innerHTML = htmlContent;
+                    paragraphHTML += `</p>`;
+                    outputBox.innerHTML = paragraphHTML;
                 } else {
-                    outputBox.innerHTML = "ترجمہ لوڈ کرنے میں خرابی۔";
+                    outputBox.innerHTML = "<b>⚠️ ترجمہ لوڈ کرنے میں خرابی پیش آئی۔</b>";
                 }
-            } catch(e) {
-                outputBox.innerHTML = "نیٹ ورک کا مسئلہ ہے۔";
+            } catch (err) {
+                outputBox.innerHTML = "<b>⚠️ نیٹ ورک کا مسئلہ ہے۔ انٹرنیٹ کنکشن چیک کریں۔</b>";
             }
-        }
+                   }
 
         function renderComprehensiveBookContent() {
             let bookKey = document.getElementById('comprehensiveBookSelect').value;
