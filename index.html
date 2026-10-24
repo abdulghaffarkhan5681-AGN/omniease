@@ -97,7 +97,7 @@
     </div>        
             <button class="btn" onclick="fetchComprehensiveQuranData()">▶️ تلاوت پلے کریں اور ترجمہ لوڈ کریں</button>
             <audio id="comprehensiveQuranAudio" controls style="width: 100%; margin-top: 15px;"></audio>
-            <div id="comprehensiveQuranOutput" class="output-box">ترجمہ یہاں ظاہر ہوگا۔</div>
+<div id="comprehensiveQuranOutput" style="width:100%; box-sizing:border-box; margin-top:15px; direction:rtl; text-align:right;"></div>
         </section>
 
         <!-- 2. Hadith Module -->
@@ -282,7 +282,7 @@
             renderComprehensiveBookContent();
         };
 
-                        async function fetchComprehensiveQuranData() {
+                      async function fetchComprehensiveQuranData() {
             let surahNum = document.getElementById('comprehensiveSurahSelect').value;
             let langCode = document.getElementById('comprehensiveLangSelect').value;
             let qariName = document.getElementById('comprehensiveQariSelect').value;
@@ -290,7 +290,7 @@
             let paddedNum = String(surahNum).padStart(3, '0');
             let audioPlayer = document.getElementById('comprehensiveQuranAudio');
             
-            // یہاں بیک ٹِکس (`) کا درست استعمال کیا گیا ہے
+            // لائیو آڈیو لنک (بیک ٹِکس کے ساتھ)
             audioPlayer.src = `https://everyayah.com/data/${qariName}/${paddedNum}.mp3`;
             audioPlayer.play().catch(e => console.log("Audio play error:", e));
             
@@ -302,12 +302,18 @@
                 let jsonResult = await response.json();
                 if(jsonResult.code === 200) {
                     let data = jsonResult.data;
-                    let paragraphHTML = `<h3 style='color:var(--primary); margin-bottom:15px; text-align:center;'>${data.englishName} (${data.name}) - ${data.englishNameTranslation}</h3><p style='line-height:2.4; font-size:19px; text-align:right; direction:rtl; padding:10px;'>`;
+                    
+                    // پیراگراف فارمیٹ (پوری اسکرین پر خوبصورت اور واضح)
+                    let paragraphHTML = `<div style='width:100%; text-align:center; margin-bottom:15px;'>
+                        <h3 style='color:var(--primary); margin:0;'>${data.englishName} (${data.name}) - ${data.englishNameTranslation}</h3>
+                    </div>
+                    <div style='width:100%; direction:rtl; text-align:right; line-height:2.5; font-size:20px; padding:15px; background:#fdfdfd; border:1px solid #eee; border-radius:10px; box-sizing:border-box;'>`;
                     
                     data.ayahs.forEach(ayah => {
-                        paragraphHTML += `${ayah.text} <span style='color:var(--primary); font-weight:bold; font-size:15px;'>(${ayah.numberInSurah})</span> `;
+                        paragraphHTML += `${ayah.text} <span style='color:var(--primary); font-weight:bold; font-size:16px;'>﴿${ayah.numberInSurah}﴾</span> `;
                     });
-                    paragraphHTML += `</p>`;
+                    
+                    paragraphHTML += `</div>`;
                     outputBox.innerHTML = paragraphHTML;
                 } else {
                     outputBox.innerHTML = "<b>⚠️ ترجمہ لوڈ کرنے میں خرابی پیش آئی۔</b>";
@@ -315,8 +321,7 @@
             } catch (err) {
                 outputBox.innerHTML = "<b>⚠️ نیٹ ورک کا مسئلہ ہے۔ انٹرنیٹ کنکشن چیک کریں۔</b>";
             }
-                   }
-
+                   }  
         function renderComprehensiveBookContent() {
             let bookKey = document.getElementById('comprehensiveBookSelect').value;
             let displayBox = document.getElementById('comprehensiveBookOutput');
