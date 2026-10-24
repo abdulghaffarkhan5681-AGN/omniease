@@ -286,46 +286,7 @@
             renderComprehensiveBookContent();
         };
 
-        async function fetchComprehensiveQuranData() {
-            let surahNum = document.getElementById('comprehensiveSurahSelect').value;
-            let langCode = document.getElementById('comprehensiveLangSelect').value;
-            let qariName = document.getElementById('comprehensiveQariSelect').value;
-            let outputBox = document.getElementById('comprehensiveQuranOutput');
-            let paddedNum = String(surahNum).padStart(3, '0');
-            let audioPlayer = document.getElementById('comprehensiveQuranAudio');
-            
-            audioPlayer.src = `https://everyayah.com/data/${qariName}/${paddedNum}.mp3`;
-            audioPlayer.play().catch(e => console.log("Audio play error:", e));
-            
-            outputBox.style.display = 'block';
-            outputBox.innerHTML = "<b>📖 تلاوت اور ترجمہ لوڈ ہو رہا ہے، براہ کرم انتظار کریں...</b>";
-            
-            try {
-                let response = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/${langCode}`);
-                let jsonResult = await response.json();
-                if(jsonResult.code === 200) {
-                    let data = jsonResult.data;
-                    let paragraphHTML = `<div style='width:100%; text-align:center; margin-bottom:15px;'>
-                        <h3 style='color:var(--primary); margin:0;'>${data.englishName} (${data.name}) - ${data.englishNameTranslation}</h3>
-                    </div>
-                    <div style='width:100%; direction:rtl; text-align:right; line-height:2.5; font-size:20px; padding:15px; background:#fdfdfd; border:1px solid #eee; border-radius:10px; box-sizing:border-box;'>`;
-                    
-                    data.ayahs.forEach(ayah => {
-                        paragraphHTML += `${ayah.text} <span style='color:var(--primary); font-weight:bold; font-size:16px;'>﴿${ayah.numberInSurah}﴾</span> `;
-                    });
-                    
-                    paragraphHTML += `</div>`;
-                    outputBox.innerHTML = paragraphHTML;
-                } else {
-                    outputBox.innerHTML = "<b>⚠️ ترجمہ لوڈ کرنے میں خرابی پیش آئی۔</b>";
-                }
-            } catch (err) {
-                outputBox.innerHTML = "<b>⚠️ نیٹ ورک کا مسئلہ ہے۔ انٹرنیٹ کنکشن چیک کریں۔</b>";
-            }
-        }
-
-        function renderComprehensiveBookContent() {
-            let bookKey = document.getElementById('comprehensiveBookSelect').value;
+                    https://server11.mp3quran.net/sds/${paddedNum}.mp3
             let displayBox = document.getElementById('comprehensiveBookOutput');
             if(bookKey === 'bukhari') {
                 displayBox.innerHTML = "<b>صحیح بخاری شریف:</b> إنما الأعمال بالنيات (تمام اعمال کا دارومدار نیت پر ہے)۔";
