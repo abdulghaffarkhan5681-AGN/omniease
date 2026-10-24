@@ -14,7 +14,7 @@
         nav button { background: rgba(255,255,255,0.2); border: none; color: white; padding: 10px 5px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: bold; text-align: center; }
         nav button.active { background: #fff; color: #0284c7; }
         main { flex: 1; padding: 12px; max-width: 800px; margin: 0 auto; width: 100%; }
-        .module-section { display: none; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-right: 5px solid var(--primary); }
+        .module-section { display: none; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-right: 5px solid var(--primary); margin-bottom: 15px; }
         .module-section.active { display: block; }
         h2 { color: var(--primary); font-size: 16px; margin-bottom: 10px; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; }
         label { display: block; margin: 8px 0 3px; font-weight: bold; font-size: 12px; }
@@ -32,7 +32,7 @@
 
     <header>
         <h1>Omni Ease AGN Super App Pro</h1>
-        <p>موبائل گرڈ سپر ایپ • انسٹ্যান্ট آٹو تلاوت پلیئر</p>
+        <p>موبائل گرڈ سپر ایپ • فعال نیویگیشن سسٹم</p>
     </header>
 
     <nav>
@@ -48,12 +48,12 @@
     </nav>
 
     <main>
-        <!-- 1. Quran Module with Instant Auto-Play -->
+        <!-- 1. Quran Module -->
         <section id="sec-quran" class="module-section active">
             <h2>📖 1. قرآن پاک (فوری آٹو تلاوت & ترجمہ)</h2>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
                 <div>
-                    <label>سورت منتخب کریں (فوری چلے گی):</label>
+                    <label>سورت منتخب کریں:</label>
                     <select id="surahSelect" onchange="startInstantQuranPlayback()">
                         <option value="https://download.quranicaudio.com/quran/abdul_rahman_al-sudais/001.mp3">سورة الفاتحة (السديس)</option>
                         <option value="https://download.quranicaudio.com/quran/abdul_rahman_al-sudais/036.mp3">سورة يس (السديس)</option>
@@ -82,9 +82,7 @@
                 <div id="quranAiRes" class="output-box ai-result" style="display:none;"></div>
             </div>
             <div id="quranDisplay" class="output-box" style="display:block;">
-                <b>سورة الفاتحة:</b><br>
-                بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>
-                الْحَمْدُ لِلَّهِ رَبِّ الْعالَمِينَ... (فوری آٹو پلے موڈ فعال)
+                <b>سورة الفاتحة:</b><br>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>الْحَمْدُ لِلَّهِ رَبِّ الْعالَمِينَ...
             </div>
         </section>
 
@@ -147,29 +145,33 @@
             <button class="btn" onclick="generateMarketingAdStudio()">فوری ایڈ پوسٹر تیار کریں</button>
             <div id="posterPreview" class="output-box ai-result" style="display:none;"></div>
         </section>
-    </main>
-        <script>
+            </main>
+           <script>
         function switchTab(tabId) {
-            document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.module-section').forEach(s => {
+                s.classList.remove('active');
+                s.style.display = 'none';
+            });
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
             
             let targetSec = document.getElementById('sec-' + tabId);
             let targetBtn = document.getElementById('tab-' + tabId);
             
-            if(targetSec) targetSec.classList.add('active');
-            if(targetBtn) targetBtn.classList.add('active');
+            if(targetSec) {
+                targetSec.classList.add('active');
+                targetSec.style.display = 'block';
+            }
+            if(targetBtn) {
+                targetBtn.classList.add('active');
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Instant Play function with zero delay
         function startInstantQuranPlayback() {
             let audioUrl = document.getElementById('surahSelect').value;
             let audioPlayer = document.getElementById('quranAudioPlayer');
-            
             audioPlayer.src = audioUrl;
-            audioPlayer.play().catch(e => {
-                console.log("Browser auto-play policy intercepted, user can click play.");
-            });
+            audioPlayer.play().catch(e => console.log("Play restricted"));
         }
 
         function handleRecording(moduleName) {
@@ -232,10 +234,13 @@
             box.innerHTML = "<b>مارکیٹنگ ایڈ:</b> " + text;
         }
 
-        // Auto trigger instant playback on page load for supreme ease
+        // Initialize display on load
         window.onload = function() {
-            console.log("Omni Ease AGN Super App Pro ready for instant playback.");
+            document.querySelectorAll('.module-section').forEach(s => {
+                if(!s.classList.contains('active')) s.style.display = 'none';
+                else s.style.display = 'block';
+            });
         };
     </script>
 </body>
-</html>
+</html>     
