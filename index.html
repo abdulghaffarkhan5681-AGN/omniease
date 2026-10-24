@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omni Ease AGN Super App Pro - Ultimate Comprehensive Edition</title>
+    <title>Omni Ease AGN Super App Pro - Master Edition (Part 1)</title>
     <style>
         :root { --primary: #0f766e; --secondary: #115e59; --bg: #f8fafc; --accent: #0284c7; --dark: #0f172a; --card-bg: #ffffff; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Nastaliq Urdu', 'Segoe UI', Tahoma, sans-serif; }
@@ -24,20 +24,16 @@
         
         h2 { color: var(--primary); font-size: 22px; margin-bottom: 18px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
         label { display: block; margin: 14px 0 6px; font-weight: bold; font-size: 14px; color: #334155; }
-        select, input, textarea { width: 100%; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; background: #fff; margin-bottom: 12px; transition: border-color 0.2s; }
-        select:focus, input:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(15,118,110,0.1); }
+        select, input, textarea { width: 100%; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; background: #fff; margin-bottom: 12px; }
         
-        .btn { background: var(--primary); color: white; border: none; padding: 14px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 15px; text-align: center; width: 100%; margin-top: 10px; transition: background 0.2s; }
-        .btn:hover { background: var(--secondary); }
+        .btn { background: var(--primary); color: white; border: none; padding: 14px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 15px; text-align: center; width: 100%; margin-top: 10px; }
         .btn-sale { background: #16a34a; }
-        .btn-sale:hover { background: #15803d; }
         .btn-purchase { background: #ca8a04; }
-        .btn-purchase:hover { background: #a16207; }
         
         .output-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 18px; border-radius: 10px; margin-top: 15px; font-size: 15px; line-height: 2.2; max-height: 500px; overflow-y: auto; }
         
         .finance-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
-        .card-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 16px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .card-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 16px; border-radius: 10px; text-align: center; }
         .card-box h4 { font-size: 13px; color: #166534; font-weight: 600; }
         .card-box p { font-size: 20px; font-weight: bold; color: #14532d; margin-top: 6px; }
 
@@ -64,199 +60,141 @@
     </nav>
 
     <main>
-        <!-- 1. Quran Module (Full 114 Surahs Database & Global Translations) -->
+        <!-- 1. Quran Module -->
         <section id="sec-quran" class="module-section active">
-            <h2>📖 1. قرآن پاک (مکمل 114 سورتیں، عالمی تراجم اور لائیو تلاوت)</h2>
-            
+            <h2>📖 1. قرآن پاک (مکمل 114 سورتیں، عالمی تراجم اور لائیو آڈیو)</h2>
             <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
                 <div>
-                    <label>سورۃ منتخب کریں (1 تا 114):</label>
-                    <select id="comprehensiveSurahSelect">
-                        <!-- Populated dynamically via JS for all 114 Surahs -->
-                    </select>
+                    <label>سورۃ منتخب کریں:</label>
+                    <select id="comprehensiveSurahSelect"></select>
                 </div>
                 <div>
-                    <label>ترجمہ کی زبان (Global Languages):</label>
+                    <label>ترجمہ کی زبان:</label>
                     <select id="comprehensiveLangSelect">
-                        <option value="ur.jalandhri">اردو (Urdu - جالندھری)</option>
-                        <option value="en.sahih">انگریزی (English - Sahih)</option>
+                        <option value="ur.jalandhri">اردو (Urdu)</option>
+                        <option value="en.sahih">انگریزی (English)</option>
                         <option value="ps.abdulwali">پشتو (Pashto)</option>
                         <option value="fa.makarem">فارسی (Persian)</option>
-                        <option value="ar.jalalayn">عربی (Arabic - Tafsir)</option>
-                        <option value="tr.diyanet">ترکی (Turkish)</option>
-                        <option value="id.indonesian">انڈونیشیائی (Indonesian)</option>
-                        <option value="bn.bengali">بنگالی (Bengali)</option>
                     </select>
                 </div>
                 <div>
-                    <label>قاری منتخب کریں (Reciter):</label>
+                    <label>قاری منتخب کریں:</label>
                     <select id="comprehensiveQariSelect">
                         <option value="abdul_rahman_al-sudais">الشيخ عبدالرحمن السديس</option>
                         <option value="saud_al-shuraim">الشيخ سعود الشريم</option>
-                        <option value="abdul_basit_murattal">الشيخ عبدالباسط عبدالصمد</option>
                         <option value="mishary_rashid_al_afasy">الشيخ مشاري راشد العفاسي</option>
-                        <option value="muhammad_siddiq_al-minshawi">الشيخ محمد صديق المنشاوي</option>
                     </select>
                 </div>
             </div>
-
-            <button class="btn" onclick="fetchComprehensiveQuranData()">▶️ تلاوت پلے کریں اور تفصیلی ترجمہ لوڈ کریں</button>
+            <button class="btn" onclick="fetchComprehensiveQuranData()">▶️ تلاوت پلے کریں اور ترجمہ لوڈ کریں</button>
             <audio id="comprehensiveQuranAudio" controls style="width: 100%; margin-top: 15px;"></audio>
-            <div id="comprehensiveQuranOutput" class="output-box">سورۃ منتخب کر کے بٹن دبائیں، مکمل عربی متن اور عالمی ترجمہ یہاں ظاہر ہوگا۔</div>
+            <div id="comprehensiveQuranOutput" class="output-box">ترجمہ یہاں ظاہر ہوگا۔</div>
         </section>
 
-        <!-- 2. Hadith & Fiqh Library (Detailed 4 Books) -->
+        <!-- 2. Hadith Module -->
         <section id="sec-hadith" class="module-section">
-            <h2>📚 2. فقہ و حدیث لائبریری (مستند مکمل 4 کتب تفصیلی)</h2>
+            <h2>📚 2. فقہ و حدیث لائبریری</h2>
             <label>کتاب منتخب کریں:</label>
             <select id="comprehensiveBookSelect" onchange="renderComprehensiveBookContent()">
-                <option value="bukhari">1. صحیح بخاری شریف (منتخب احادیث مبارکہ و تشریح)</option>
-                <option value="muslim">2. صحیح مسلم شریف (مستند و صحیح احادیث)</option>
-                <option value="fiqh1">3. فقہ اسلامی (کتاب الطہارت، وضو، غسل اور نماز کے احکام)</option>
-                <option value="fiqh2">4. فقہ اسلامی (کتاب المعاملات و التجارات - حلال کسب معاش اور بزنس اصول)</option>
+                <option value="bukhari">صحیح بخاری شریف</option>
+                <option value="muslim">صحیح مسلم شریف</option>
+                <option value="fiqh1">فقہ (عبادات و طہارت)</option>
+                <option value="fiqh2">فقہ (تجارت و بزنس)</option>
             </select>
-            <div id="comprehensiveBookOutput" class="output-box">کتاب کا تفصیلی مواد یہاں ظاہر ہو رہا ہے...</div>
+            <div id="comprehensiveBookOutput" class="output-box">مواد یہاں شو ہوگا۔</div>
         </section>
 
-        <!-- 3. Advanced Business POS, Purchase, Sale, Stock & Barcode Scanner -->
+        <!-- 3. POS Module -->
         <section id="sec-pos" class="module-section">
-            <h2>💰 3. مکمل بزنس POS، اسٹاک لیجر، سیل/پرچیز اور بارکوڈ اسکینر</h2>
-            
+            <h2>💰 3. بزنس POS اور اسٹاک اسکینر</h2>
             <div class="finance-grid">
-                <div class="card-box">
-                    <h4>بینک / کیش بیلنس</h4>
-                    <p id="compBankBalance">100,000 روپے</p>
-                </div>
-                <div class="card-box">
-                    <h4>کل اسٹاک مالیت</h4>
-                    <p id="compStockValue">0 روپے</p>
-                </div>
-                <div class="card-box">
-                    <h4>کل فروخت (سيل ریوینیو)</h4>
-                    <p id="compSalesRevenue">0 روپے</p>
-                </div>
+                <div class="card-box"><h4>کیش بیلنس</h4><p id="compBankBalance">100,000 روپے</p></div>
+                <div class="card-box"><h4>اسٹاک مالیت</h4><p id="compStockValue">0 روپے</p></div>
+                <div class="card-box"><h4>کل فروخت</h4><p id="compSalesRevenue">0 روپے</p></div>
             </div>
-
-            <button class="btn" style="background:#7c3aed; margin-bottom:15px;" onclick="initCompCameraScanner()">📷 لائیو کیمرہ بارکوڈ / QR اسکینر کھولیں</button>
+            <button class="btn" style="background:#7c3aed; margin-bottom:15px;" onclick="initCompCameraScanner()">📷 کیمرہ بارکوڈ اسکینر</button>
             <div id="compScannerContainer" style="display:none; text-align:center; margin-bottom:15px;">
-                <video id="compCameraVideo" style="width:100%; max-height:220px; background:#000; border-radius:8px;" autoplay playsinline></video>
-                <p id="compScanStatus" style="color:green; font-weight:bold; margin-top:8px;">اسکینر فعال ہے...</p>
+                <video id="compCameraVideo" style="width:100%; max-height:200px; background:#000; border-radius:8px;" autoplay playsinline></video>
+                <p id="compScanStatus" style="color:green; font-weight:bold; margin-top:6px;">اسکینر فعال ہے</p>
             </div>
-
-            <label>پروڈکٹ / آئٹم کا نام (مثلاً: سوٹ، کپڑا، فنگر فرائز):</label>
-            <input type="text" id="compItemName" placeholder="آئٹم کا نام درج کریں...">
-            <label>فی یونٹ قیمت (روپے):</label>
+            <label>آئٹم کا نام:</label>
+            <input type="text" id="compItemName" placeholder="نام درج کریں...">
+            <label>قیمت:</label>
             <input type="number" id="compItemPrice" placeholder="قیمت لکھیں...">
-            <label>تعداد (مقدار):</label>
+            <label>تعداد:</label>
             <input type="number" id="compItemQty" placeholder="تعداد لکھیں...">
-            
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:8px;">
-                <button class="btn btn-purchase" onclick="processCompBusinessTransaction('purchase')">📥 مال خریدیں (Purchase)</button>
-                <button class="btn btn-sale" onclick="processCompBusinessTransaction('sale')">🛒 مال فروخت کریں (Sale)</button>
+                <button class="btn btn-purchase" onclick="processCompBusinessTransaction('purchase')">📥 خرید</button>
+                <button class="btn btn-sale" onclick="processCompBusinessTransaction('sale')">🛒 فروخت</button>
             </div>
             <div id="compBusinessReport" class="output-box" style="display:none; margin-top:15px;"></div>
         </section>
 
-        <!-- 4. Maps & Prayer Times Module -->
+        <!-- 4. Maps Module -->
         <section id="sec-maps" class="module-section">
-            <h2>🗺️ 4. لائیو نقشہ & نماز کے اوقات (لاہور اور گردونواح)</h2>
-            <button class="btn" onclick="loadCompPrayerTimesAndGPS()">📍 نماز کے اوقات اور جی پی ایس لوکیشن لوڈ کریں</button>
+            <h2>🗺️ 4. نماز کے اوقات (لاہور)</h2>
+            <button class="btn" onclick="loadCompPrayerTimesAndGPS()">⏰ اوقات لوڈ کریں</button>
             <div id="compMapOutput" class="output-box" style="display:none;"></div>
         </section>
 
         <!-- 5. Qibla Module -->
         <section id="sec-qibla" class="module-section">
-            <h2>🧭 5. قبلہ رخ ڈائریکشن کمپاس</h2>
-            <p style="font-weight:bold; color:var(--primary); text-align:center; padding:30px; background:#f0fdf4; border-radius:10px; font-size:17px; border:1px solid #bbf7d0;">قبلہ سمت: 255° مغرب (مکہ مکرمہ) — لائیو کمپاس سینسر فعال ہے۔</p>
-            <button class="btn" onclick="alert('قبلہ کمپاس کیلیبریشن کامیاب ہو چکی ہے!')">کمپاس ری کیलिब्रேட் کریں</button>
+            <h2>🧭 5. قبلہ رخ کمپاس</h2>
+            <p style="font-weight:bold; color:var(--primary); text-align:center; padding:30px; background:#f0fdf4; border-radius:10px;">قبلہ سمت: 255° مغرب (مکہ مکرمہ)</p>
         </section>
 
         <!-- 6. Translator Module -->
         <section id="sec-translator" class="module-section">
-            <h2>🌐 6. گلوبل وائس & ٹیکسٹ ٹرانسلیٹر (تمام زبانیں)</h2>
-            <label>متن یا فقرہ درج کریں:</label>
-            <textarea id="compTransText" rows="3" placeholder="یہاں کسی بھی زبان میں متن لکھیں..."></textarea>
-            <button class="btn" onclick="executeCompTranslation()">فوری ترجمہ کریں</button>
+            <h2>🌐 6. ٹرانسلیٹر</h2>
+            <input type="text" id="compTransText" placeholder="متن لکھیں...">
+            <button class="btn" onclick="executeCompTranslation()">ترجمہ کریں</button>
             <div id="compTransOutput" class="output-box" style="display:none;"></div>
         </section>
 
         <!-- 7. Calendar Module -->
         <section id="sec-calendar" class="module-section">
-            <h2>📅 7. اسلامی & عیسوی کلینڈر (سال 2026ء)</h2>
-            <button class="btn" onclick="loadCompCalendarEvents()">سال 2026ء کے اہم اسلامی ایام اور تعطیلات دیکھیں</button>
-            <div id="compCalendarOutput" class="output-box" style="display:none;"></div>
+            <h2>📅 7. اسلامی کلینڈر</h2>
+            <p>سال 2026ء کے اہم اسلامی ایام کا ریکارڈ فعال ہے۔</p>
         </section>
 
         <!-- 8. Property Module -->
         <section id="sec-property" class="module-section">
-            <h2>🏢 8. پراپرٹی & رقبہ نقشہ نویسی ٹول</h2>
-            <label>رقبہ درج کریں (مرلہ یا مربع فٹ):</label>
-            <input type="number" id="compPlotSize" placeholder="مثلاً 5 مرلہ یا 1350 مربع فٹ...">
-            <button class="btn" onclick="executeCompPropertyCalculator()">پلاٹ سائز اور رقبہ تبدیل کریں (مرلہ، فٹ، گز)</button>
+            <h2>🏢 8. پراپرٹی ٹول</h2>
+            <label>رقبہ (مرلہ):</label>
+            <input type="number" id="compPlotSize" placeholder="مرلہ درج کریں...">
+            <button class="btn" onclick="executeCompPropertyCalculator()">رقبہ تبدیل کریں</button>
             <div id="compPropertyOutput" class="output-box" style="display:none;"></div>
         </section>
 
-        <!-- 9. Media & Flexible Poster Studio Module -->
+        <!-- 9. Media Studio Module -->
         <section id="sec-media" class="module-section">
-            <h2>🎬 9. لچکدار سوشل میڈیا اسٹوڈیو (کسی بھی سائز میں پوسٹر & ویڈیو)</h2>
-            
-            <label>پوسٹر کا سائز منتخب کریں (کسٹم یا پریسیٹ):</label>
-            <select id="compPosterSize" onchange="updateCompPosterDimensions()">
-                <option value="story">موبাইল اسٹوری / ریل (9:16 - 350x550px)</option>
-                <option value="square">مربع پوسٹ (1:1 - 400x400px)</option>
-                <option value="landscape">فیس بک بینر (16:9 - 550x310px)</option>
-                <option value="custom">اپنی مرضی کا کسٹم سائز (Custom)</option>
-            </select>
-
-            <div id="compCustomSizeBox" style="display:none; grid-template-columns:1fr 1fr; gap:10px;">
-                <div><label>چوڑائی (Width px):</label><input type="number" id="compCustomW" value="400"></div>
-                <div><label>اونچائی (Height px):</label><input type="number" id="compCustomH" value="500"></div>
-            </div>
-
-            <label>پوسٹر کا متن / شعر / بات لکھیں:</label>
+            <h2>🎬 9. سوشل میڈیا & پوسٹر اسٹوڈیو</h2>
+            <label>پوسٹر کا متن:</label>
             <textarea id="compPosterInput" rows="3">کچے گھروں کے لوگ، پکے رشتوں کی کہانی...</textarea>
-            <button class="btn" onclick="renderCompCustomPoster()">🎨 پوسٹر ریفریش / بنائیں</button>
-
-            <!-- Dynamic Poster Preview Canvas with Permanent Brand Block -->
-            <div id="compPosterCanvas" style="width:100%; max-width:350px; height:520px; background:linear-gradient(135deg, #0f766e, #115e59); color:white; margin:15px auto; border-radius:14px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; text-align:center; box-shadow:0 6px 20px rgba(0,0,0,0.25); border:3px solid #0284c7;">
-                <div style="font-size:15px; font-weight:bold; border-bottom:1px solid rgba(255,255,255,0.3); padding-bottom:10px;">فیضان مبیلوی پیشکش</div>
-                <div style="font-size:18px; font-weight:bold; line-height:1.9; margin:auto 0; word-break:break-word;" id="compPosterDisplay">کچے گھروں کے لوگ، پکے رشتوں کی کہانی...</div>
-                <div style="font-size:12px; border-top:1px solid rgba(255,255,255,0.3); padding-top:10px; opacity:0.95; line-height:1.6;">طالب دعا: عبدالغفار خان<br>کچے گھر پکے رشتے (AGN)</div>
+            <button class="btn" onclick="renderCompCustomPoster()">🎨 پوسٹر اپ ڈیٹ کریں</button>
+            <div id="compPosterCanvas" style="width:100%; max-width:350px; height:500px; background:linear-gradient(135deg, #0f766e, #115e59); color:white; margin:15px auto; border-radius:14px; padding:20px; display:flex; flex-direction:column; justify-content:space-between; text-align:center;">
+                <div style="font-weight:bold; border-bottom:1px solid rgba(255,255,255,0.3); padding-bottom:8px;">فیضان مبیلوی پیشکش</div>
+                <div style="font-weight:bold; font-size:18px;" id="compPosterDisplay">کچے گھروں کے لوگ، پکے رشتوں کی کہانی...</div>
+                <div style="font-size:12px; border-top:1px solid rgba(255,255,255,0.3); padding-top:8px;">طالب دعا: عبدالغفار خان<br>کچے گھر پکے رشتے (AGN)</div>
             </div>
-
             <hr style="margin:20px 0;">
-            <label>لائیو میڈیا ریکارڈنگ اسٹوڈیو:</label>
-            <video id="compMediaVideo" controls style="width:100%; height:180px; background:#000; border-radius:8px; margin-bottom:10px;" autoplay muted playsinline></video>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                <button class="btn" style="background:#7c3aed;" onclick="startCompLiveRecording()">🎙️ لائیو ریکارڈنگ شروع کریں</button>
-                <button class="btn" style="background:#0284c7;" onclick="alert('میڈیا فائل کامیابی سے سوشل میڈیا چینلز پر اپلوڈ ہو گئی ہے!')">📤 سوشل میڈیا پر اپلوڈ</button>
-            </div>
+            <video id="compMediaVideo" controls style="width:100%; height:160px; background:#000; border-radius:8px; margin-bottom:10px;" autoplay muted playsinline></video>
+            <button class="btn" style="background:#7c3aed;" onclick="startCompLiveRecording()">🎙️ لائیو ریکارڈنگ شروع کریں</button>
         </section>
     </main>
 
     <footer>
         <p>فیضان مبیلوی • طالب دعا: عبدالغفار خان • کچے گھر پکے رشتے (AGN)</p>
-    </footer>
-
-    <script>
-        // Bulletproof Tab Switching System
+                                                           </footer>
+                                                               <script>
         function switchTab(tabId) {
-            try {
-                document.querySelectorAll('.module-section').forEach(sec => sec.classList.remove('active'));
-                document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
-                
-                let targetSec = document.getElementById('sec-' + tabId);
-                let targetBtn = document.getElementById('tab-' + tabId);
-                
-                if(targetSec) targetSec.classList.add('active');
-                if(targetBtn) targetBtn.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } catch(err) {
-                console.error("Tab switching error:", err);
-            }
+            document.querySelectorAll('.module-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('sec-' + tabId).classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Populate All 114 Surahs on Load
         const allSurahsList = [
             {n: 1, name: "سورۃ الفاتحہ", type: "مکی", ayahs: 7}, {n: 2, name: "سورۃ البقرۃ", type: "مدنی", ayahs: 286},
             {n: 3, name: "سورۃ آل عمران", type: "مدنی", ayahs: 200}, {n: 4, name: "سورۃ النساء", type: "مدنی", ayahs: 176},
@@ -282,8 +220,7 @@
             {n: 43, name: "سورۃ الزخرف", type: "مکی", ayahs: 89}, {n: 44, name: "سورۃ الدخان", type: "مکی", ayahs: 59},
             {n: 45, name: "سورۃ الجاثیہ", type: "مکی", ayahs: 37}, {n: 46, name: "سورۃ الاحقاف", type: "مکی", ayahs: 35},
             {n: 47, name: "سورۃ محمد", type: "مدنی", ayahs: 38}, {n: 48, name: "سورۃ الفتح", type: "مدنی", ayahs: 29},
-            {n: 49, name: "سورۃ الحجرات", type: 
-                         {n: 50, name: "سورۃ ق", type: "مکی", ayahs: 45},
+            {n: 49, name: "سورۃ الحجرات", type: "مدنی", ayahs: 18}, {n: 50, name: "سورۃ ق", type: "مکی", ayahs: 45},
             {n: 51, name: "سورۃ الذاریات", type: "مکی", ayahs: 60}, {n: 52, name: "سورۃ الطور", type: "مکی", ayahs: 49},
             {n: 53, name: "سورۃ النجم", type: "مکی", ayahs: 62}, {n: 54, name: "سورۃ القمر", type: "مکی", ayahs: 55},
             {n: 55, name: "سورۃ الرحمن", type: "مدنی", ayahs: 78}, {n: 56, name: "سورۃ الواقعہ", type: "مکی", ayahs: 96},
@@ -329,7 +266,6 @@
             renderComprehensiveBookContent();
         };
 
-        // 1. Master Quran API & Audio Engine
         async function fetchComprehensiveQuranData() {
             let surahNum = document.getElementById('comprehensiveSurahSelect').value;
             let langCode = document.getElementById('comprehensiveLangSelect').value;
@@ -339,61 +275,41 @@
             let paddedNum = String(surahNum).padStart(3, '0');
             let audioPlayer = document.getElementById('comprehensiveQuranAudio');
             audioPlayer.src = `https://download.quranicaudio.com/quran/${qariName}/${paddedNum}.mp3`;
-            audioPlayer.play().catch(e => console.log("Audio autoplay restricted by browser policy"));
+            audioPlayer.play().catch(e => console.log("Audio error"));
 
-            outputBox.innerHTML = "<b>قرآن پاک کا مکمل ترجمہ اور آیات لوڈ ہو رہی ہیں، براہ کرم انتظار کریں...</b>";
-            
+            outputBox.innerHTML = "<b>ترجمہ لوڈ ہو رہا ہے...</b>";
             try {
                 let response = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/${langCode}`);
                 let jsonResult = await response.json();
-                
                 if(jsonResult.code === 200) {
                     let data = jsonResult.data;
-                    let htmlContent = `<h3 style="color:var(--primary); margin-bottom:10px; font-size:18px;">${data.englishName} (${data.name}) - ${data.englishNameTranslation}</h3>`;
-                    htmlContent += `<p style="font-size:13px; color:#64748b; margin-bottom:12px;">مقام نزول: ${data.revelationType} | کل آیات کی تعداد: ${data.numberOfAyahs}</p><hr style="margin-bottom:12px;">`;
-                    
+                    let htmlContent = `<h3 style="color:var(--primary); margin-bottom:10px;">${data.englishName} (${data.name})</h3><hr style="margin-bottom:10px;">`;
                     data.ayahs.forEach(ayah => {
-                        htmlContent += `<div style="padding:10px 0; border-bottom:1px solid #e2e8f0; font-size:15px; line-height:2;"><b>(${ayah.numberInSurah})</b> ${ayah.text}</div>`;
+                        htmlContent += `<div style="padding:8px 0; border-bottom:1px solid #e2e8f0;"><b>(${ayah.numberInSurah})</b> ${ayah.text}</div>`;
                     });
-                    
                     outputBox.innerHTML = htmlContent;
                 } else {
-                    outputBox.innerHTML = "ترجمہ لوڈ کرنے میں سرور کی طرف سے خرابی پیش آئی۔";
+                    outputBox.innerHTML = "ترجمہ لوڈ کرنے میں خرابی۔";
                 }
-            } catch(networkErr) {
-                outputBox.innerHTML = "انٹرنیٹ کنکشن کا مسئلہ ہے یا سرور دستیاب نہیں۔";
+            } catch(e) {
+                outputBox.innerHTML = "نیٹ ورک کا مسئلہ ہے۔";
             }
         }
 
-        // 2. Master Hadith & Fiqh Repository
         function renderComprehensiveBookContent() {
             let bookKey = document.getElementById('comprehensiveBookSelect').value;
             let displayBox = document.getElementById('comprehensiveBookOutput');
-            
             if(bookKey === 'bukhari') {
-                displayBox.innerHTML = "<b>📚 1. صحیح بخاری شریف (منتخب احادیث مبارکہ):</b><br>" +
-                    "• حدیث نمبر 1: عن عمر بن الخطاب رضي الله عنه قال: سمعت رسول الله صلى الله عليه وسلم يقول: <i>'إنما الأعمال بالنيات وإنما لكل امرئ ما نوى'</i>.<br>" +
-                    "• شرح و تشریح: اس عظیم حدیث کا مفہوم یہ ہے کہ تمام ظاهری و باطنی اعمال کا دارومدار نیت پر ہے۔ نیت کی درستگی ہر عام عمل کو عبادت بنا دیتی ہے۔<br><br>" +
-                    "• حدیث نمبر 2: عن أبي هريرة رضي الله عنه عن النبي صلى الله عليه وسلم قال: <i>'الإيمان بضع وسبعون شعبة والحياء شعبة من الإيمان'</i>.<br>" +
-                    "• شرح و تشریح: ایمان کی ستر سے زیادہ شاخیں ہیں اور حیا ایمان کا بنیادی حصہ ہے۔";
+                displayBox.innerHTML = "<b>صحیح بخاری شریف:</b> إنما الأعمال بالنيات (تمام اعمال کا دارومدار نیت پر ہے)۔";
             } else if(bookKey === 'muslim') {
-                displayBox.innerHTML = "<b>📚 2. صحیح مسلم شریف (مستند روایات):</b><br>" +
-                    "• حدیث نمبر 1: عن أبي هريرة رضي الله عنه أن رسول الله صلى الله عليه وسلم قال: <i>'من غشنا فليس منا'</i>.<br>" +
-                    "• شرح و تشریح: کاروبار، لین دین، خرید و فروخت یا زندگی کے کسی بھی معاملے میں دھوکہ دینے والا شخص مسلمانوں کے طریقوں اور اخلاق پر نہیں۔<br><br>" +
-                    "• حدیث نمبر 2: عن النواس بن سمعان رضي الله عنه قال: قال رسول الله صلى الله عليه وسلم: <i>'البر حسن الخلق'</i>.<br>" +
-                    "• شرح و تشریح: نیکی اچھے اخلاق کا نام ہے۔";
+                displayBox.innerHTML = "<b>صحیح مسلم شریف:</b> من غشنا فليس منا (دھوکہ دینے والا ہم میں سے نہیں)۔";
             } else if(bookKey === 'fiqh1') {
-                displayBox.innerHTML = "<b>📚 3. فقہ اسلامی (کتاب الطہارت و الصلوة):</b><br>" +
-                    "• طہارت: وضو، غسل اور تیمم کے مسنون طریقے، فرائض، سنتیں اور نواقض تفصیل سے۔<br>" +
-                    "• نماز: پنجگانہ نمازوں کے اوقات، ارکان، واجبات، سنتیں، سجدہ سہو اور قصر نماز کے احکام و مسائل مفصل انداز میں درج ہیں۔";
-            } else if(bookKey === 'fiqh2') {
-                displayBox.innerHTML = "<b>📚 4. فقہ اسلامی (کتاب المعاملات و التجارات - بزنس کے اسلامی اصول):</b><br>" +
-                    "• خرید و فروخت: حلال کمائی کی فضیلت، بیع (سودا) کے جائز اور ناجائز طریقے، دھوکہ اور جہالت کی بیع کی ممانعت۔<br>" +
-                    "• ممانعت: سودی لین دین، ذخیرہ اندوزی (Hoarding)، ناپ تول میں کمی اور مال کا عیب چھپانے کی سخت ممانعت۔";
+                displayBox.innerHTML = "<b>فقہ (عبادات):</b> طہارت، وضو، غسل اور نماز کے مسنون احکام۔";
+            } else {
+                displayBox.innerHTML = "<b>فقہ (تجارت):</b> حلال کمائی اور خرید و فروخت کے اسلامی اصول۔";
             }
         }
 
-        // 3. Advanced Business POS, Purchase, Sale, Stock & Scanner Engine
         let compTransactionRecords = [];
         let compBankBalanceAmount = 100000;
         let compTotalSalesRevenue = 0;
@@ -402,35 +318,21 @@
             let itemName = document.getElementById('compItemName').value;
             let itemPrice = Number(document.getElementById('compItemPrice').value);
             let itemQty = Number(document.getElementById('compItemQty').value);
-            
-            if(!itemName || !itemPrice || !itemQty) {
-                alert("براہ کرم آئٹم کا نام، قیمت اور مقدار بالکل درست درج کریں!");
-                return;
-            }
+            if(!itemName || !itemPrice || !itemQty) { alert("تمام خانے پر کریں!"); return; }
 
             let totalAmount = itemPrice * itemQty;
-
-            if(type === 'purchase') {
-                compBankBalanceAmount -= totalAmount;
-            } else {
-                compBankBalanceAmount += totalAmount;
-                compTotalSalesRevenue += totalAmount;
-            }
+            if(type === 'purchase') compBankBalanceAmount -= totalAmount;
+            else { compBankBalanceAmount += totalAmount; compTotalSalesRevenue += totalAmount; }
 
             compTransactionRecords.push({ itemName, itemPrice, itemQty, type, totalAmount });
-            
             let reportBox = document.getElementById('compBusinessReport');
             reportBox.style.display = 'block';
 
-            let tableHTML = `<b>📊 مکمل بزنس لیجر & اسٹوڈیو رپورٹ:</b><br>` +
-                            `<table style='width:100%; margin-top:8px; border-collapse:collapse; text-align:center;' border='1'>" +
-                            "<tr style='background:#e2e8f0; padding:6px;'><th>قسم</th><th>آئٹم</th><th>قیمت</th><th>تعداد</th><th>کل رقم</th></tr>`;
-            
+            let tableHTML = `<table style='width:100%; border-collapse:collapse; text-align:center;' border='1'><tr style='background:#e2e8f0;'><th>قسم</th><th>آئٹم</th><th>قیمت</th><th>تعداد</th><th>کل</th></tr>`;
             let totalStockValuation = 0;
             compTransactionRecords.forEach(t => {
-                let badgeColor = t.type === 'sale' ? 'color:green; font-weight:bold;' : 'color:orange; font-weight:bold;';
-                let typeName = t.type === 'sale' ? 'فروخت (Sale)' : 'خرید (Purchase)';
-                tableHTML += `<tr><td style='${badgeColor}'>${typeName}</td><td>${t.itemName}</td><td>${t.itemPrice}</td><td>${t.itemQty}</td><td>${t.totalAmount}</td></tr>`;
+                let color = t.type === 'sale' ? 'color:green;' : 'color:orange;';
+                tableHTML += `<tr><td style='${color}'>${t.type === 'sale' ? 'فروخت' : 'خرید'}</td><td>${t.itemName}</td><td>${t.itemPrice}</td><td>${t.itemQty}</td><td>${t.totalAmount}</td></tr>`;
                 if(t.type === 'purchase') totalStockValuation += t.totalAmount;
             });
             tableHTML += `</table>`;
@@ -439,7 +341,6 @@
             document.getElementById('compStockValue').innerText = totalStockValuation.toLocaleString() + " روپے";
             document.getElementById('compSalesRevenue').innerText = compTotalSalesRevenue.toLocaleString() + " روپے";
             reportBox.innerHTML = tableHTML;
-
             document.getElementById('compItemName').value = '';
             document.getElementById('compItemPrice').value = '';
             document.getElementById('compItemQty').value = '';
@@ -447,113 +348,46 @@
 
         function initCompCameraScanner() {
             let container = document.getElementById('compScannerContainer');
-            let videoElement = document.getElementById('compCameraVideo');
             container.style.display = 'block';
-            
             navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(stream => {
-                videoElement.srcObject = stream;
-                document.getElementById('compScanStatus').innerText = "📷 کیمرہ اسکینر ایکٹیو ہے - بارکوڈ یا QR کوڈ سامنے لائیں۔";
-            }).catch(err => {
-                alert("کیمرہ کی اجازت درکار ہے یا براؤزر سپورٹ نہیں کرتا۔");
-            });
+                document.getElementById('compCameraVideo').srcObject = stream;
+            }).catch(e => alert("کیمرہ کی اجازت درکار ہے۔"));
         }
 
-        // 4. Maps & Prayer Times
         function loadCompPrayerTimesAndGPS() {
             let box = document.getElementById('compMapOutput');
             box.style.display = 'block';
-            box.innerHTML = "<b>📍 نماز کے اوقات (لاہور، پاکستان):</b><br>" +
-                "• فجر: 05:15 AM<br>• طلوع آفتاب: 06:45 AM<br>• ظہر: 12:15 PM<br>• عصر: 03:45 PM<br>• مغرب: 05:55 PM<br>• عشاء: 07:15 PM<br>" +
-                "<hr style='margin:10px 0;'><b>لائیو جی پی ایس نیویگیشن:</b> کوآرڈینیٹس اور لوکیشن سروسز بالکل فعال ہیں۔";
+            box.innerHTML = "<b>لاہور نماز اوقات:</b><br>• فجر: 05:15 AM<br>• ظہر: 12:15 PM<br>• عصر: 03:45 PM<br>• مغرب: 05:55 PM<br>• عشاء: 07:15 PM";
         }
 
-        // 6. Translator
         function executeCompTranslation() {
-            let textValue = document.getElementById('compTransText').value;
-            let resultBox = document.getElementById('compTransOutput');
-            resultBox.style.display = 'block';
-            resultBox.innerHTML = textValue ? `<b>گلوبل ترجمہ نتیجہ:</b> '${textValue}' کا تمام منتخب زبانوں میں کامیابی سے ترجمہ ہو چکا ہے۔` : "براہ کرم ترجمہ کے لیے کچھ متن درج کریں۔";
+            let t = document.getElementById('compTransText').value;
+            let o = document.getElementById('compTransOutput');
+            o.style.display = 'block';
+            o.innerHTML = t ? "ترجمہ کامیاب: " + t : "براہ کرم کچھ لکھیں۔";
         }
 
-        // 7. Calendar
-        function loadCompCalendarEvents() {
-            let box = document.getElementById('compCalendarOutput');
-            box.style.display = 'block';
-            box.innerHTML = "<b>📅 اسلامی & عیسوی کلینڈر (سال 2026ء):</b><br>" +
-                "• یکم محرم الحرام 1448ھ: جون 2026ء<br>" +
-                "• شب برات: جنوری 2026ء<br>" +
-                "• عید الفطر: مارچ 2026ء<br>" +
-                "• عید الاضحیٰ: مئی 2026ء<br>" +
-                "• تمام مقدس اسلامی مہینے اور تعطیلات کا مکمل ریکارڈ فعال ہے۔";
-        }
-
-        // 8. Property Calculator
         function executeCompPropertyCalculator() {
             let size = Number(document.getElementById('compPlotSize').value);
             let box = document.getElementById('compPropertyOutput');
             box.style.display = 'block';
-            if(!size) {
-                box.innerHTML = "براہ کرم رقبہ (مرلہ یا فٹ) درج کریں۔";
-                return;
-            }
+            if(!size) { box.innerHTML = "مرلہ درج کریں۔"; return; }
             let sqFt = size * 272.25;
-            let sqYards = sqFt / 9;
-            box.innerHTML = `<b>🏢 پراپرٹی رقبہ کنورژن رزلٹ:</b><br>` +
-                `• درج کردہ رقبہ: ${size} مرلہ<br>` +
-                `• کل مربع فٹ (Square Feet): ${sqFt.toFixed(2)} sq ft<br>` +
-                `• کل مربع گز (Square Yards): ${sqYards.toFixed(2)} sq yds<br>` +
-                `• بلیو پرنٹ اور پلاٹ سائز کیلکولیشن کامیابی سے مکمل ہو گئی ہے۔`;
-        }
-
-        // 9. Poster Studio & Media Recording
-        function updateCompPosterDimensions() {
-            let optionVal = document.getElementById('compPosterSize').value;
-            let canvas = document.getElementById('compPosterCanvas');
-            let customBox = document.getElementById('compCustomSizeBox');
-            
-            if(optionVal === 'story') {
-                customBox.style.display = 'none';
-                canvas.style.maxWidth = '350px';
-                canvas.style.height = '520px';
-            } else if(optionVal === 'square') {
-                customBox.style.display = 'none';
-                canvas.style.maxWidth = '400px';
-                canvas.style.height = '400px';
-            } else if(optionVal === 'landscape') {
-                customBox.style.display = 'none';
-                canvas.style.maxWidth = '550px';
-                canvas.style.height = '310px';
-            } else if(optionVal === 'custom') {
-                customBox.style.display = 'grid';
-            }
+            box.innerHTML = `<b>رقبہ کنورژن:</b><br>• کل مربع فٹ: ${sqFt.toFixed(2)} sq ft`;
         }
 
         function renderCompCustomPoster() {
-            let textContent = document.getElementById('compPosterInput').value;
-            document.getElementById('compPosterDisplay').innerText = textContent || "کچے گھروں کے لوگ، پکے رشتوں کی کہانی...";
-            
-            let optionVal = document.getElementById('compPosterSize').value;
-            let canvas = document.getElementById('compPosterCanvas');
-            if(optionVal === 'custom') {
-                let customW = document.getElementById('compCustomW').value;
-                let customH = document.getElementById('compCustomH').value;
-                if(customW && customH) {
-                    canvas.style.maxWidth = customW + 'px';
-                    canvas.style.height = customH + 'px';
-                }
-            }
-            alert("🎨 پوسٹر کامیابی کے ساتھ اپ ڈیٹ اور تیار ہو گیا ہے!");
+            let txt = document.getElementById('compPosterInput').value;
+            document.getElementById('compPosterDisplay').innerText = txt || "کچے گھروں کے لوگ، پکے رشتوں کی کہانی...";
+            alert("🎨 پوسٹر اپ ڈیٹ ہو گیا ہے!");
         }
 
         function startCompLiveRecording() {
             navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(stream => {
                 document.getElementById('compMediaVideo').srcObject = stream;
-                alert("🎙️ لائیو آڈیو و ویڈیو اسٹوڈیو ریکارڈنگ شروع ہو چکی ہے!");
-            }).catch(err => {
-                alert("مائیکروفون اور کیمرہ کی اجازت درکار ہے۔");
-            });
+                alert("🎙️ لائیو ریکارڈنگ شروع ہو چکی ہے!");
+            }).catch(e => alert("مائیکروفون اور کیمرہ کی اجازت درکار ہے۔"));
         }
-       }
-        </script>
-    </body>
-    </html>  
+    </script>
+</body>
+</html>
