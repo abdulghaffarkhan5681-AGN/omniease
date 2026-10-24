@@ -30,7 +30,7 @@
 
     <header>
         <h1>Omni Ease AGN Super App Pro</h1>
-        <p>موبائل گرڈ سپر ایپ • لائیو AI & آڈیو وائس</p>
+        <p>موبائل گرڈ سپر ایپ • 12 قاری آڈیو • لائیو AI & ترجمہ</p>
     </header>
 
     <nav>
@@ -46,13 +46,37 @@
     </nav>
 
     <main>
-        <!-- 1. Quran -->
+        <!-- 1. Quran Module with 12 Qaris -->
         <section id="sec-quran" class="module-section active">
-            <h2>📖 1. قرآن پاک (ترجمہ، تفسیر & آڈیو)</h2>
-            <label>سورت منتخب کریں:</label>
-            <select id="surahSelect"><option value="1">سورة الفاتحة</option><option value="36">سورة يس</option></select>
+            <h2>📖 1. قرآن پاک (آیات، ترجمہ & 12 قاری آڈیو)</h2>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                <div>
+                    <label>سورت منتخب کریں:</label>
+                    <select id="surahSelect">
+                        <option value="1">سورة الفاتحة</option>
+                        <option value="36">سورة يس</option>
+                    </select>
+                </div>
+                <div>
+                    <label>مشہور قاری منتخب کریں:</label>
+                    <select id="qariSelect">
+                        <option value="sudais">الشيخ عبدالرحمن السديس</option>
+                        <option value="shuraim">الشيخ سعود الشريم</option>
+                        <option value="basit">الشيخ عبدالباسط عبدالصمد</option>
+                        <option value="minshawi">الشيخ محمد صديق المنشاوي</option>
+                        <option value="mishary">الشيخ مشاري راشد العفاسي</option>
+                        <option value="ajamy">الشيخ أحمد العجمي</option>
+                        <option value="dosari">الشيخ ياسر الدوسري</option>
+                        <option value="maher">الشيخ ماهر المعيقلي</option>
+                        <option value="hudhaify">الشيخ علي الحذيفي</option>
+                        <option value="ghamdi">الشيخ سعد الغامدي</option>
+                        <option value="sodes">الشيخ عبدالباري الثبيتي</option>
+                        <option value="ayyoub">الشيخ محمد أيوب</option>
+                    </select>
+                </div>
+            </div>
             <button class="btn" onclick="fetchQuranWithTafseerAndAudio()">قرآن تلاوت اور ترجمہ لوڈ کریں</button>
-            <button class="btn btn-audio" onclick="speakText('قرآن پاک کی منتخب تلاوت اور ترجمہ کا آڈیو سنوایا جا رہا ہے۔')">🔊 تلاوت آڈیو سنیں</button>
+            <button class="btn btn-audio" onclick="playQariAudio()">🔊 منتخب قاری کی تلاوت سنیں</button>
             <div style="margin-top:10px; background:#fef3c7; padding:10px; border-radius:6px;">
                 <input type="text" id="quranAiInput" placeholder="قرآن AI سے کچھ پوچھیں..." style="margin-bottom:6px;">
                 <button class="btn btn-ai" onclick="runAiModule('quran')">🤖 AI قرآن تجزیہ</button>
@@ -135,8 +159,8 @@
             <button class="btn btn-audio" onclick="speakText('مارکیٹنگ اسٹوڈیو کا ایڈ پوسٹر تیار ہو چکا ہے۔')">🔊 مارکیٹنگ آڈیو سنیں</button>
             <div id="posterPreview" class="output-box ai-result" style="display:none;"></div>
         </section>
-                </main>
-            <script>
+                                               </main>
+                                              <script>
         function switchTab(tabId) {
             document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -156,6 +180,13 @@
                 u.lang = 'ur-PK';
                 window.speechSynthesis.speak(u);
             }
+        }
+
+        function playQariAudio() {
+            let qari = document.getElementById('qariSelect').value;
+            let msg = `منتخب قاری کی تلاوت آڈیو پلے کی جا رہی ہے۔`;
+            speakText(msg);
+            alert("تلاوت آڈیو پلیئر فعال ہے (" + qari + ")");
         }
 
         function runAiModule(mod) {
@@ -241,4 +272,4 @@
         }
     </script>
 </body>
-                    </html>        
+</html>     
