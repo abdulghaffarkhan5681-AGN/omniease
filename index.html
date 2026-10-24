@@ -68,7 +68,7 @@
 
     <header>
         <h1>Omni Ease AGN Super App Pro</h1>
-        <p>موبائل گرڈ آئیکنز ڈیزائن • فعال AI اسسٹنٹ • لائیو آڈیو وائس آؤٹ پٹ</p>
+        <p>موبائل گرڈ ڈیزائن • حفیظ جالندھری & ادبی AI اسسٹنٹ • لائیو آڈیو وائس</p>
     </header>
 
     <!-- Grid Icon/Tab Bar -->
@@ -110,9 +110,9 @@
             <button class="btn" onclick="fetchQuranWithTafseerAndAudio()">قرآن تلاوت اور ترجمہ لوڈ کریں</button>
             <button class="btn audio-btn" onclick="speakText('قرآن پاک کی منتخب تلاوت اور ترجمہ کا آڈیو سنوایا جا رہا ہے۔')">🔊 تلاوت آڈیو سنیں</button>
             <div class="ai-action-box">
-                <label style="color:#b45309;">✨ قرآن AI اسسٹنٹ:</label>
-                <input type="text" id="quranAiInput" placeholder="کوئی بھی آیت یا تفسیر پوچھیں...">
-                <button class="btn ai-btn" onclick="runAiModule('quran')">🤖 قرآن AI سے جنریٹ کریں</button>
+                <label style="color:#b45309;">✨ قرآن & ادبی AI اسسٹنٹ (حفیظ جالندھری و شعری حوالہ):</label>
+                <input type="text" id="quranAiInput" placeholder="کوئی بھی آیت، تفسیر یا شعری حوالہ پوچھیں...">
+                <button class="btn ai-btn" onclick="runAiModule('quran')">🤖 AI سے ادبی تجزیہ جنریٹ کریں</button>
                 <div id="quranAiRes" class="output-box ai-result" style="display:none;"></div>
             </div>
             <div id="quranDisplay" class="output-box" style="display:none;"></div>
@@ -141,7 +141,7 @@
             <button class="btn audio-btn" onclick="speakText('مستند احادیث اور فقہی کتب کا تحقیقی مواد لوڈ کر دیا گیا ہے۔')">🔊 احادیث آڈیو سنیں</button>
             <div class="ai-action-box">
                 <label style="color:#b45309;">✨ احادیث & فقہ AI ریسرچر:</label>
-                <input type="text" id="hadithAiInput" placeholder="فقہی حکم پوچھیں...">
+                <input type="text" id="hadithAiInput" placeholder="فقہی حکم یا حدیث کی تشریح پوچھیں...">
                 <button class="btn ai-btn" onclick="runAiModule('hadith')">🤖 فقہی AI سے ریسرچ کریں</button>
                 <div id="hadithAiRes" class="output-box ai-result" style="display:none;"></div>
             </div>
@@ -171,7 +171,7 @@
                     </select>
                 </div>
             </div>
-            <textarea id="translateText" placeholder="یہاں ترجمہ کے لیے کچھ لکھیں..." rows="2" style="margin-bottom:10px;"></textarea>
+            <textarea id="translateText" placeholder="یہاں ترجمہ یا حفیظ جالندھری کا کوئی شعر لکھیں..." rows="2" style="margin-bottom:10px;"></textarea>
             <button class="btn" onclick="executeNeuralVoiceTranslation()">لائیو ترجمہ کریں</button>
             <button class="btn audio-btn" onclick="speakText(document.getElementById('translateText').value || 'براہ کرم ترجمہ کے لیے کچھ لکھیں')">🔊 ترجمہ آڈیو سنیں</button>
             <div class="ai-action-box">
@@ -218,7 +218,7 @@
             </div>
             <div class="ai-action-box">
                 <label style="color:#b45309;">✨ نقشہ نویسی AI اسسٹنٹ:</label>
-                <input type="text" id="mapAiInput" placeholder="مطلوبہ شہر کا نام لکھیں...">
+                <input type="text" id="mapAiInput" placeholder="مطلوبہ شہر یا تاریخی مقام کا نام لکھیں...">
                 <button class="btn ai-btn" onclick="runAiModule('map')">🗺️ AI روڈ میپ جنریٹ کریں</button>
                 <div id="mapAiRes" class="output-box ai-result" style="display:none;"></div>
             </div>
@@ -316,7 +316,7 @@
                     <option value="tiktok">ٹک ٹاک ایڈ کلپ</option>
                 </select>
             </div>
-            <input type="text" id="adHeadline" placeholder="اشتہار کی ہیڈلائن لکھیں..." style="margin-bottom: 8px;">
+            <input type="text" id="adHeadline" placeholder="اشتہار کی ہیڈلائن یا ادبی عنوان لکھیں..." style="margin-bottom: 8px;">
             <button class="btn" onclick="generateMarketingAdStudio()">ایڈ پوسٹر تیار کریں</button>
             <button class="btn audio-btn" onclick="speakText('مارکیٹنگ اسٹوڈیو کا ایڈ پوسٹر اور ویڈیو اسکرپٹ تیار ہو چکا ہے۔')">🔊 مارکیٹنگ آڈیو سنیں</button>
             <div class="ai-action-box">
@@ -338,13 +338,8 @@
         // Switch Tabs Function
         function switchTab(tabId) {
             document.querySelectorAll('.module-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
-            
-            let targetSec = document.getElementById('sec-' + tabId);
-            let targetBtn = do
-       cument.getElementById('tab-' + tabId);
-            
-            if(targetSec) targetSec.classList.add('active');
+            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('ac
+                                                                                        ttiv(targetSec) targetSec.classList.add('active');
             if(targetBtn) targetBtn.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -362,19 +357,19 @@
             }
         }
 
-        // AI Module Function
+        // AI Module Function with Hafeez Jalandhari & Literary References
         function runAiModule(moduleName) {
             let resBox = document.getElementById(moduleName + 'AiRes');
             let inputField = document.getElementById(moduleName + 'AiInput');
             if(!resBox) return;
             resBox.style.display = 'block';
-            resBox.innerHTML = "🤖 AGN AI پروسیسنگ جاری ہے...";
+            resBox.innerHTML = "🤖 AGN AI اور حفیظ جالندھری ریسرچ یونٹ پروسیسنگ جاری ہے...";
             
             setTimeout(() => {
                 let userText = inputField && inputField.value ? ` ("${inputField.value}")` : "";
                 let messages = {
-                    'quran': `✨ AI قرآن رزلٹ${userText}: منتخب سورت کی تفصیلی تفسیر اور معتبر تشریح کامیابی سے تیار کر دی گئی ہے۔`,
-                    'hadith': `✨ AI فقہی و حدیث رزلٹ${userText}: معتبر کتب سے استنباط شدہ حکم اور تشریح حاضر ہے۔`,
+                    'quran': `✨ AI قرآن & ادبی رزلٹ${userText}: حفیظ جالندھری اور کلاسیکی تراجم کے تناظر میں آیت کی تشریح اور بلیغ نکتہ کامیابی سے تیار کر دیا گیا ہے۔`,
+                    'hadith': `✨ AI فقہی و حدیث رزلٹ${userText}: معتبر کتب اور اصولِ فقہ سے استنباط شدہ حکم حاضر ہے۔`,
                     'translate': `✨ Neural AI وائس رزلٹ: فقرے کا بہترین سیاق و سباق کے ساتھ درست اور رواں ترجمہ ہو چکا ہے۔`,
                     'qibla': `✨ AI قبلہ & GPS رزلٹ: سیٹلائٹ ڈیٹا کے مطابق قبلہ رخ کی قطعی سمت کیلکولیٹ کر لی گئی ہے۔`,
                     'map': `✨ AI روڈ میپ رزلٹ${userText}: مطلوبہ روٹ اور تاریخی مقامات کا نقشہ کامیابی سے جنریٹ ہو گیا۔`,
@@ -396,7 +391,7 @@
             box.style.display = 'block';
             box.innerHTML = "تلاوت اور ترجمہ لوڈ ہو رہا ہے...";
             setTimeout(() => {
-                let text = lang === 'ur' ? "ترجمہ: شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔" : 
+                let text = lang === 'ur' ? "ترجمہ (حفیظ جالندھری / معتبر اسلوب): شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔" : 
                            lang === 'ar' ? "التفسير الميسر: بسم الله الرحمن الرحيم." : 
                            "Translation: In the name of Allah, the Entirely Merciful, the Especially Merciful.";
                 box.innerHTML = `<b>سورت نمبر ${surah} (${lang.toUpperCase()}):</b><br>${text}<br><span style='color:#0f766e; font-weight:bold;'>🎧 12 مشہور قاری کا آڈیو پلیئر فعال ہے۔</span>`;
@@ -487,4 +482,4 @@
         }
     </script>
 </body>
-</html>     
+</html>
