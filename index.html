@@ -32,7 +32,7 @@
 
     <header>
         <h1>Omni Ease AGN Super App Pro</h1>
-        <p>موبائل گرڈ سپر ایپ • فعال نیویگیشن سسٹم</p>
+        <p>موبائل گرڈ سپر ایپ • 12 قاری حضرات & فوری تلاوت</p>
     </header>
 
     <nav>
@@ -48,17 +48,25 @@
     </nav>
 
     <main>
-        <!-- 1. Quran Module -->
+        <!-- 1. Quran Module with 12 Qaris -->
         <section id="sec-quran" class="module-section active">
-            <h2>📖 1. قرآن پاک (فوری آٹو تلاوت & ترجمہ)</h2>
+            <h2>📖 1. قرآن پاک (12 مشہور قاری & فوری تلاوت)</h2>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
                 <div>
-                    <label>سورت منتخب کریں:</label>
-                    <select id="surahSelect" onchange="startInstantQuranPlayback()">
-                        <option value="https://download.quranicaudio.com/quran/abdul_rahman_al-sudais/001.mp3">سورة الفاتحة (السديس)</option>
-                        <option value="https://download.quranicaudio.com/quran/abdul_rahman_al-sudais/036.mp3">سورة يس (السديس)</option>
-                        <option value="https://download.quranicaudio.com/quran/abdul_basit_murattal/001.mp3">سورة الفاتحة (عبدالباسط)</option>
-                        <option value="https://download.quranicaudio.com/quran/mishary_rashid_al_afasy/001.mp3">سورة الفاتحة (العفاسي)</option>
+                    <label>مشہور قاری منتخب کریں (12 قاری):</label>
+                    <select id="qariSelect" onchange="startInstantQuranPlayback()">
+                        <option value="https://download.quranicaudio.com/quran/abdul_rahman_al-sudais/001.mp3">الشيخ عبدالرحمن السديس</option>
+                        <option value="https://download.quranicaudio.com/quran/saud_al-shuraim/001.mp3">الشيخ سعود الشريم</option>
+                        <option value="https://download.quranicaudio.com/quran/abdul_basit_murattal/001.mp3">الشيخ عبدالباسط عبدالصمد</option>
+                        <option value="https://download.quranicaudio.com/quran/muhammad_siddiq_al-minshawi/001.mp3">الشيخ محمد صديق المنشاوي</option>
+                        <option value="https://download.quranicaudio.com/quran/mishary_rashid_al_afasy/001.mp3">الشيخ مشاري راشد العفاسي</option>
+                        <option value="https://download.quranicaudio.com/quran/ahmed_bin_ali_al-ajamy/001.mp3">الشيخ أحمد العجمي</option>
+                        <option value="https://download.quranicaudio.com/quran/yasser_ad-dossari/001.mp3">الشيخ ياسر الدوسري</option>
+                        <option value="https://download.quranicaudio.com/quran/maher_almuaiqly/001.mp3">الشيخ ماهر المعيقلي</option>
+                        <option value="https://download.quranicaudio.com/quran/ali_jaber/001.mp3">الشيخ علي الحذيفي</option>
+                        <option value="https://download.quranicaudio.com/quran/saad_al-ghamdi/001.mp3">الشيخ سعد الغامدي</option>
+                        <option value="https://download.quranicaudio.com/quran/abdul_bari_thebyan/001.mp3">الشيخ عبدالباري الثبيتي</option>
+                        <option value="https://download.quranicaudio.com/quran/muhammad_ayyub/001.mp3">الشيخ محمد أيوب</option>
                     </select>
                 </div>
                 <div>
@@ -86,7 +94,7 @@
             </div>
         </section>
 
-        <!-- 2. Hadith -->
+        <!-- 2. Hadith Module -->
         <section id="sec-hadith" class="module-section">
             <h2>📚 2. احادیث & فقہ لائبریری</h2>
             <label>کتاب منتخب کریں:</label>
@@ -95,7 +103,7 @@
             <div id="libraryDisplay" class="output-box" style="display:none;"></div>
         </section>
 
-        <!-- 3. Translator -->
+        <!-- 3. Translator Module -->
         <section id="sec-translator" class="module-section">
             <h2>🌐 3. گلوبل وائس ٹرانسلیٹر</h2>
             <textarea id="translateText" placeholder="یہاں ترجمہ کے لیے کچھ لکھیں..." rows="2"></textarea>
@@ -103,50 +111,50 @@
             <div id="translateResult" class="output-box" style="display:none;"></div>
         </section>
 
-        <!-- 4. Qibla -->
+        <!-- 4. Qibla Module -->
         <section id="sec-qibla" class="module-section">
             <h2>🧭 4. قبلہ کمپاس & نماز کے اوقات</h2>
             <p id="qiblaStatus" style="font-weight:bold; margin-bottom:8px;">قبلہ سمت: 255° مغرب</p>
             <button class="btn" onclick="initLiveQiblaCompass()">کمپاس اسکین کریں</button>
         </section>
 
-        <!-- 5. Maps -->
+        <!-- 5. Maps Module -->
         <section id="sec-maps" class="module-section">
             <h2>🗺️ 5. ڈوئل نقشے</h2>
             <button class="btn" onclick="loadDualMapSystem()">نقشہ لوڈ کریں</button>
             <div id="mapOutputDisplay" class="output-box" style="display:none;"></div>
         </section>
 
-        <!-- 6. Calendar -->
+        <!-- 6. Calendar Module -->
         <section id="sec-calendar" class="module-section">
             <h2>📅 6. اسلامی & عیسوی کلینڈر</h2>
             <button class="btn" onclick="loadHistoricalEventsData()">اہم تاریخی واقعات دیکھیں</button>
             <div id="calendarOutput" class="output-box" style="display:none;"></div>
         </section>
 
-        <!-- 7. POS -->
+        <!-- 7. POS Module -->
         <section id="sec-pos" class="module-section">
             <h2>👗 7. بزنس POS & اسٹاک</h2>
             <input type="text" id="barcodeInput" placeholder="آئٹم کا نام لکھیں..." style="margin-top:8px; margin-bottom:8px;">
             <button class="btn" onclick="processPOSSaleWithStock()">فوری سیل درج کریں</button>
         </section>
 
-        <!-- 8. Property -->
+        <!-- 8. Property Module -->
         <section id="sec-property" class="module-section">
             <h2>🏢 8. پراپرٹی & نقشہ نویسی</h2>
             <button class="btn" onclick="executePropertyAndMapTool()">پراپرٹی ڈیل & نقشہ جنریٹ کریں</button>
             <div id="propertyMapDisplay" class="output-box" style="display:none;"></div>
         </section>
 
-        <!-- 9. Marketing -->
+        <!-- 9. Marketing Module -->
         <section id="sec-marketing" class="module-section">
             <h2>🎨 9. مارکیٹنگ اسٹوڈیو</h2>
             <input type="text" id="adHeadline" placeholder="اشتہار کی ہیڈلائن..." style="margin-top:8px; margin-bottom:8px;">
             <button class="btn" onclick="generateMarketingAdStudio()">فوری ایڈ پوسٹر تیار کریں</button>
             <div id="posterPreview" class="output-box ai-result" style="display:none;"></div>
         </section>
-            </main>
-           <script>
+    </main>
+        <script>
         function switchTab(tabId) {
             document.querySelectorAll('.module-section').forEach(s => {
                 s.classList.remove('active');
@@ -168,7 +176,7 @@
         }
 
         function startInstantQuranPlayback() {
-            let audioUrl = document.getElementById('surahSelect').value;
+            let audioUrl = document.getElementById('qariSelect').value;
             let audioPlayer = document.getElementById('quranAudioPlayer');
             audioPlayer.src = audioUrl;
             audioPlayer.play().catch(e => console.log("Play restricted"));
@@ -243,4 +251,4 @@
         };
     </script>
 </body>
-</html>     
+</html>
