@@ -3,75 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omni Ease AGN - Ultimate Super App Pro</title>
+    <title>Omni Ease AGN Super App Pro</title>
     <style>
-        :root {
-            --primary: #0f766e;
-            --secondary: #115e59;
-            --accent: #f59e0b;
-            --bg-color: #f1f5f9;
-            --text-color: #1e293b;
-            --card-bg: #ffffff;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; min-height: 100vh; }
-        header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        header h1 { font-size: 20px; margin-bottom: 3px; }
-        header p { font-size: 11px; opacity: 0.9; }
-
-        /* Modern Grid Icon/Tab Navigation Bar */
-        nav { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; padding: 10px; background: #0284c7; box-shadow: inset 0 -2px 5px rgba(0,0,0,0.1); }
-        @media(max-width: 600px) {
-            nav { grid-template-columns: repeat(3, 1fr); }
-        }
-        nav button { background: rgba(255,255,255,0.15); border: none; color: white; padding: 10px 5px; font-size: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; transition: background 0.3s, transform 0.2s; text-align: center; }
-        nav button:hover, nav button.active { background: #ffffff; color: #0284c7; transform: translateY(-2px); }
-
-        main { flex: 1; padding: 15px; max-width: 900px; margin: 0 auto; width: 100%; }
-
-        /* Module Sections */
-        .module-section { display: none; background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-right: 6px solid var(--primary); }
+        :root { --primary: #0f766e; --secondary: #115e59; --bg: #f1f5f9; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background: var(--bg); color: #1e293b; display: flex; flex-direction: column; min-height: 100vh; }
+        header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 12px; text-align: center; }
+        header h1 { font-size: 18px; }
+        nav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; padding: 8px; background: #0284c7; }
+        nav button { background: rgba(255,255,255,0.2); border: none; color: white; padding: 10px 5px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: bold; text-align: center; }
+        nav button.active { background: #fff; color: #0284c7; }
+        main { flex: 1; padding: 12px; max-width: 800px; margin: 0 auto; width: 100%; }
+        .module-section { display: none; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-right: 5px solid var(--primary); }
         .module-section.active { display: block; }
-
-        h2 { color: var(--primary); margin-bottom: 12px; font-size: 18px; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; }
-        
-        .form-group { margin-bottom: 12px; }
-        label { display: block; margin-bottom: 4px; font-weight: bold; font-size: 13px; color: #334155; }
-        select, input, textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; background: #fff; }
-        
-        button.btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; transition: background 0.3s; font-size: 14px; margin-top: 5px; }
-        button.btn:hover { background: var(--secondary); }
-        
-        button.ai-btn { background: #d97706; }
-        button.ai-btn:hover { background: #b45309; }
-        
-        button.audio-btn { background: #0284c7; }
-        button.audio-btn:hover { background: #0369a1; }
-        
-        .ai-action-box { background: #fef3c7; border: 1px dashed #d97706; padding: 12px; border-radius: 8px; margin-top: 12px; }
-        
-        .output-box { background: #f8fafc; border: 1px solid #cbd5e1; padding: 12px; border-radius: 6px; margin-top: 10px; font-size: 13px; line-height: 1.6; }
-        .ai-result { background: #fffbeb; border: 1px solid #fcd34d; color: #78350f; font-weight: bold; margin-top: 8px; }
-        
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        @media(max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 8px; }
-        th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: center; font-size: 13px; }
-        th { background: #e2e8f0; }
-
-        .compass-dial { width: 140px; height: 140px; border: 4px solid var(--primary); border-radius: 50%; margin: 10px auto; position: relative; display: flex; align-items: center; justify-content: center; background: #fff; }
-        .compass-needle { width: 3px; height: 110px; background: red; position: absolute; transition: transform 0.8s ease-in-out; }
+        h2 { color: var(--primary); font-size: 16px; margin-bottom: 10px; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; }
+        label { display: block; margin: 8px 0 3px; font-weight: bold; font-size: 12px; }
+        select, input, textarea { width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; }
+        .btn { background: var(--primary); color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 8px; font-size: 13px; }
+        .btn-ai { background: #d97706; }
+        .btn-audio { background: #0284c7; }
+        .output-box { background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 4px; margin-top: 8px; font-size: 12px; line-height: 1.5; }
+        .ai-result { background: #fffbeb; border: 1px solid #fcd34d; color: #78350f; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>Omni Ease AGN Super App Pro</h1>
-        <p>موبائل گرڈ ڈیزائن • حفیظ جالندھری & ادبی AI اسسٹنٹ • لائیو آڈیو وائس</p>
+        <p>موبائل گرڈ سپر ایپ • لائیو AI & آڈیو وائس</p>
     </header>
 
-    <!-- Grid Icon/Tab Bar -->
     <nav>
         <button onclick="switchTab('quran')" id="tab-quran" class="active">📖 قرآن</button>
         <button onclick="switchTab('hadith')" id="tab-hadith">📚 احادیث</button>
@@ -85,401 +46,188 @@
     </nav>
 
     <main>
-        <!-- 1. QURAN MODULE -->
+        <!-- 1. Quran -->
         <section id="sec-quran" class="module-section active">
-            <h2>📖 1. قرآن پاک (ترجمہ، تفاسیر & قاری آڈیو)</h2>
-            <div class="grid-2 form-group">
-                <div>
-                    <label>سورت منتخب کریں:</label>
-                    <select id="surahSelect">
-                        <option value="1">سورة الفاتحة</option>
-                        <option value="36">سورة يس</option>
-                        <option value="67">سورة الملك</option>
-                        <option value="112">سورة الإخلاص</option>
-                    </select>
-                </div>
-                <div>
-                    <label>تراجم و تفاسیر کی زبان:</label>
-                    <select id="quranLangSelect">
-                        <option value="ur">اردو (ترجمہ و تشریح)</option>
-                        <option value="en">English (Translation & Tafseer)</option>
-                        <option value="ar">العربية (التفسير الميسر)</option>
-                    </select>
-                </div>
-            </div>
+            <h2>📖 1. قرآن پاک (ترجمہ، تفسیر & آڈیو)</h2>
+            <label>سورت منتخب کریں:</label>
+            <select id="surahSelect"><option value="1">سورة الفاتحة</option><option value="36">سورة يس</option></select>
             <button class="btn" onclick="fetchQuranWithTafseerAndAudio()">قرآن تلاوت اور ترجمہ لوڈ کریں</button>
-            <button class="btn audio-btn" onclick="speakText('قرآن پاک کی منتخب تلاوت اور ترجمہ کا آڈیو سنوایا جا رہا ہے۔')">🔊 تلاوت آڈیو سنیں</button>
-            <div class="ai-action-box">
-                <label style="color:#b45309;">✨ قرآن & ادبی AI اسسٹنٹ (حفیظ جالندھری و شعری حوالہ):</label>
-                <input type="text" id="quranAiInput" placeholder="کوئی بھی آیت، تفسیر یا شعری حوالہ پوچھیں...">
-                <button class="btn ai-btn" onclick="runAiModule('quran')">🤖 AI سے ادبی تجزیہ جنریٹ کریں</button>
+            <button class="btn btn-audio" onclick="speakText('قرآن پاک کی منتخب تلاوت اور ترجمہ کا آڈیو سنوایا جا رہا ہے۔')">🔊 تلاوت آڈیو سنیں</button>
+            <div style="margin-top:10px; background:#fef3c7; padding:10px; border-radius:6px;">
+                <input type="text" id="quranAiInput" placeholder="قرآن AI سے کچھ پوچھیں..." style="margin-bottom:6px;">
+                <button class="btn btn-ai" onclick="runAiModule('quran')">🤖 AI قرآن تجزیہ</button>
                 <div id="quranAiRes" class="output-box ai-result" style="display:none;"></div>
             </div>
             <div id="quranDisplay" class="output-box" style="display:none;"></div>
         </section>
 
-        <!-- 2. HADITH & FIQH -->
+        <!-- 2. Hadith -->
         <section id="sec-hadith" class="module-section">
             <h2>📚 2. احادیث & فقہ لائبریری</h2>
-            <div class="grid-2 form-group">
-                <div>
-                    <label>احادیث کی کتاب:</label>
-                    <select id="hadithBookSelect">
-                        <option value="bukhari">صحیح بخاری</option>
-                        <option value="muslim">صحیح مسلم</option>
-                    </select>
-                </div>
-                <div>
-                    <label>فقہی کتب:</label>
-                    <select id="fiqhBookSelect">
-                        <option value="hanafi">فقہ حنفی (ہدایه، قدوری)</option>
-                        <option value="shafii">فقہ شافعی</option>
-                    </select>
-                </div>
-            </div>
+            <label>کتاب منتخب کریں:</label>
+            <select id="hadithBookSelect"><option value="bukhari">صحیح بخاری</option><option value="muslim">صحیح مسلم</option></select>
             <button class="btn" onclick="loadHadithAndFiqhLibrary()">مستند کتب کا مواد دیکھیں</button>
-            <button class="btn audio-btn" onclick="speakText('مستند احادیث اور فقہی کتب کا تحقیقی مواد لوڈ کر دیا گیا ہے۔')">🔊 احادیث آڈیو سنیں</button>
-            <div class="ai-action-box">
-                <label style="color:#b45309;">✨ احادیث & فقہ AI ریسرچر:</label>
-                <input type="text" id="hadithAiInput" placeholder="فقہی حکم یا حدیث کی تشریح پوچھیں...">
-                <button class="btn ai-btn" onclick="runAiModule('hadith')">🤖 فقہی AI سے ریسرچ کریں</button>
+            <button class="btn btn-audio" onclick="speakText('مستند احادیث اور فقہی کتب کا تحقیقی مواد لوڈ کر دیا گیا ہے۔')">🔊 احادیث آڈیو سنیں</button>
+            <div style="margin-top:10px; background:#fef3c7; padding:10px; border-radius:6px;">
+                <input type="text" id="hadithAiInput" placeholder="فقہی حکم پوچھیں..." style="margin-bottom:6px;">
+                <button class="btn btn-ai" onclick="runAiModule('hadith')">🤖 AI فقہی ریسرچ</button>
                 <div id="hadithAiRes" class="output-box ai-result" style="display:none;"></div>
             </div>
             <div id="libraryDisplay" class="output-box" style="display:none;"></div>
         </section>
 
-        <!-- 3. TRANSLATOR -->
+        <!-- 3. Translator -->
         <section id="sec-translator" class="module-section">
-            <h2>🌐 3. گلوبل لائیو وائس & ٹیکسٹ ٹرانسلیٹر</h2>
-            <div class="grid-2 form-group">
-                <div>
-                    <label>آپ کی زبان:</label>
-                    <select id="sourceLang">
-                        <option value="ur">اردو</option>
-                        <option value="en">English</option>
-                        <option value="zh">中文</option>
-                        <option value="ar">العربية</option>
-                    </select>
-                </div>
-                <div>
-                    <label>مقابل کی زبان:</label>
-                    <select id="targetLang">
-                        <option value="en">English</option>
-                        <option value="ur">اردو</option>
-                        <option value="zh">中文</option>
-                        <option value="ar">العربية</option>
-                    </select>
-                </div>
-            </div>
-            <textarea id="translateText" placeholder="یہاں ترجمہ یا حفیظ جالندھری کا کوئی شعر لکھیں..." rows="2" style="margin-bottom:10px;"></textarea>
+            <h2>🌐 3. گلوبل وائس ٹرانسلیٹر</h2>
+            <textarea id="translateText" placeholder="یہاں ترجمہ کے لیے کچھ لکھیں..." rows="2"></textarea>
             <button class="btn" onclick="executeNeuralVoiceTranslation()">لائیو ترجمہ کریں</button>
-            <button class="btn audio-btn" onclick="speakText(document.getElementById('translateText').value || 'براہ کرم ترجمہ کے لیے کچھ لکھیں')">🔊 ترجمہ آڈیو سنیں</button>
-            <div class="ai-action-box">
-                <label style="color:#b45309;">✨ Neural AI وائس ترجمہ اسسٹنٹ:</label>
-                <button class="btn ai-btn" onclick="runAiModule('translate')">🎙️ AI صوتی ترجمہ جنریٹ کریں</button>
-                <div id="translateAiRes" class="output-box ai-result" style="display:none;"></div>
-            </div>
+            <button class="btn btn-audio" onclick="speakText(document.getElementById('translateText').value || 'براہ کرم ترجمہ کے لیے کچھ لکھیں')">🔊 ترجمہ آڈیو سنیں</button>
             <div id="translateResult" class="output-box" style="display:none;"></div>
         </section>
 
-        <!-- 4. QIBLA & PRAYER TIMES -->
+        <!-- 4. Qibla -->
         <section id="sec-qibla" class="module-section">
             <h2>🧭 4. قبلہ کمپاس & نماز کے اوقات</h2>
-            <div style="text-align: center;">
-                <div class="compass-dial">
-                    <div id="compassNeedle" class="compass-needle"></div>
-                    <div style="position: absolute; top: 2px; font-weight: bold; font-size:11px;">N</div>
-                    <div style="position: absolute; bottom: 2px; font-weight: bold; font-size:11px;">S</div>
-                </div>
-                <p id="qiblaStatus" style="font-weight: bold; font-size: 13px; margin-bottom: 8px;">قبلہ سمت: 255° مغرب</p>
-                <button class="btn" onclick="initLiveQiblaCompass()" style="max-width: 200px; margin-bottom: 6px;">کمپاس اسکین کریں</button>
-                <button class="btn audio-btn" onclick="speakText('قبلہ رخ خانہ کعبہ کی سمت 255 ڈگری مغرب کی طرف بالکل درست ہے۔')" style="max-width: 200px;">🔊 سمت آڈیو سنیں</button>
-            </div>
-            <div class="ai-action-box">
-                <label style="color:#b45309;">✨ GPS & قبلہ AI لوکیٹر:</label>
-                <button class="btn ai-btn" onclick="runAiModule('qibla')">🧭 AI کے ذریعے سمت کیلکولیٹ کریں</button>
-                <div id="qiblaAiRes" class="output-box ai-result" style="display:none;"></div>
-            </div>
-            <div class="output-box">
-                <b>مسجد / نماز کے اوقات:</b> فجر: 05:00 AM | ظہر: 01:30 PM | عصر: 04:45 PM | مغرب: 06:15 PM | عشاء: 07:45 PM
-            </div>
+            <p id="qiblaStatus" style="font-weight:bold; margin-bottom:8px;">قبلہ سمت: 255° مغرب</p>
+            <button class="btn" onclick="initLiveQiblaCompass()">کمپاس اسکین کریں</button>
+            <button class="btn btn-audio" onclick="speakText('قبلہ رخ خانہ کعبہ کی سمت 255 ڈگری مغرب کی طرف بالکل درست ہے۔')">🔊 سمت آڈیو سنیں</button>
+            <div id="qiblaAiRes" class="output-box ai-result" style="display:none;"></div>
         </section>
 
-        <!-- 5. DUAL MAPS -->
+        <!-- 5. Maps -->
         <section id="sec-maps" class="module-section">
-            <h2>🗺️ 5. ڈوئل نقشے (گلوبل & اسلامی مقامات)</h2>
-            <div class="form-group">
-                <label>نقشہ کی قسم منتخب کریں:</label>
-                <select id="mapTypeSelect" style="margin-bottom: 8px;">
-                    <option value="global">گلوبل بزنس روڈ میپ</option>
-                    <option value="islamic">اسلامی تاریخی مقامات کا میپ</option>
-                </select>
-                <button class="btn" onclick="loadDualMapSystem()">نقشہ لوڈ کریں</button>
-            </div>
-            <div class="ai-action-box">
-                <label style="color:#b45309;">✨ نقشہ نویسی AI اسسٹنٹ:</label>
-                <input type="text" id="mapAiInput" placeholder="مطلوبہ شہر یا تاریخی مقام کا نام لکھیں...">
-                <button class="btn ai-btn" onclick="runAiModule('map')">🗺️ AI روڈ میپ جنریٹ کریں</button>
-                <div id="mapAiRes" class="output-box ai-result" style="display:none;"></div>
-            </div>
+            <h2>🗺️ 5. ڈوئل نقشے</h2>
+            <select id="mapTypeSelect" style="margin-bottom:8px;"><option value="global">گلوبل روڈ میپ</option><option value="islamic">اسلامی مقامات</option></select>
+            <button class="btn" onclick="loadDualMapSystem()">نقشہ لوڈ کریں</button>
             <div id="mapOutputDisplay" class="output-box" style="display:none;"></div>
         </section>
 
-        <!-- 6. CALENDAR -->
+        <!-- 6. Calendar -->
         <section id="sec-calendar" class="module-section">
             <h2>📅 6. اسلامی & عیسوی کلینڈر</h2>
-            <div class="grid-2 form-group">
-                <div>
-                    <label>ہجری کلینڈر:</label>
-                    <input type="text" value="1447ھ - ذوالحجہ" readonly>
-                </div>
-                <div>
-                    <label>عیسوی کلینڈر:</label>
-                    <input type="text" value="2026ء - عالمی سال" readonly>
-                </div>
-            </div>
             <button class="btn" onclick="loadHistoricalEventsData()">اہم تاریخی واقعات دیکھیں</button>
-            <button class="btn audio-btn" onclick="speakText('اسلامی ہجری سال 1447 اور عیسوی سال 2026 کے اہم تاریخی واقعات لوڈ کر دیے گئے ہیں۔')">🔊 کلینڈر آڈیو سنیں</button>
-            <div class="ai-action-box">
-                <label style="color:#b45309;">✨ تاریخ ساز واقعات AI جنریٹر:</label>
-                <button class="btn ai-btn" onclick="runAiModule('calendar')">📅 AI تاریخی ڈیٹا لوڈ کریں</button>
-                <div id="calendarAiRes" class="output-box ai-result" style="display:none;"></div>
-            </div>
+            <button class="btn btn-audio" onclick="speakText('اہم تاریخی اور اسلامی واقعات لوڈ کر دیے گئے ہیں۔')">🔊 کلینڈر آڈیو سنیں</button>
             <div id="calendarOutput" class="output-box" style="display:none;"></div>
         </section>
 
-        <!-- 7. POS BUSINESS -->
+        <!-- 7. POS -->
         <section id="sec-pos" class="module-section">
-            <h2>👗 7. بزنس POS & گارمنٹس اسٹاک</h2>
-            <div class="form-group">
-                <label>کاروبار کی قسم:</label>
-                <select id="businessType">
-                    <option value="garments">کپڑے کی دکان / گارمنٹس</option>
-                    <option value="general">جنرل اسٹور / پرچون</option>
-                </select>
-                <input type="text" id="barcodeInput" placeholder="آئٹم کا نام یا بارکوڈ لکھیں..." style="margin-top: 8px; margin-bottom: 8px;">
-                <button class="btn" onclick="processPOSSaleWithStock()">فوری سیل درج کریں & اسٹاک کم کریں</button>
-            </div>
-            <button class="btn audio-btn" onclick="speakText('بزنس POS اور گارمنٹس اسٹاک کا ریکارڈ کامیابی سے اپ ڈیٹ کر دیا گیا ہے۔')">🔊 POS آڈیو سنیں</button>
-            <div class="ai-action-box">
-                <label style="color:#b45309;">✨ بزنس POS AI اسسٹنٹ:</label>
-                <input type="text" id="posAiInput" placeholder="نیا پروڈکٹ یا قیمت درج کریں...">
-                <button class="btn ai-btn" onclick="runAiModule('pos')">💼 AI اسٹاک رپورٹ جنریٹ کریں</button>
-                <div id="posAiRes" class="output-box ai-result" style="display:none;"></div>
-            </div>
-            <table>
-                <tr><th>پروڈکٹ</th><th>اسٹاک</th><th>حالت</th></tr>
-                <tr><td>سلک سوٹ</td><td>60 میٹر</td><td>محفوظ</td></tr>
-                <tr><td>برانڈیڈ شرٹ</td><td>12 پیس</td><td>شارٹ</td></tr>
-            </table>
+            <h2>👗 7. بزنس POS & اسٹاک</h2>
+            <input type="text" id="barcodeInput" placeholder="آئٹم کا نام لکھیں..." style="margin-top:8px; margin-bottom:8px;">
+            <button class="btn" onclick="processPOSSaleWithStock()">فوری سیل درج کریں & اسٹاک کم کریں</button>
+            <button class="btn btn-audio" onclick="speakText('بزنس POS اور گارمنٹس اسٹاک کا ریکارڈ اپ ڈیٹ ہو گیا ہے۔')">🔊 POS آڈیو سنیں</button>
+            <div id="posAiRes" class="output-box ai-result" style="display:none;"></div>
         </section>
 
-        <!-- 8. PROPERTY & MAP -->
+        <!-- 8. Property -->
         <section id="sec-property" class="module-section">
-            <h2>🏢 8. پراپرٹی & نقشہ نویسی (Architect Tools)</h2>
-            <div class="grid-2 form-group">
-                <div>
-                    <label>پراپرٹی ڈیل:</label>
-                    <select id="propertyDealType">
-                        <option value="buy">خریدنا (Buy)</option>
-                        <option value="sell">بیچنا (Sell)</option>
-                        <option value="rent">کرایہ (Rent)</option>
-                    </select>
-                </div>
-                <div>
-                    <label>نقشہ لے آؤٹ:</label>
-                    <select id="architectMapSize">
-                        <option value="5marla">5 مرلہ بلیو پرنٹ</option>
-                        <option value="10marla">10 مرلہ بلیو پرنٹ</option>
-                    </select>
-                </div>
-            </div>
+            <h2>🏢 8. پراپرٹی & نقشہ نویسی</h2>
             <button class="btn" onclick="executePropertyAndMapTool()">پراپرٹی ڈیل & نقشہ جنریٹ کریں</button>
-            <button class="btn audio-btn" onclick="speakText('رئیل اسٹیٹ پراپرٹی ڈیل اور نقشہ کا بلیو پرنٹ تیار کر لیا گیا ہے۔')">🔊 پراپرٹی آڈیو سنیں</button>
-            <div class="ai-action-box">
-                <label style="color:#b45309;">✨ رئیل اسٹیٹ AI بلیو پرنٹ جنریٹر:</label>
-                <input type="text" id="propAiInput" placeholder="پراپرٹی کی تفصیل لکھیں...">
-                <button class="btn ai-btn" onclick="runAiModule('property')">🏢 AI پراپرٹی تجزیہ جنریٹ کریں</button>
-                <div id="propAiRes" class="output-box ai-result" style="display:none;"></div>
-            </div>
+            <button class="btn btn-audio" onclick="speakText('رئیل اسٹیٹ پراپرٹی ڈیل اور نقشہ کا بلیو پرنٹ تیار ہے۔')">🔊 پراپرٹی آڈیو سنیں</button>
             <div id="propertyMapDisplay" class="output-box" style="display:none;"></div>
         </section>
 
-        <!-- 9. MARKETING STUDIO -->
+        <!-- 9. Marketing -->
         <section id="sec-marketing" class="module-section">
-            <h2>🎨 9. مارکیٹنگ اسٹوڈیو (فوٹو & ویڈیو ایڈز)</h2>
-            <div class="form-group">
-                <label>سوشل میڈیا پلیٹ فارم:</label>
-                <select id="socialPlatform">
-                    <option value="facebook">فیس بک ایڈ بینر</option>
-                    <option value="instagram">انسٹاگرام ریل ویڈیو</option>
-                    <option value="tiktok">ٹک ٹاک ایڈ کلپ</option>
-                </select>
-            </div>
-            <input type="text" id="adHeadline" placeholder="اشتہار کی ہیڈلائن یا ادبی عنوان لکھیں..." style="margin-bottom: 8px;">
+            <h2>🎨 9. مارکیٹنگ اسٹوڈیو</h2>
+            <input type="text" id="adHeadline" placeholder="اشتہار کی ہیڈلائن..." style="margin-top:8px; margin-bottom:8px;">
             <button class="btn" onclick="generateMarketingAdStudio()">ایڈ پوسٹر تیار کریں</button>
-            <button class="btn audio-btn" onclick="speakText('مارکیٹنگ اسٹوڈیو کا ایڈ پوسٹر اور ویڈیو اسکرپٹ تیار ہو چکا ہے۔')">🔊 مارکیٹنگ آڈیو سنیں</button>
-            <div class="ai-action-box">
-                <label style="color:#b45309;">✨ مارکیٹنگ AI ایڈ کاپی جنریٹر:</label>
-                <input type="text" id="marketAiInput" placeholder="برانڈ کا نام لکھیں...">
-                <button class="btn ai-btn" onclick="runAiModule('marketing')">🎨 AI مارکیٹنگ ایڈ جنریٹ کریں</button>
-                <div id="marketAiRes" class="output-box ai-result" style="display:none;"></div>
-            </div>
-            <div id="posterPreview" style="margin-top: 10px; padding: 15px; background: #0f766e; color: white; text-align: center; border-radius: 6px; font-weight: bold; display:none;"></div>
+            <button class="btn btn-audio" onclick="speakText('مارکیٹنگ اسٹوڈیو کا ایڈ پوسٹر تیار ہو چکا ہے۔')">🔊 مارکیٹنگ آڈیو سنیں</button>
+            <div id="posterPreview" class="output-box ai-result" style="display:none;"></div>
         </section>
-    </main>
-
-    <script>
-        // Force default active tab on load
-        window.addEventListener('DOMContentLoaded', () => {
-            switchTab('quran');
-        });
-
-        // Switch Tabs Function
+                </main>
+                <script>
         function switchTab(tabId) {
-            document.querySelectorAll('.module-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('ac
-                                                                                        ttiv(targetSec) targetSec.classList.add('active');
+            document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            
+            let targetSec = document.getElementById('sec-' + tabId);
+            let targetBtn = document.getElementById('tab-' + tabId);
+            
+            if(targetSec) targetSec.classList.add('active');
             if(targetBtn) targetBtn.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Audio Text-to-Speech Function
-        function speakText(message) {
+        function speakText(msg) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                let utterance = new SpeechSynthesisUtterance(message);
-                utterance.lang = 'ur-PK';
-                utterance.rate = 1.0;
-                window.speechSynthesis.speak(utterance);
-            } else {
-                alert("معذرت، آپ کے براؤزر میں آڈیو سپیچ سپورٹ دستیاب نہیں ہے۔");
+                let u = new SpeechSynthesisUtterance(msg);
+                u.lang = 'ur-PK';
+                window.speechSynthesis.speak(u);
             }
         }
 
-        // AI Module Function with Hafeez Jalandhari & Literary References
-        function runAiModule(moduleName) {
-            let resBox = document.getElementById(moduleName + 'AiRes');
-            let inputField = document.getElementById(moduleName + 'AiInput');
-            if(!resBox) return;
-            resBox.style.display = 'block';
-            resBox.innerHTML = "🤖 AGN AI اور حفیظ جالندھری ریسرچ یونٹ پروسیسنگ جاری ہے...";
-            
-            setTimeout(() => {
-                let userText = inputField && inputField.value ? ` ("${inputField.value}")` : "";
-                let messages = {
-                    'quran': `✨ AI قرآن & ادبی رزلٹ${userText}: حفیظ جالندھری اور کلاسیکی تراجم کے تناظر میں آیت کی تشریح اور بلیغ نکتہ کامیابی سے تیار کر دیا گیا ہے۔`,
-                    'hadith': `✨ AI فقہی و حدیث رزلٹ${userText}: معتبر کتب اور اصولِ فقہ سے استنباط شدہ حکم حاضر ہے۔`,
-                    'translate': `✨ Neural AI وائس رزلٹ: فقرے کا بہترین سیاق و سباق کے ساتھ درست اور رواں ترجمہ ہو چکا ہے۔`,
-                    'qibla': `✨ AI قبلہ & GPS رزلٹ: سیٹلائٹ ڈیٹا کے مطابق قبلہ رخ کی قطعی سمت کیلکولیٹ کر لی گئی ہے۔`,
-                    'map': `✨ AI روڈ میپ رزلٹ${userText}: مطلوبہ روٹ اور تاریخی مقامات کا نقشہ کامیابی سے جنریٹ ہو گیا۔`,
-                    'calendar': `✨ AI تاریخی واقعات رزلٹ: اس دور کے تمام اہم اسلامی و عیسوی واقعات کا خلاصہ تیار ہے۔`,
-                    'pos': `✨ AI بزنس POS رزلٹ${userText}: اسٹاک اپ ڈیٹ، سیلز رپورٹ اور پرافٹ مارجن خود بخود کیلکولیٹ ہو گئے ہیں۔`,
-                    'property': `✨ AI رئیل اسٹیٹ رزلٹ${userText}: نقشے کا بلیو پرنٹ اور تخمینہ لاگت تیار کر دی گئی ہے۔`,
-                    'marketing': `✨ AI مارکیٹنگ اسٹوڈیو رزلٹ${userText}: زبردست ایڈ کاپی، ہیش ٹیگز اور ویڈیو اسکرپٹ تیار ہے!`
-                };
-                let resultText = messages[moduleName] || "✨ AI جنریشن کامیاب رہی!";
-                resBox.innerHTML = resultText;
-                speakText(resultText);
-            }, 600);
+        function runAiModule(mod) {
+            let box = document.getElementById(mod + 'AiRes');
+            if(box) {
+                box.style.display = 'block';
+                box.innerHTML = "✨ AGN AI رزلٹ: مطلوبہ تجزیہ کامیابی سے تیار ہو گیا ہے!";
+                speakText("AI تجزیہ تیار ہو گیا ہے۔");
+            }
         }
 
         function fetchQuranWithTafseerAndAudio() {
-            let surah = document.getElementById('surahSelect').value;
-            let lang = document.getElementById('quranLangSelect').value;
             let box = document.getElementById('quranDisplay');
             box.style.display = 'block';
-            box.innerHTML = "تلاوت اور ترجمہ لوڈ ہو رہا ہے...";
-            setTimeout(() => {
-                let text = lang === 'ur' ? "ترجمہ (حفیظ جالندھری / معتبر اسلوب): شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔" : 
-                           lang === 'ar' ? "التفسير الميسر: بسم الله الرحمن الرحيم." : 
-                           "Translation: In the name of Allah, the Entirely Merciful, the Especially Merciful.";
-                box.innerHTML = `<b>سورت نمبر ${surah} (${lang.toUpperCase()}):</b><br>${text}<br><span style='color:#0f766e; font-weight:bold;'>🎧 12 مشہور قاری کا آڈیو پلیئر فعال ہے۔</span>`;
-                speakText(text);
-            }, 400);
+            box.innerHTML = "<b>قرآن تلاوت اور ترجمہ:</b> شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔";
+            speakText("قرآن پاک کا ترجمہ لوڈ ہو گیا ہے۔");
         }
 
         function loadHadithAndFiqhLibrary() {
-            let book = document.getElementById('hadithBookSelect').value;
-            let fiqh = document.getElementById('fiqhBookSelect').value;
             let box = document.getElementById('libraryDisplay');
             box.style.display = 'block';
-            let msg = `مستند تحقیقی مواد: کتاب ${book} اور فقہی اصول ${fiqh} کامیابی سے لوڈ ہو گئے ہیں۔`;
-            box.innerHTML = `<b>مستند تحقیقی مواد:</b><br>کتاب: ${book.toUpperCase()} | فقہی اصول: ${fiqh.toUpperCase()}<br>احادیث اور فقہی مسائل کی تشریح یہاں موجود ہے۔`;
-            speakText(msg);
+            box.innerHTML = "<b>مستند احادیث:</b> صحیح بخاری اور فقہی کتب کا مواد فعال ہے۔";
+            speakText("مستند احادیث کا مواد لوڈ ہو گیا ہے۔");
         }
 
         function executeNeuralVoiceTranslation() {
-            let text = document.getElementById('translateText').value;
-            let source = document.getElementById('sourceLang').value;
-            let target = document.getElementById('targetLang').value;
             let box = document.getElementById('translateResult');
+            let txt = document.getElementById('translateText').value;
             box.style.display = 'block';
-            if(!text) {
-                box.innerHTML = "براہ کرم کچھ تحریر کریں۔";
-                speakText("براہ کرم ترجمہ کے لیے کچھ تحریر کریں۔");
-                return;
-            }
-            box.innerHTML = `(${source.toUpperCase()} سے ${target.toUpperCase()}) رئیل ٹائم ترجمہ: "${text}" -> کامیاب!`;
-            speakText(text);
+            box.innerHTML = "<b>ترجمہ رزلٹ:</b> " + (txt || "خالی متن");
+            speakText("ترجمہ مکمل ہو گیا ہے۔");
         }
 
         function initLiveQiblaCompass() {
-            let needle = document.getElementById('compassNeedle');
-            if(needle) needle.style.transform = "rotate(255deg)";
-            document.getElementById('qiblaStatus').innerText = "قبلہ رخ: خانہ کعبہ کی سمت 255° مغرب کی طرف بالکل درست ہے۔";
-            speakText("قبلہ رخ کی سمت 255 ڈگری مغرب کی طرف بالکل درست ہے۔");
+            document.getElementById('qiblaStatus').innerText = "قبلہ سمت: 255° مغرب (اسکین مکمل)";
+            speakText("قبلہ کی سمت بالکل درست ہے۔");
         }
 
         function loadDualMapSystem() {
-            let mapType = document.getElementById('mapTypeSelect').value;
             let box = document.getElementById('mapOutputDisplay');
             box.style.display = 'block';
-            if(mapType === 'global') {
-                box.innerHTML = "<b>🌐 گلوبل بزنس روڈ میپ:</b> بین الاقوامی تجارتی راستے اور سپلائی نیٹ ورک فعال ہے۔";
-                speakText("گلوبل بزنس روڈ میپ فعال ہے۔");
-            } else {
-                box.innerHTML = "<b>🕌 اسلامی تاریخی مقامات:</b> مساجد اور تاریخی ورثے کی لوکیشنز لوڈ ہو گئیں۔";
-                speakText("اسلامی تاریخی مقامات کی لوکیشنز لوڈ ہو گئیں۔");
-            }
+            box.innerHTML = "<b>نقشہ سسٹم:</b> گلوبل اور اسلامی مقامات کا ڈیٹا فعال ہے۔";
+            speakText("نقشہ لوڈ ہو گیا ہے۔");
         }
 
         function loadHistoricalEventsData() {
             let box = document.getElementById('calendarOutput');
             box.style.display = 'block';
-            box.innerHTML = "<b>اہم تاریخی و اسلامی واقعات:</b> اس مہینے میں بدر کی فتح اور دیگر عظیم اسلامی تہوار پیش آئے۔";
-            speakText("اہم تاریخی اور اسلامی واقعات لوڈ کر دیے گئے ہیں۔");
+            box.innerHTML = "<b>کلینڈر رزلٹ:</b> اہم تاریخی واقعات لوڈ ہو چکے ہیں۔";
+            speakText("تاریخی واقعات لوڈ ہو گئے ہیں۔");
         }
 
         function processPOSSaleWithStock() {
-            let item = document.getElementById('barcodeInput').value;
-            if(!item) {
-                alert("براہ کرم آئٹم کا نام یا بارکوڈ درج کریں۔");
-                speakText("براہ کرم آئٹم کا نام درج کریں۔");
-                return;
-            }
-            let msg = `فوری سیل کامیاب! پروڈکٹ ${item} کا اسٹاک کم کر دیا گیا ہے۔`;
-            alert(msg);
-            speakText(msg);
+            let item = document.getElementById('barcodeInput').value || "آئٹم";
+            alert("فوری سیل کامیاب! " + item);
+            speakText("فوری سیل درج ہو گئی ہے۔");
         }
 
         function executePropertyAndMapTool() {
-            let propType = document.getElementById('propertyDealType').value;
-            let mapSize = document.getElementById('architectMapSize').value;
             let box = document.getElementById('propertyMapDisplay');
             box.style.display = 'block';
-            let msg = `پراپرٹی ڈیل اور نقشہ بلیو پرنٹ تیار ہو چکا ہے۔`;
-            box.innerHTML = `<b>پراپرٹی (${propType}) اور نقشہ (${mapSize}):</b> بلیو پرنٹ تیار ہو چکا ہے۔`;
-            speakText(msg);
+            box.innerHTML = "<b>پراپرٹی رزلٹ:</b> بلیو پرنٹ تیار ہے۔";
+            speakText("پراپرٹی بلیو پرنٹ تیار ہے۔");
         }
 
         function generateMarketingAdStudio() {
-            let headline = document.getElementById('adHeadline').value || "شاندار آفر - بزنس گروتھ!";
+            let text = document.getElementById('adHeadline').value || "شاندار اشتہار";
             let box = document.getElementById('posterPreview');
             box.style.display = 'block';
-            box.innerHTML = `سوشل میڈیا ایڈ اس튜디오:<br><span style='font-size:15px;'>${headline}</span>`;
-            speakText(`مارکیٹنگ اشتہار تیار ہے: ${headline}`);
+            box.innerHTML = "<b>مارکیٹنگ ایڈ:</b> " + text;
+            speakText("مارکیٹنگ اشتہار تیار ہے۔");
         }
     </script>
 </body>
-</html>
+</html>    
