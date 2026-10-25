@@ -120,99 +120,37 @@
 
             <div id="comprehensiveQuranOutput" style="width:100%; box-sizing:border-box; margin-top:15px; direction:rtl; text-align:right;"></div>           
         </section>
-     // سورہ کی لسٹ تفسیر والے ڈراپ ڈاؤن میں لوڈ کرنے کے لیے
-async function loadTafsirSurahs() {
-    let tafsirSelect = document.getElementById('tafsirSurahSelect');
-    if (!tafsirSelect || tafsirSelect.options.length > 1) return;
-    try {
-        let res = await fetch('https://api.alquran.cloud/v1/surah');
-        let json = await res.json();
-        if (json.code === 200) {
-            json.data.forEach(surah => {
-                let opt = document.createElement('option');
-                opt.value = surah.number;
-                opt.textContent = `${surah.number}. ${surah.englishName} (${surah.name}) - ${surah.englishNameTranslation}`;
-                tafsirSelect.appendChild(opt);
-            });
-        }
-    } catch (e) {
-        console.log("Error loading tafsir surahs:", e);
-    }
-}
-
-// جب بھی تفسیر والا ٹیب کھلے، سورہ کی لسٹ لوڈ ہو جائے
-// (نوٹ: یہ فنکشن آپ کے پرانے switchTab فنکشن کے ساتھ خود بخود جڑ جائے گا)
-
-async function fetchTafsirData() {
-    let surahNum = document.getElementById('tafsirSurahSelect').value;
-    let tafsirBook = document.getElementById('tafsirBookSelect').value;
-    let outputBox = document.getElementById('tafsirOutput');
+       <!-- 1.5. Tafsir Module -->
+<section id="sec-tafsir" class="module-section" style="display: none;">
+    <h2>📖 قرآن مجید کی تفسیر، تلاوت اور آڈیو تشریح</h2>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 15px;">
+        <div>
+            <label>سورہ منتخب کریں</label>
+            <select id="tafsirSurahSelect">
+                <!-- سورہ کے آپشنز خود بخود یہاں لوڈ ہوں گے -->
+            </select>
+        </div>
+        <div>
+            <label>مستند تفسیر منتخب کریں</label>
+            <select id="tafsirBookSelect">
+                <option value="ur.jalandhry">تفسیر / ترجمہ (جالندھری)</option>
+                <option value="ar.jalalayn">تفسیر الجلالین (عربی/تشریح)</option>
+            </select>
+        </div>
+    </div>
     
-    if (!surahNum) {
-        alert("براہ کرم پہلے سورہ منتخب کریں!");
-        return;
-    }
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="btn" onclick="fetchTafsirData()" style="flex: 2; min-width: 150px;">🔍 تفسیر اور آڈیو ملاحظہ کریں</button>
+        <button class="btn" onclick="startVoiceSearchTafsir()" style="flex: 1; min-width: 120px; background: #16a34a;">🎤 بول کر تلاش کریں</button>
+    </div>
 
-    outputBox.style.display = 'block';
-    outputBox.innerHTML = '<div style="text-align:center; padding:15px; font-weight:bold;">تفسیر کا ڈیٹا لوڈ ہو رہا ہے...</div>';
+    <!-- آڈیو پلیئر جو تلاوت اور آواز سننے کے لیے کام آئے گا -->
+    <audio id="tafsirAudio" controls style="width: 100%; margin-top: 15px; display: none;"></audio>
     
-    try {
-        let arabicRes = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}`);
-        let arabicJson = await arabicRes.json();
-
-        let tafsirRes = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/${tafsirBook}`);
-        let tafsirJson = await tafsirRes.json();
-        
-        if (arabicJson.code === 200 && tafsirJson.code === 200) {
-            let arabicData = arabicJson.data;
-            let tafsirData = tafsirJson.data;
-
-            let htmlContent = `<div style="text-align:center; margin-bottom:15px;"><h3 style="color:var(--primary); margin:0;">${arabicData.englishName} (${arabicData.name}) - تفصیلی مطالعہ</h3></div>`;
-            
-            htmlContent += `<div style="direction:rtl; text-align:right; line-height:2.6; font-size:17px;">`;
-            
-            for (let i = 0; i < arabicData.ayahs.length; i++) {
-                let ayahNum = arabicData.ayahs[i].numberInSurah;
-                let arabicText = arabicData.ayahs[i].text;
-                let tafsirText = tafsirData.ayahs[i] ? tafsirData.ayahs[i].text : '';
-
-                htmlContent += `<div style="padding: 10px; margin-bottom: 10px; border-bottom: 1px dashed #ccc; border-radius: 6px;">
-                    <b style="color:var(--primary);">آیت [${ayahNum}]</b><br>
-                    <span style="font-size:19px;">${arabicText}</span><br>
-                    <span style="font-size:15px; color:#333; display:inline-block; margin-top:5px;"><b>تفسیر و تشریح:</b> ${tafsirText}</span>
-                </div>`;
-            }
-            
-            htmlContent += `</div>`;
-            outputBox.innerHTML = htmlContent;
-        } else {
-            outputBox.innerHTML = '<b>⚠️ تفسیر لوڈ کرنے میں خرابی پیش آئی۔</b>';
-        }
-    } catch (err) {
-        outputBox.innerHTML = '<b>⚠️ انٹرنیٹ کنکشن چیک کریں۔</b>';
-    }
-}
-
-// پیج لوڈ ہوتے ہی تفسیر کی سورہ لسٹ کو کال کر لیں
-document.addEventListener("DOMContentLoaded", () => {
-    loadTafsirSurahs();
-});   
-
-        function startVoiceSearchTafsir() {
-    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        alert("آپ کے براؤزر میں مائیک کی سہولت دستیاب نہیں ہے۔");
-        return;
-    }
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'ur-PK';
-    recognition.start();
-
-    recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
-        alert("آپ نے فرمایا: " + transcript);
-    };
-
+    <div id="tafsirOutput" class="output-box" style="margin-top: 15px; display: none; max-height: 400px; overflow-y: auto;">
+        <!-- تفسیر کا آؤٹ پٹ یہاں شو ہوگا -->
+    </div>
+</section> 
         <!-- 2. Hadith Module -->
         <section id="sec-hadith" class="module-section">
             <h2>📚 2. فقہ و حدیث لائبریری</h2>
