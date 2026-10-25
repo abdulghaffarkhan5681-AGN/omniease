@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+نہ<!DOCTYPE html>
 <html lang="ur" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -338,18 +338,13 @@
             audioPlayer.load();
             audioPlayer.play().catch(e => console.log("Stream play error:", e));
 
-                audioPlayer.play().catch(e => console.log("Stream play error:", e));
-
-    if (!showTranslation) {
+        if (!showTranslation) {
         outputBox.style.display = 'none';
         return;
     }
 
     outputBox.style.display = 'block';
-    outputBox.innerHTML = '<b>⏳ تلاوت آڈیو اسٹریمنگ پر ہے اور ترجمہ لوڈ ہو رہا ہے...</b>';
-            outputBox.style.display = 'block';
-            outputBox.innerHTML = "<b>📖 تلاوت لائیو اسٹریمنگ پر ہے اور ترجمہ لوڈ ہو رہا ہے...</b>";
-            
+    outputBox.innerHTML = '<b>⏳ تلاوت آڈیو اسٹریمنگ پر ہے اور ترجمہ لوڈ ہو رہا ہے...</b>'; 
             try {
                 let response = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/${langCode}`);
                 let jsonResult = await response.json();
