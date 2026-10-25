@@ -306,69 +306,70 @@
             renderComprehensiveBookContent();
         };
 
-        async function fetchComprehensiveQuranData() {
-            let surahNum = document.getElementById('comprehensiveSurahSelect').value;
-            let langCode = document.getElementById('comprehensiveLangSelect').value;
-            let qariDropdown = document.getElementById('comprehensiveQariSelect').value;
-            let outputBox = document.getElementById('comprehensiveQuranOutput');
-            let paddedNum = String(surahNum).padStart(3, '0');
-            let showTranslation = document.getElementById('comprehensiveShowTranslation') ? document.getElementById('comprehensiveShowTranslation').checked : true;
-            let audioPlayer = document.getElementById('comprehensiveQuranAudio');
-            
-            let selectedQari = qariDropdown || "Mishary_Rashid_Alafasy_128kbps";
+async function fetchComprehensiveQuranData() {
+    let surahNum = document.getElementById('comprehensiveSurahSelect').value;
+    let langCode = document.getElementById('comprehensiveLangSelect').value;
+    let qariDropdown = document.getElementById('comprehensiveQariSelect').value;
+    let outputBox = document.getElementById('comprehensiveQuranOutput');
+    let paddedNum = String(surahNum).padStart(3, '0');
+    let showTranslation = document.getElementById('comprehensiveShowTranslation') ? document.getElementById('comprehensiveShowTranslation').checked : true;
+    let audioPlayer = document.getElementById('comprehensiveQuranAudio');
 
-            const qariDirectStreams = {
-                "Abdurrahmaan_As-Sudais_192kbps": `https://server11.mp3quran.net/sds/${paddedNum}.mp3`,
-                "Saud_Ash-Shuraym_192kbps": `https://server7.mp3quran.net/shur/${paddedNum}.mp3`,
-                "Mishary_Rashid_Alafasy_128kbps": `https://server8.mp3quran.net/afs/${paddedNum}.mp3`,
-                "Abdul_Basit_Murattal_192kbps": `https://server7.mp3quran.net/basit/surah/${paddedNum}.mp3`,
-                "Abdul_Basit_Mujawwad_128kbps": `https://server12.mp3quran.net/basit/Mujawwad/${paddedNum}.mp3`,
-                "Minshawy_Murattal_128kbps": `https://server10.mp3quran.net/minsh/${paddedNum}.mp3`,
-                "Mahmoud_Khalil_Al-Husary_128kbps": `https://server13.mp3quran.net/husr/${paddedNum}.mp3`,
-                "Maher_AlMuaiqly_64kbps": `https://server12.mp3quran.net/maher/${paddedNum}.mp3`,
-                "Saad_Al-Ghamdi_128kbps": `https://server7.mp3quran.net/ghamdi/${paddedNum}.mp3`,
-                "Ahmed_Al_Ajamy_128kbps": `https://server10.mp3quran.net/ajm/${paddedNum}.mp3`,
-                "Ali_Al-Hudhaify_128kbps": `https://server6.mp3quran.net/huthfi/${paddedNum}.mp3`,
-                "Muhammad_Ayyoub_128kbps": `https://server16.mp3quran.net/ayyoub/${paddedNum}.mp3`
-            };
+    let selectedQari = qariDropdown || 'Mishary_Rashid_Alafasy_128kbps';
 
-            let streamUrl = qariDirectStreams[selectedQari] || `https://server8.mp3quran.net/afs/${paddedNum}.mp3`;
-            
-            audioPlayer.src = streamUrl;
-            audioPlayer.load();
-            audioPlayer.play().catch(e => console.log("Stream play error:", e));
+    const qariDirectStreams = {
+        "Abdurrahmaan_As-Sudais_192kbps": `https://server11.mp3quran.net/sds/${paddedNum}.mp3`,
+        "Saud_Ash-Shuraym_192kbps": `https://server7.mp3quran.net/shur/${paddedNum}.mp3`,
+        "Mishary_Rashid_Alafasy_128kbps": `https://server8.mp3quran.net/afs/${paddedNum}.mp3`,
+        "Abdul_Basit_Murattal_192kbps": `https://server7.mp3quran.net/basit/surah/${paddedNum}.mp3`,
+        "Abdul_Basit_Mujawwad_128kbps": `https://server12.mp3quran.net/mujawwad/${paddedNum}.mp3`,
+        "Minshawi_Murattal_128kbps": `https://server10.mp3quran.net/minsh/${paddedNum}.mp3`,
+        "Mahmoud_Khalil_Al-Husary_128kbps": `https://server13.mp3quran.net/husar/${paddedNum}.mp3`,
+        "Maher_AlMuaiqly_64kbps": `https://server12.mp3quran.net/maher/${paddedNum}.mp3`,
+        "Saad_Al-Ghamdi_128kbps": `https://server7.mp3quran.net/ghamd/${paddedNum}.mp3`,
+        "Ahmed_Al_Ajamy_128kbps": `https://server10.mp3quran.net/ajm/${paddedNum}.mp3`,
+        "Ali_Al-Hudhaify_128kbps": `https://server6.mp3quran.net/hudhaify/${paddedNum}.mp3`,
+        "Muhammad_Ayyoub_128kbps": `https://server16.mp3quran.net/ayyoub/${paddedNum}.mp3`
+    };
 
-    if (!showTranslation) {
-        outputBox.style.display = 'none';
-        return;
-                        }            
+    let streamUrl = qariDirectStreams[selectedQari] || `https://server8.mp3quran.net/afs/${paddedNum}.mp3`;
+
+    audioPlayer.src = streamUrl;
+    audioPlayer.load();
+    audioPlayer.play().catch(e => console.log("Stream play error:", e));
 
     outputBox.style.display = 'block';
-    outputBox.innerHTML = '<b>⏳ تلاوت آڈیو اسٹریمنگ پر ہے اور ترجمہ لوڈ ہو رہا ہے...</b>'; 
-            try {
-                let response = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/${langCode}`);
-                let jsonResult = await response.json();
-                if(jsonResult.code === 200) {
-                    let data = jsonResult.data;
-                    let paragraphHTML = `<div style='width:100%; text-align:center; margin-bottom:15px;'>
-                        <h3 style='color:var(--primary); margin:0;'>${data.englishName} (${data.name}) - ${data.englishNameTranslation}</h3>
-                    </div>
-                    <div style='width:100%; direction:rtl; text-align:right; line-height:2.5; font-size:20px; padding:15px; background:#fdfdfd; border:1px solid #eee; border-radius:10px; box-sizing:border-box;'>`;
-                    
-                    data.ayahs.forEach(ayah => {
-                        paragraphHTML += `${ayah.text} <span style='color:var(--primary); font-weight:bold; font-size:16px;'>﴿${ayah.numberInSurah}﴾</span> `;
-                    });
-                    
-                    paragraphHTML += `</div>`;
-                    outputBox.innerHTML = paragraphHTML;
-                } else {
-                    outputBox.innerHTML = "<b>⚠️ ترجمہ لوڈ کرنے میں خرابی پیش آئی۔</b>";
-                }
-            } catch (err) {
-                outputBox.innerHTML = "<b>⚠️ نیٹ ورک کا مسئلہ ہے۔ انٹرنیٹ کنکشن چیک کریں۔</b>";
-            }
-        }
 
+    if (!showTranslation) {
+        outputBox.innerHTML = '<div style="text-align:center; padding:15px; font-weight:bold;">تلاوت آڈیو چل رہی ہے... (ترجمہ چھپایا گیا ہے)</div>';
+        return;
+    }
+
+    outputBox.innerHTML = '<div style="text-align:center; padding:15px; font-weight:bold;">ترجمہ اور آیات لوڈ کی جا رہی ہیں...</div>';
+    
+    try {
+        let response = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/${langCode}`);
+        let jsonResult = await response.json();
+        
+        if (jsonResult.code === 200) {
+            let data = jsonResult.data;
+            let paragraphHTML = `<div style="width:100%; text-align:center; margin-bottom:15px;"><h3 style="color:var(--primary); margin:0;">${data.englishName} (${data.name}) - ${data.englishNameTranslation}</h3></div>`;
+            
+            paragraphHTML += `<div style="width:100%; direction:rtl; text-align:right; line-height:2.5; font-size:20px; padding:10px;">`;
+            
+            data.ayahs.forEach(ayah => {
+                paragraphHTML += `<b>[${ayah.numberInSurah}]</b> ${ayah.text} <span style="color:var(--primary); font-weight:bold; font-size:16px;">(${ayah.numberInSurah})</span><br>`;
+            });
+            
+            paragraphHTML += `</div>`;
+            outputBox.innerHTML = paragraphHTML;
+        } else {
+            outputBox.innerHTML = '<b>⚠️ ترجمہ لوڈ کرنے میں کوئی خرابی پیش آئی۔</b>';
+        }
+    } catch (err) {
+        outputBox.innerHTML = '<b>⚠️ انٹرنیٹ کنکشن چیک کریں۔</b>';
+    }
+                        }
         // آڈیو ختم ہونے پر آٹو پلے یا ریپیٹ کا فنکشن
         document.getElementById('comprehensiveQuranAudio').addEventListener('ended', function() {
             let loopCheck = document.getElementById('loopCurrent');
