@@ -308,7 +308,7 @@
 
 async function fetchComprehensiveQuranData() {
     let surahNum = document.getElementById('comprehensiveSurahSelect').value;
-    let langCode = document.getElementById('comprehensiveLangSelect').value;
+    let langCode = document.getElementById('comprehensiveLangSelect').value || 'ur.jalandhry';
     let qariDropdown = document.getElementById('comprehensiveQariSelect').value;
     let outputBox = document.getElementById('comprehensiveQuranOutput');
     let paddedNum = String(surahNum).padStart(3, '0');
@@ -339,36 +339,66 @@ async function fetchComprehensiveQuranData() {
     audioPlayer.play().catch(e => console.log("Stream play error:", e));
 
     outputBox.style.display = 'block';
-
-    if (!showTranslation) {
-        outputBox.innerHTML = '<div style="text-align:center; padding:15px; font-weight:bold;">تلاوت آڈیو چل رہی ہے... (ترجمہ چھپایا گیا ہے)</div>';
-        return;
-    }
-
-    outputBox.innerHTML = '<div style="text-align:center; padding:15px; font-weight:bold;">ترجمہ اور آیات لوڈ کی جا رہی ہیں...</div>';
+    outputBox.innerHTML = '<div style="text-align:center; padding:15px; font-weight:bold;">تلاوت اور ترجمہ لوڈ ہو رہا ہے...</div>';
     
     try {
-        let response = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/${langCode}`);
-        let jsonResult = await response.json();
+        let arabicRes = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}`);
+        let arabicJson = await arabicRes.json();
+
+        let translationRes = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/ur.jalandhry`);
+        let translationJson = await translationRes.json();
         
-        if (jsonResult.code === 200) {
-            let data = jsonResult.data;
-            let paragraphHTML = `<div style="width:100%; text-align:center; margin-bottom:15px;"><h3 style="color:var(--primary); margin:0;">${data.englishName} (${data.name}) - ${data.englishNameTranslation}</h3></div>`;
+        if (arabicJson.code === 200 && translationJson.code === 200) {
+            let arabicData = arabicJson.data;
+            let transData = translationJson.data;
+
+            let paragraphHTML = `<div style="width:100%; text-align:center; margin-bottom:15px;"><h3 style="color:var(--primary); margin:0;">${arabicData.englishName} (${arabicData.name})</h3></div>`;
             
-            paragraphHTML += `<div style="width:100%; direction:rtl; text-align:right; line-height:2.5; font-size:20px; padding:10px;">`;
+            paragraphHTML += `<div id="quran-lines-container" style="width:100%; direction:rtl; text-align:right; line-height:2.8; font-size:18px; padding:10px; max-height:400px; overflow-y:auto;">`;
             
-            data.ayahs.forEach(ayah => {
-                paragraphHTML += `<b>[${ayah.numberInSurah}]</b> ${ayah.text} <span style="color:var(--primary); font-weight:bold; font-size:16px;">(${ayah.numberInSurah})</span><br>`;
-            });
+            for (let i = 0; i < arabicData.ayahs.length; i++) {
+                let ayahNum = arabicData.ayahs[i].numberInSurah;
+                let arabicText = arabicData.ayahs[i].text;
+                let transText = showTranslation && transData.ayahs[i] ? transData.ayahs[i].text : '';
+
+                paragraphHTML += `<div id="ayah-row-${i}" style="padding: 8px; margin-bottom: 8px; border-radius: 8px; transition: all 0.3s ease;">
+                    <b style="color:var(--primary);">[${ayahNum}]</b> ${arabicText}
+                    ${transText ? `<br><span style="font-size:14px; color:#555;">ترجمہ: ${transText}</span>` : ''}
+                </div>`;
+            }
             
             paragraphHTML += `</div>`;
             outputBox.innerHTML = paragraphHTML;
+
+            audioPlayer.ontimeupdate = function() {
+                if (!audioPlayer.duration) return;
+                let progressPercent = audioPlayer.currentTime / audioPlayer.duration;
+                let totalAyahs = arabicData.ayahs.length;
+                let activeIndex = Math.floor(progressPercent * totalAyahs);
+
+                for (let i = 0; i < totalAyahs; i++) {
+                    let row = document.getElementById(`ayah-row-${i}`);
+                    if (row) {
+                        if (i === activeIndex) {
+                            row.style.backgroundColor = '#e3f2fd';
+                            row.style.borderRight = '4px solid var(--primary)';
+                            row.style.fontWeight = 'bold';
+                        } else {
+                            row.style.backgroundColor = 'transparent';
+                            row.style.borderRight = 'none';
+                            row.style.fontWeight = 'normal';
+                        }
+                    }
+                }
+            };
+
         } else {
-            outputBox.innerHTML = '<b>⚠️ ترجمہ لوڈ کرنے میں کوئی خرابی پیش آئی۔</b>';
+            outputBox.innerHTML = '<b>⚠️ ڈیٹا لوڈ کرنے میں خرابی پیش آئی۔</b>';
         }
     } catch (err) {
         outputBox.innerHTML = '<b>⚠️ انٹرنیٹ کنکشن چیک کریں۔</b>';
     }
+                        }
                         }
         // آڈیو ختم ہونے پر آٹو پلے یا ریپیٹ کا فنکشن
         document.getElementById('comprehensiveQuranAudio').addEventListener('ended', function() {
