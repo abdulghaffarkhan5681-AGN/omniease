@@ -198,6 +198,21 @@ document.addEventListener("DOMContentLoaded", () => {
     loadTafsirSurahs();
 });   
 
+        function startVoiceSearchTafsir() {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert("آپ کے براؤزر میں مائیک کی سہولت دستیاب نہیں ہے۔");
+        return;
+    }
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'ur-PK';
+    recognition.start();
+
+    recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        alert("آپ نے فرمایا: " + transcript);
+    };
+
         <!-- 2. Hadith Module -->
         <section id="sec-hadith" class="module-section">
             <h2>📚 2. فقہ و حدیث لائبریری</h2>
