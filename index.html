@@ -151,7 +151,7 @@
         <!-- تفسیر کا آؤٹ پٹ یہاں شو ہوگا -->
     </div>
 </section> 
-        // سورہ کی لسٹ لوڈ کرنے کے لیے
+        <script>
 async function loadTafsirSurahs() {
     let tafsirSelect = document.getElementById('tafsirSurahSelect');
     if (!tafsirSelect || tafsirSelect.options.length > 1) return;
@@ -162,16 +162,15 @@ async function loadTafsirSurahs() {
             json.data.forEach(surah => {
                 let opt = document.createElement('option');
                 opt.value = surah.number;
-                opt.textContent = `${surah.number}. ${surah.englishName} (${surah.name}) - ${surah.englishNameTranslation}`;
+                opt.textContent = surah.number + '. ' + surah.englishName + ' (' + surah.name + ') - ' + surah.englishNameTranslation;
                 tafsirSelect.appendChild(opt);
             });
         }
     } catch (e) {
-        console.log("Error loading tafsir surahs:", e);
+        console.log("Error:", e);
     }
 }
 
-// تفسیر، متن اور آڈیو ڈیٹا فیچ کرنے کے لیے
 async function fetchTafsirData() {
     let surahNum = document.getElementById('tafsirSurahSelect').value;
     let tafsirBook = document.getElementById('tafsirBookSelect').value;
@@ -187,38 +186,36 @@ async function fetchTafsirData() {
     outputBox.innerHTML = '<div style="text-align:center; padding:15px; font-weight:bold;">تفسیر اور تلاوت کا ڈیٹا لوڈ ہو رہا ہے...</div>';
     
     try {
-        let arabicRes = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}`);
+        let arabicRes = await fetch('https://api.alquran.cloud/v1/surah/' + surahNum);
         let arabicJson = await arabicRes.json();
 
-        let tafsirRes = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/${tafsirBook}`);
+        let tafsirRes = await fetch('https://api.alquran.cloud/v1/surah/' + surahNum + '/' + tafsirBook);
         let tafsirJson = await tafsirRes.json();
         
         if (arabicJson.code === 200 && tafsirJson.code === 200) {
             let arabicData = arabicJson.data;
             let tafsirData = tafsirJson.data;
 
-            // آڈیو پلیئر کو ایکٹیو کرنا
             audioPlayer.style.display = 'block';
             let formattedNum = String(surahNum).padStart(3, '0');
-            audioPlayer.src = `https://everyayah.com/data/Alafasy_128kbps/${formattedNum}.mp3`;
+            audioPlayer.src = 'https://everyayah.com/data/Alafasy_128kbps/' + formattedNum + '.mp3';
 
-            let htmlContent = `<div style="text-align:center; margin-bottom:15px;"><h3 style="color:var(--primary); margin:0;">${arabicData.englishName} (${arabicData.name}) - تفصیلی مطالعہ</h3></div>`;
-            
-            htmlContent += `<div style="direction:rtl; text-align:right; line-height:2.6; font-size:17px;">`;
+            let htmlContent = '<div style="text-align:center; margin-bottom:15px;"><h3 style="color:var(--primary); margin:0;">' + arabicData.englishName + ' (' + arabicData.name + ') - تفصیلی مطالعہ</h3></div>';
+            htmlContent += '<div style="direction:rtl; text-align:right; line-height:2.6; font-size:17px;">';
             
             for (let i = 0; i < arabicData.ayahs.length; i++) {
                 let ayahNum = arabicData.ayahs[i].numberInSurah;
                 let arabicText = arabicData.ayahs[i].text;
                 let tafsirText = tafsirData.ayahs[i] ? tafsirData.ayahs[i].text : '';
 
-                htmlContent += `<div style="padding: 10px; margin-bottom: 10px; border-bottom: 1px dashed #ccc; border-radius: 6px;">
-                    <b style="color:var(--primary);">آیت [${ayahNum}]</b><br>
-                    <span style="font-size:19px;">${arabicText}</span><br>
-                    <span style="font-size:15px; color:#333; display:inline-block; margin-top:5px;"><b>تفسیر و تشریح:</b> ${tafsirText}</span>
-                </div>`;
+                htmlContent += '<div style="padding: 10px; margin-bottom: 10px; border-bottom: 1px dashed #ccc; border-radius: 6px;">' +
+                    '<b style="color:var(--primary);">آیت [' + ayahNum + ']</b><br>' +
+                    '<span style="font-size:19px;">' + arabicText + '</span><br>' +
+                    '<span style="font-size:15px; color:#333; display:inline-block; margin-top:5px;"><b>تفسیر و تشریح:</b> ' + tafsirText + '</span>' +
+                    '</div>';
             }
             
-            htmlContent += `</div>`;
+            htmlContent += '</div>';
             outputBox.innerHTML = htmlContent;
         } else {
             outputBox.innerHTML = '<b>⚠️ تفسیر لوڈ کرنے میں خرابی پیش آئی۔</b>';
@@ -228,10 +225,9 @@ async function fetchTafsirData() {
     }
 }
 
-// بول کر سرچ کرنے کا وائس سرچ فنکشن
 function startVoiceSearchTafsir() {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        alert("آپ کے براؤزر میں مائیک کی سہولت دستیاب نہیں ہے۔");
+        alert("مائیک کی سہولت دستیاب نہیں ہے۔");
         return;
     }
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -245,10 +241,10 @@ function startVoiceSearchTafsir() {
     };
 }
 
-// پیج لوڈ ہوتے ہی سورہ لسٹ کال کرنے کے لیے
 document.addEventListener("DOMContentLoaded", () => {
     loadTafsirSurahs();
 });
+        </script>
         <!-- 2. Hadith Module -->
         <section id="sec-hadith" class="module-section">
             <h2>📚 2. فقہ و حدیث لائبریری</h2>
