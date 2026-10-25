@@ -205,8 +205,8 @@
 
     <footer>
         <p>فیضان مبیلوی • طالب دعا: عبدالغفار خان • کچے گھر پکے رشتے (AGN)</p>
-                                                      </footer>
-                                                          <script>
+    </footer>
+        <script>
         function switchTab(tabId) {
             document.querySelectorAll('.module-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
@@ -261,7 +261,7 @@
             {n: 85, name: "سورۃ البروج", type: "مکی", ayahs: 22}, {n: 86, name: "سورۃ الطارق", type: "مکی", ayahs: 17},
             {n: 87, name: "سورۃ الاعلیٰ", type: "مکی", ayahs: 19}, {n: 88, name: "سورۃ الغاشیہ", type: "مکی", ayahs: 26},
             {n: 89, name: "سورۃ الفجر", type: "مکی", ayahs: 30}, {n: 90, name: "سورۃ البلد", type: "مکی", ayahs: 20},
-            {n: 91, name: "سورۃ الشمس", type: "مکی", ayahs: 15}, {n: 92, name: "سورۃ اللیل", type: "مکی", ayahs: 21},
+            {n: 91, name: "سورۃ الشمس", type: "مکی", ayahs: 15}, {n: 92, name: "سورۃ اللیل", type: "مدنی", ayahs: 21},
             {n: 93, name: "سورۃ الضحیٰ", type: "مکی", ayahs: 11}, {n: 94, name: "سورۃ الشرح", type: "مکی", ayahs: 8},
             {n: 95, name: "سورۃ التین", type: "مکی", ayahs: 8}, {n: 96, name: "سورۃ العلق", type: "مکی", ayahs: 19},
             {n: 97, name: "سورۃ القدر", type: "مکی", ayahs: 5}, {n: 98, name: "سورۃ البینہ", type: "مدنی", ayahs: 8},
@@ -278,15 +278,6 @@
         window.onload = function() {
             let select = document.getElementById('comprehensiveSurahSelect');
             allSurahsList.forEach(s => {
-                let opt = document.createElement('option');
-                opt.value = s.n;
-                opt.innerText = `${s.n}. ${s.name} (${s.type} - ${s.ayahs} آیات)`;
-                select.appendChild(opt);
-            });
-            renderComprehensiveBookContent();
-                  window.onload = function() {
-            let select = document.getElementById('comprehensiveSurahSelect');
-            allSurahList.forEach(s => {
                 let opt = document.createElement('option');
                 opt.value = s.n;
                 opt.innerText = `${s.n}. ${s.name} (${s.type} - ${s.ayahs} آیات)`;
@@ -348,10 +339,13 @@
                 } else {
                     outputBox.innerHTML = "<b>⚠️ ترجمہ لوڈ کرنے میں خرابی پیش آئی۔</b>";
                 }
-            } catch (err) 
+            } catch (err) {
                 outputBox.innerHTML = "<b>⚠️ نیٹ ورک کا مسئلہ ہے۔ انٹرنیٹ کنکشن چیک کریں۔</b>";
             }
-                                                              }                                                    }                                                 
+        }
+
+        function renderComprehensiveBookContent() {
+            let bookKey = document.getElementById('comprehensiveBookSelect').value;
             let displayBox = document.getElementById('comprehensiveBookOutput');
             if(bookKey === 'bukhari') {
                 displayBox.innerHTML = "<b>صحیح بخاری شریف:</b> إنما الأعمال بالنيات (تمام اعمال کا دارومدار نیت پر ہے)۔";
@@ -439,7 +433,6 @@
             o.innerHTML = t ? "ترجمہ کامیاب: " + t : "براہ کرم کچھ لکھیں۔";
         }
 
-        // اے آئی اسپیچ ٹو ٹیکسٹ (جو بولیں گے وہ خود بخود لکھا جائے گا)
         function startCompSpeechRecognition() {
             let outputBox = document.getElementById('compTransOutput');
             outputBox.style.display = 'block';
