@@ -312,6 +312,7 @@
             let qariDropdown = document.getElementById('comprehensiveQariSelect').value;
             let outputBox = document.getElementById('comprehensiveQuranOutput');
             let paddedNum = String(surahNum).padStart(3, '0');
+            let showTranslation = document.getElementById('comprehensiveShowTranslation') ? document.getElementById('comprehensiveShowTranslation').checked : true;
             let audioPlayer = document.getElementById('comprehensiveQuranAudio');
             
             let selectedQari = qariDropdown || "Mishary_Rashid_Alafasy_128kbps";
