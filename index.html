@@ -97,6 +97,13 @@
             </div>        
             <button class="btn" onclick="fetchComprehensiveQuranData()">▶️ تلاوت پلے کریں اور ترجمہ لوڈ کریں</button>
             <audio id="comprehensiveQuranAudio" controls style="width: 100%; margin-top: 15px;"></audio>
+            
+            <!-- آٹو پلے اور ریپیٹ کے کنٹرولز -->
+            <div style="margin-top: 10px; display: flex; gap: 15px; align-items: center; font-size: 14px; direction: rtl;">
+                <label style="cursor:pointer; display:flex; align-items:center; gap:5px;"><input type="checkbox" id="autoPlayNext" checked> اگلی سورۃ خود بخود چلائیں (Auto-Play)</label>
+                <label style="cursor:pointer; display:flex; align-items:center; gap:5px;"><input type="checkbox" id="loopCurrent"> یہی سورۃ بار بار دہرائیں (Repeat)</label>
+            </div>
+
             <div id="comprehensiveQuranOutput" style="width:100%; box-sizing:border-box; margin-top:15px; direction:rtl; text-align:right;"></div>           
         </section>
 
@@ -205,8 +212,8 @@
 
     <footer>
         <p>فیضان مبیلوی • طالب دعا: عبدالغفار خان • کچے گھر پکے رشتے (AGN)</p>
-    </footer>
-        <script>
+                </footer>
+             <script>
         function switchTab(tabId) {
             document.querySelectorAll('.module-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
@@ -343,6 +350,27 @@
                 outputBox.innerHTML = "<b>⚠️ نیٹ ورک کا مسئلہ ہے۔ انٹرنیٹ کنکشن چیک کریں۔</b>";
             }
         }
+
+        // آڈیو ختم ہونے پر آٹو پلے یا ریپیٹ کا فنکشن
+        document.getElementById('comprehensiveQuranAudio').addEventListener('ended', function() {
+            let loopCheck = document.getElementById('loopCurrent');
+            let autoCheck = document.getElementById('autoPlayNext');
+            
+            if (loopCheck && loopCheck.checked) {
+                this.currentTime = 0;
+                this.play();
+                return;
+            }
+            
+            if (autoCheck && autoCheck.checked) {
+                let select = document.getElementById('comprehensiveSurahSelect');
+                let currentIndex = select.selectedIndex;
+                if (currentIndex < select.options.length - 1) {
+                    select.selectedIndex = currentIndex + 1;
+                    fetchComprehensiveQuranData();
+                }
+            }
+        });
 
         function renderComprehensiveBookContent() {
             let bookKey = document.getElementById('comprehensiveBookSelect').value;
@@ -490,8 +518,9 @@
             navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(stream => {
                 document.getElementById('compMediaVideo').srcObject = stream;
                 alert("🎙️ لائیو ریکارڈنگ شروع ہو چکی ہے!");
-            }).catch(e => alert("مائیکروفون اور کیمرہ کی اجازت درکار ہے۔"));
-        }
-    </script>
+                }).catch(e => alert("مائیکروفون اور کیمرہ کی اجازت درکار ہے۔"));
+                 }
+    }
+</script>
 </body>
 </html>
