@@ -651,23 +651,35 @@ document.addEventListener("DOMContentLoaded", () => {
             let qiblaAngle = Math.round((Math.atan2(y, x) * 180 / Math.PI + 360) % 360);
 
             qiblaBox.innerHTML = `
-                <div style="background:#fff; padding:15px; border-radius:10px; border:1px solid #cbd5e1; text-align:center;">
-                    <div style="font-size:18px; font-weight:bold; color:var(--primary); margin-bottom:8px;">
-                        🕋 قبلہ کا رخ (مکہ مکرمہ کی سمت): ${qiblaAngle}° Degree
+                <div style="background:#fff; padding:20px; border-radius:12px; border:1px solid #cbd5e1; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+                    
+                    <!-- بڑا اور واضح قبلہ رخ بینر -->
+                    <div style="background:linear-gradient(135deg, var(--primary), var(--secondary)); color:#fff; padding:18px; border-radius:10px; margin-bottom:15px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                        <div style="font-size:22px; font-weight:bold; margin-bottom:6px;">
+                            🕋 قبلہ کا رخ: ${qiblaAngle}° ڈگری
+                        </div>
+                        <div style="font-size:14px; opacity:0.9;">
+                            مکہ مکرمہ (کعبہ شریف) کی درست سمت کا نشان
+                        </div>
+                        <!-- بڑا بصری تیر (Needle Indicator) -->
+                        <div style="margin-top:12px; font-size:36px; display:inline-block;">
+                            🧭⬆️
+                        </div>
                     </div>
-                    <p style="font-size:13px; color:#64748b; margin-bottom:12px;">
-                        (آپ کے مقام سے کعبہ شریف کی سمت کی ڈگری معلوم کر لی گئی ہے)
+
+                    <p style="font-size:13px; color:#64748b; margin-bottom:15px;">
+                        (آپ کے موجودہ مقام سے مکہ مکرمہ کا زاویہ اور لائیو نقشہ نیچے دیا گیا ہے)
                     </p>
 
                     <!-- لائیو قبلہ نیویگیشن نقشہ -->
-                    <div style="border-radius:8px; overflow:hidden; border:2px solid var(--primary); margin-bottom:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+                    <div style="border-radius:10px; overflow:hidden; border:2px solid var(--primary); margin-bottom:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
                         <iframe width="100%" height="260" style="border:0;" loading="lazy" allowfullscreen 
                             src="https://maps.google.com/maps?q=${lat},${lon}&z=15&output=embed">
                         </iframe>
                     </div>
 
-                    <div style="font-size:14px; font-weight:bold; color:#1e293b; background:#f1f5f9; padding:8px; border-radius:6px;">
-                        📍 لائیو نقشہ: نقشے میں دیکھ کر مکہ مکرمہ (${qiblaAngle}°) کی سمت رخ کریں۔
+                    <div style="font-size:14px; font-weight:bold; color:#1e293b; background:#f1f5f9; padding:10px; border-radius:6px;">
+                        📍 نقشے میں اپنی لوکیشن دیکھ کر اس سمت (${qiblaAngle}°) پر رخ کریں۔
                     </div>
                 </div>
             `;
