@@ -288,22 +288,22 @@ document.addEventListener("DOMContentLoaded", () => {
             <div id="compBusinessReport" class="output-box" style="display:none; margin-top:15px;"></div>
         </section> 
 
-        <!-- 4. Maps & Prayer Times Module -->
-        <section id="sec-maps" class="module-section">
-            <h2>🗺️ 4. لائیو جی پی ایس اوقاتِ نماز (آٹو لوکیشن)</h2>
-            <button class="btn" onclick="loadCompPrayerTimesAndGPS()">⏰ لائیو جی پی ایس اوقات لوڈ کریں</button>
-            <div id="compMapOutput" class="output-box" style="display:none;"></div>
-        </section>
+            <!-- 4. Maps Module (نقشہ اور اوقاتِ نماز) -->
+    <section id="sec-maps" class="module-section" style="background:#fff; padding:20px; margin-bottom:15px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+        <h2 style="color:var(--primary); margin-bottom:10px;">🧭 اوقاتِ نماز اور لائیو نقشہ</h2>
+        <button class="btn" onclick="loadCompPrayerTimesAndGPS(this)" style="background:var(--primary); color:#fff; padding:10px 15px; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">📍 لائیو لوکیشن اور اوقات حاصل کریں</button>
+        <div id="compMapOutput" class="output-box" style="margin-top:15px; padding:12px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; display:none;"></div>
+    </section>
 
-        <!-- 5. Qibla Module -->
-        <section id="sec-qibla" class="module-section">
-            <h2>🧭 5. قبلہ رخ لائیو کمپاس</h2>
-            <div id="compQiblaDisplay" style="font-weight:bold; color:var(--primary); text-align:center; padding:25px; background:#f0fdf4; border-radius:10px; border:1px solid #bbf7d0;">
-                قبلہ سمت: 255° مغرب (مکہ مکرمہ) — لائیو سینسر ایکٹیویٹ کرنے کے لیے نیچے بٹن دبائیں۔
-            </div>
-            <button class="btn" onclick="initCompQiblaCompass()" style="margin-top:12px;">🧭 لائیو کمپاس سینسر آن کریں</button>
-        </section>
-
+    <!-- 5. Qibla Compass Module (صرف قبلہ کمپاس اور سوئی) -->
+    <section id="sec-qibla" class="module-section" style="background:#fff; padding:20px; margin-bottom:15px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+        <h2 style="color:var(--primary); margin-bottom:10px;">🧭 قبلہ رخ لائیو کمپاس</h2>
+        <div id="compQiblaDisplay" style="font-weight:bold; color:var(--primary); text-align:center; padding:15px; font-size:16px;">
+            قبلہ سمت: 255° مغرب (مکہ مکرمہ) — لائیو سینسرز فعال کرنے کے لیے نیچے بٹن دبائیں۔
+        </div>
+        <button class="btn" onclick="initCompQiblaCompass()" style="background:#16a34a; color:#fff; padding:10px 15px; border:none; border-radius:8px; cursor:pointer; font-weight:bold; width:100%; margin-top:10px;">🧭 لائیو کمپاس سینسر آن کریں</button>
+    </section>
+        
         <!-- 6. Translator & AI Voice Module -->
         <section id="sec-translator" class="module-section">
             <h2>🌐 6. ٹرانسلیٹر اور اے آئی وائس ٹائپنگ (بول کر لکھیں)</h2>
