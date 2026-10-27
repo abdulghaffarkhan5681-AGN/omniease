@@ -575,43 +575,53 @@ document.addEventListener("DOMContentLoaded", () => {
         let compTotalSalesRevenue = 0;
 
         function loadCompPrayerTimesAndGPS() {
-            let box = document.getElementById('compMapOutput');
-            box.style.display = 'block';
-            box.innerHTML = "<b>📍 آپ کی لائیو لوکیشن اور جی پی ایس سگنل حاصل کیے جا رہے ہیں، براہ کرم انتظار کریں...</b>";
+    let box = document.getElementById('compMapOutput');
+    box.style.display = 'block';
+    box.innerHTML = '<div style="text-align:center; padding:15px; font-weight:bold; color:var(--primary);">📍 آپ کی لائیو لوکیشن اور جینون میپ لوڈ ہو رہا ہے، براہ کرم انتظار کریں...</div>';
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            let lat = position.coords.latitude;
+            let lon = position.coords.longitude;
+            let today = new Date().toISOString().split('T')[0];
             
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(async (position) => {
-                    let lat = position.coords.latitude;
-                    let lon = position.coords.longitude;
-                    let today = new Date().toISOString().split('T')[0];
+            try {
+                let response = await fetch(`https://api.aladhan.com/v1/timings/${today}?latitude=${lat}&longitude=${lon}&method=2`);
+                let result = await response.json();
+                
+                if (result.code === 200) {
+                    let timings = result.data.timings;
                     
-                    try {
-                        let response = await fetch(`https://api.aladhan.com/v1/timings/${today}?latitude=${lat}&longitude=${lon}&method=2`);
-                        let result = await response.json();
-                        
-                        if (result.code === 200) {
-                            let t = result.data.timings;
-                            box.innerHTML = `<b>📍 لائیو لوکیشن کے مطابق نماز کے اوقات (مستند حساب):</b><br>` +
-                                `• فجر (Fajr): ${t.Fajr}<br>` +
-                                `• طلوع آفتاب (Sunrise): ${t.Sunrise}<br>` +
-                                `• ظہر (Dhuhr): ${t.Dhuhr}<br>` +
-                                `• عصر (Asr): ${t.Asr}<br>` +
-                                `• مغرب (Maghrib): ${t.Maghrib}<br>` +
-                                `• عشاء (Isha): ${t.Isha}<br>` +
-                                `<hr style='margin:10px 0;'><b>لائیو کوآرڈینیٹس:</b> Lat: ${lat.toFixed(3)}, Lon: ${lon.toFixed(3)}`;
-                        } else {
-                            fallbackPrayerTimes(box);
-                        }
-                    } catch (err) {
-                        fallbackPrayerTimes(box);
-                    }
-                }, (error) => {
-                    fallbackPrayerTimes(box);
-                });
-            } else {
-                fallbackPrayerTimes(box);
+                    box.innerHTML = `
+                        <div style="margin-bottom:12px; font-weight:bold; color:var(--primary); font-size:16px;">
+                            📍 لائیو لوکیشن (Lat: ${lat.toFixed(3)}, Lon: ${lon.toFixed(3)})
+                        </div>
+                        <div style="margin-bottom:15px; border-radius:8px; overflow:hidden; border:2px solid var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                            <iframe width="100%" height="280" style="border:0;" loading="lazy" allowfullscreen src="https://maps.google.com/maps?q=${lat},${lon}&z=16&output=embed"></iframe>
+                        </div>
+                        <div style="background:#fff; padding:12px; border-radius:6px; border:1px solid #cbd5e1;">
+                            <b style="color:var(--primary);">⏰ آج کے نماز کے مستند اوقات:</b><br>
+                            <div style="margin-top:8px; line-height:2.2; font-size:15px; color:#334155;">
+                                • <b>فجر:</b> ${timings.Fajr}<br>
+                                • <b>ظہر:</b> ${timings.Dhuhr}<br>
+                                • <b>عصر:</b> ${timings.Asr}<br>
+                                • <b>مغرب:</b> ${timings.Maghrib}<br>
+                                • <b>عشاء:</b> ${timings.Isha}
+                            </div>
+                        </div>`;
+                } else {
+                    box.innerHTML = '<b>⚠️ اوقاتِ نماز حاصل کرنے میں خرابی پیش آئی۔</b>';
+                }
+            } catch (err) {
+                box.innerHTML = '<b>⚠️ انٹرنیٹ کنکشن یا جی پی ایس سگنل کا مسئلہ ہے۔</b>';
             }
-        }
+        }, (error) => {
+            box.innerHTML = '<b>⚠️ براہ کرم اپنے براؤزر یا موبائل کی لوکیشن (GPS) کی اجازت آن کریں۔</b>';
+        }, { timeout: 10000 });
+    } else {
+        box.innerHTML = '<b>⚠️ آپ کا براؤزر جیو لوکیشن کو سپورٹ نہیں کرتا۔</b>';
+    }
+                        }
 
         function fallbackPrayerTimes(box) {
             box.innerHTML = "<b>📍 لاہور (ڈیفالٹ لوکیشن) کے مستند اوقاتِ نماز:</b><br>" +
