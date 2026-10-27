@@ -703,7 +703,57 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById('compMediaVideo').srcObject = stream;
                 alert("🎙️ لائیو ریکارڈنگ شروع ہو چکی ہے!");
             }).catch(e => alert("مائیکروفون اور کیمرہ کی اجازت درکار ہے۔"));
+}
+                        // تفصیلی تشریح و وضاحت لوڈ کرنے کا فنکشن
+async function loadDedicatedTafsirContent() {
+    let surahNum = document.getElementById('tafsirModuleSurahSelect').value;
+    let outputBox = document.getElementById('dedicatedTafsirOutput');
+    
+    if (!surahNum) {
+        alert("براہ کرم پہلے کوئی سورہ منتخب کریں!");
+        return;
+    }
+
+    outputBox.style.display = 'block';
+    outputBox.innerHTML = '<div style="text-align:center; padding:20px; font-weight:bold; color:var(--primary);">تفصیلی تشریح اور نکات لوڈ ہو رہے ہیں...</div>';
+    
+    try {
+        let res = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/ur.jalandhry`);
+        let json = await res.json();
+        
+        let arabicRes = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}`);
+        let arabicJson = await arabicRes.json();
+        
+        if (json.code === 200 && arabicJson.code === 200) {
+            let data = json.data;
+            let arabicData = arabicJson.data;
+
+            let html = `<div style="text-align:center; margin-bottom:15px;"><h3 style="color:var(--primary); margin:0;">${arabicData.englishName} (${arabicData.name}) - تفصیلی تشریح</h3></div>`;
+            
+            for (let i = 0; i < data.ayahs.length; i++) {
+                let ayahNum = arabicData.ayahs[i].numberInSurah;
+                let arabicText = arabicData.ayahs[i].text;
+                let tafsirText = data.ayahs[i] ? data.ayahs[i].text : '';
+
+                html += `<div style="margin-bottom: 15px; padding: 12px; background: #fff; border-radius: 8px; border: 1px solid #cbd5e1; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+                    <div style="font-size:16px; color:#1e293b; margin-bottom:6px;">
+                        <b style="background:var(--primary); color:#fff; padding:2px 6px; border-radius:4px; font-size:13px;">آیت [${ayahNum}]</b> 
+                        <span style="font-size:18px; display:inline-block; margin-top:5px;">${arabicText}</span>
+                    </div>
+                    <div style="font-size:15px; color:#334155; background:#f1f5f9; padding:10px; border-radius:6px; margin-top:8px; line-height:2.2; border-right:3px solid var(--primary);">
+                        <b>📖 تفصیلی تشریح و وضاحت:</b><br>${tafsirText}
+                    </div>
+                </div>`;
+            }
+            outputBox.innerHTML = html;
+        } else {
+            outputBox.innerHTML = '<b>⚠️ تشریح لوڈ کرنے میں خرابی پیش آئی۔</b>';
         }
+    } catch (err) {
+        outputBox.innerHTML = '<b>⚠️ انٹرنیٹ کنکشن چیک کریں۔</b>';
+    }
+                        }
+                        
     </script>
 </body>
 </html> 
