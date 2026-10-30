@@ -9,9 +9,14 @@
                 :root { --primary: #0f766e; --secondary: #1f2937; --bg: #f8fafc; --accent: #0284c7; --dark: #0f172a; --card-bg: #ffffff; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Nastaliq Urdu', 'Segoe UI', Tahoma, sans-serif; }
         body { background: var(--bg); color: #1e293b; display: flex; flex-direction: column; min-height: 100vh; direction: rtl; }
-        .app-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .module-section { display: none; background: var(--card-bg); padding: 30px; border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); border-right: 8px solid var(--primary); margin-bottom: 25px; }
+        .app-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 15px; }
+        header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 25px; border-radius: 14px; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        nav button { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; transition: all 0.3s; }
+        nav button.active, nav button:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .module-section { display: none; background: var(--card-bg); padding: 25px; border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); border-right: 8px solid var(--primary); margin-bottom: 25px; }
         .module-section.active { display: block; }
+        select, input { width: 100%; max-width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 15px; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff; }
     </style>
 </head>
 
