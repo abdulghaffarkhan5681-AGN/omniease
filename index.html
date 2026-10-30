@@ -12,40 +12,6 @@
         .app-container { width: 100%; max-width: 1200px; margin: 0 auto; }
     </style>
 </head>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Nastaliq Urdu', 'Segoe UI', Tahoma, sans-serif; }
-        body { background: var(--bg); color: #1e293b; display: flex; flex-direction: column; min-height: 100vh; direction: rtl; }
-        
-        header { background: linear-gradient(135deg, #0f766e, #065f46); color: white; padding: 24px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        header h1 { font-size: 28px; font-weight: bold; margin-bottom: 6px; }
-        header p { font-size: 14px; opacity: 0.95; letter-spacing: 0.5px; }
-        
-        nav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 14px; background: #0284c7; position: sticky; top: 0; z-index: 1000; box-shadow: 0 3px 8px rgba(0,0,0,0.2); }
-        nav button { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 14px 8px; font-size: 13px; cursor: pointer; border-radius: 8px; font-weight: bold; text-align: center; transition: all 0.2s ease; }
-        nav button:hover { background: rgba(255,255,255,0.3); }
-        nav button.active { background: #ffffff; color: #0284c7; box-shadow: 0 4px 8px rgba(0,0,0,0.25); transform: translateY(-1px); }
-        
-        main { flex: 1; padding: 25px; max-width: 1100px; margin: 0 auto; width: 100%; }
-        .module-section { display: none; background: var(--card-bg); padding: 30px; border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); border-right: 8px solid var(--primary); margin-bottom: 30px; }
-        .module-section.active { display: block; }
-        
-        h2 { color: var(--primary); font-size: 22px; margin-bottom: 18px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-        label { display: block; margin: 14px 0 6px; font-weight: bold; font-size: 14px; color: #334155; }
-        select, input, textarea { width: 100%; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; background: #fff; margin-bottom: 12px; }
-        
-        .btn { background: var(--primary); color: white; border: none; padding: 14px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 15px; text-align: center; width: 100%; margin-top: 10px; }
-        .btn-sale { background: #16a34a; }
-        .btn-purchase { background: #ca8a04; }
-        
-        .output-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 18px; border-radius: 10px; margin-top: 15px; font-size: 15px; line-height: 2.2; max-height: 500px; overflow-y: auto; }
-        
-        .finance-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
-        .card-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 16px; border-radius: 10px; text-align: center; }
-        .card-box h4 { font-size: 13px; color: #166534; font-weight: 600; }
-        .card-box p { font-size: 20px; font-weight: bold; color: #14532d; margin-top: 6px; }
-
-        footer { text-align: center; padding: 24px; font-size: 13px; background: #0f172a; color: #cbd5e1; margin-top: auto; border-top: 4px solid var(--accent); }
-    </style>
-</head>
 <body>
 
     <header>
