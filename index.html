@@ -664,19 +664,6 @@ document.addEventListener("DOMContentLoaded", () => {
             window.onload = function() {
                 updateBooksList();
             };
-        function renderComprehensiveBookContent() {
-            let bookKey = document.getElementById('comprehensiveBookSelect').value;
-            let displayBox = document.getElementById('comprehensiveBookOutput');
-            if(bookKey === 'bukhari') {
-                displayBox.innerHTML = "<b>صحیح بخاری شریف:</b> إنما الأعمال بالنيات (تمام اعمال کا دارومدار نیت پر ہے)۔";
-            } else if(bookKey === 'muslim') {
-                displayBox.innerHTML = "<b>صحیح مسلم شریف:</b> من غشنا فليس منا (دھوکہ دینے والا ہم میں سے نہیں)۔";
-            } else if(bookKey === 'fiqh1') {
-                displayBox.innerHTML = "<b>فقہ (عبادات):</b> طہارت، وضو، غسل اور نماز کے مسنون احکام۔";
-            } else {
-                displayBox.innerHTML = "<b>فقہ (تجارت):</b> حلال کمائی اور خرید و فروخت کے اسلامی اصول۔";
-            }
-        }
 
         let compTransactionRecords = [];
         let compBankBalanceAmount = 100000;
