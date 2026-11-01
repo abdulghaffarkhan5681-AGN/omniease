@@ -963,7 +963,12 @@ async function loadDedicatedTafsirContent() {
         outputBox.innerHTML = '<b>⚠️ انٹرنیٹ کنکشن چیک کریں۔</b>';
     }
                         }
-                        
+
+                                window.addEventListener('DOMContentLoaded', () => {
+            if (document.getElementById('mainCatSelect')) {
+                updateBooksList();
+            }
+        });
     </script>
 </body>
 </html> 
