@@ -39,18 +39,39 @@
         <button onclick="switchTab('property')" id="tab-property">🏢 پراپرٹی ٹول</button>
         <button onclick="switchTab('media')" id="tab-media">🎬 میڈیا اسٹوڈیو</button>
     </nav>
+        <!-- 2. Fiqh & Hadith Books Module -->
+        <section id="tab-hadith" class="module-section active-module">
+            <h2>📚 فقہ و احادیثِ مبارکہ جامع کتب خانہ</h2>
+            <p style="text-align: center; color: #64748b; margin-bottom: 20px;">تمام مستند کتب ستہ، فقہ حنفی اور فتاویٰ کی تمام جلدیں اور ابواب</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                <div>
+                    <label><b>1. کٹیگری منتخب کریں:</b></label>
+                    <select id="mainCatSelect" onchange="updateBooksList()" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+                        <option value="hadith">احادیثِ مبارکہ (كتب الستة)</option>
+                        <option value="fiqh">فقہ، اصولِ فقہ و فتاویٰ</option>
+                    </select>
+                </div>
+                <div>
+                    <label><b>2. کتاب منتخب کریں:</b></label>
+                    <select id="specificBookSelect" onchange="updateVolumesList()" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+                    </select>
+                </div>
+                <div>
+                    <label><b>3. جلد / حصہ منتخب کریں:</b></label>
+                    <select id="volumeSelect" onchange="loadBookContent()" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+                    </select>
+                </div>
+            </div>
 
-       <!-- تفصیلی تشریح اور وضاحت کا الگ سیکشن -->
-    <section id="sec-dedicated-tafsir" class="module-section" style="display: none; background:#fff; padding:20px; margin-bottom:15px; border-radius:12px;">
-        <h2 style="color:var(--primary); text-align:center; margin-bottom:15px;">📖 قرآن مجید کی تفصیلی تشریح و وضاحت</h2>
-        <label style="font-weight:bold; display:block; margin-bottom:5px;">تفسیر کے لیے سورہ منتخب کریں:</label>
-        <select id="tafsirModuleSurahSelect" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #cbd5e1; border-radius:8px; font-size:15px;">
-            <option value="">-- سورہ منتخب کریں --</option>
-        </select>
-        <button onclick="loadDedicatedTafsirContent()" style="width:100%; background:var(--primary); color:#fff; padding:12px; border:none; border-radius:8px; font-weight:bold; cursor:pointer; margin-bottom:15px;">🔍 تفصیلی تشریح ملاحظہ کریں</button>
-        <div id="dedicatedTafsirOutput" style="background:#f8fafc; padding:15px; border:1px solid #e2e8f0; border-radius:8px; max-height:400px; overflow-y:auto; display:none; direction:rtl; text-align:right;"></div>
-    </section>
-    
+            <div style="background: #f1f5f9; padding: 25px; border-radius: 12px; border-right: 6px solid var(--primary); box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);">
+                <h3 id="readerTitle" style="color: var(--primary); margin-bottom: 12px; font-size: 18px;">کتاب اور جلد منتخب کریں...</h3>
+                <div id="readerBody" style="line-height: 1.9; color: #334155; font-size: 16px;">
+                    اوپر دیے گئے خانوں سے اپنی مطلوبہ کتاب اور اس کی جلد منتخب کریں تاکہ اس کا مکمل تفصیلی مواد یہاں ظاہر ہو سکے۔
+                </div>
+            </div>
+        </section>
+       
     <main>
         <!-- 1. Quran Module -->
         <section id="sec-quran" class="module-section active">
