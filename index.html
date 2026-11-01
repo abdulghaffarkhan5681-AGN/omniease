@@ -535,7 +535,135 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         });
+            // کتب اور جلدوں کا مکمل ڈیٹا بیس
+            const libraryData = {
+                hadith: [
+                    {
+                        id: 'bukhari',
+                        name: 'صحیح البخاری (مکمل 8 جلدیں)',
+                        volumes: [
+                            { title: 'جلد 1: کتاب الوحی، الایمان و العلم', content: 'صحیح البخاری جلد اول: وحی کی ابتدا، ایمان کے احکام اور علم کی فضیلت پر مشتمل مستند احادیث۔' },
+                            { title: 'جلد 2: کتاب الوضوء و الصلاۃ', content: 'صحیح البخاری جلد دوم: طهارت، وضو، غسل، اوقاتِ نماز اور جماعت کے احکام۔' },
+                            { title: 'جلد 3: کتاب الجنائز، الزکوۃ و الصوم', content: 'صحیح البخاری جلد سوم: تدفین، زکوٰۃ کا نصاب اور ماہِ رمضان کے روزوں کے مسائل۔' },
+                            { title: 'جلد 4: کتاب الحج و البيوع', content: 'صحیح البخاری جلد چہارم: حج کے مناسک اور تجارت، بیع وشرا کے اسلامی اصول۔' },
+                            { title: 'جلد 5: کتاب المغازی و التفسیر', content: 'صحیح البخاری جلد پنجم: غزواتِ نبوی ﷺ اور قرآن پاک کی تفسیری احادیث۔' },
+                            { title: 'جلد 6: کتاب النکاح و الطلاق', content: 'صحیح البخاری جلد ششم: نکاح، حق مہر، نفقہ اور طلاق کے شرعی احکام۔' },
+                            { title: 'جلد 7: کتاب الاطعمہ و الطب و اللباس', content: 'صحیح البخاری جلد ہفتم: کھانے پینے کے آداب، طبِ نبوی ﷺ اور لباس کے احکام۔' },
+                            { title: 'جلد 8: کتاب الدعوات، الرقاق و التوحید', content: 'صحیح البخاری جلد ہشتم: دعائیں، دل کی رقت، توبہ اور توحید خالص کے دلائل۔' }
+                        ]
+                    },
+                    {
+                        id: 'muslim',
+                        name: 'صحیح مسلم (مکمل 8 جلدیں)',
+                        volumes: [
+                            { title: 'جلد 1: مقدمہ و کتاب الإیمان', content: 'صحیح مسلم جلد اول: اصولِ حدیث کا بیش قیمت مقدمہ اور ایمان و عقائد کی احادیث۔' },
+                            { title: 'جلد 2: کتاب الطہارۃ و الصلاۃ', content: 'صحیح مسلم جلد دوم: پاکی، وضو اور نمازِ باجماعت کے فضائل و احکام۔' },
+                            { title: 'جلد 3: کتاب الحج و الزکوۃ', content: 'صحیح مسلم جلد سوم: زکوٰۃ کے مصارف اور حج و عمرہ کی مکمل تفصیل۔' },
+                            { title: 'جلد 4: کتاب النکاح و الطلاق', content: 'صحیح مسلم جلد چہارم: خاندانی قوانین، نکاح، رضاعت اور طلاق کے مسائل۔' },
+                            { title: 'جلد 5: کتاب البيوع و المزارعہ', content: 'صحیح مسلم جلد پنجم: کاروباری معاملات، سود کی حرمت اور زمین کی بٹائی کے احکام۔' },
+                            { title: 'جلد 6: کتاب الحدود و الاقضیہ', content: 'صحیح مسلم جلد ششم: حدود و سزائیں، فیصلے اور عدالتی احکام۔' },
+                            { title: 'جلد 7: کتاب الجہاد و السیر', content: 'صحیح مسلم جلد ہفتم: جہاد، صلح اور اسلامی جنگی اصول۔' },
+                            { title: 'جلد 8: کتاب الفضائل و الاداب و الذکر', content: 'صحیح مسلم جلد ہشتم: صحابہ و اہل بیت کے فضائل، آداب اور ذکر و دعا۔' }
+                        ]
+                    },
+                    {
+                        id: 'tirmidhi',
+                        name: 'جامع الترمذی (مکمل 6 جلدیں)',
+                        volumes: [
+                            { title: 'جلد 1: کتاب الطہارۃ و الصلاۃ', content: 'جامع الترمذی جلد اول: طہارت اور نماز کے ابواب مع فقہی تشریح۔' },
+                            { title: 'جلد 2: کتاب الزکوۃ، الصوم و الحج', content: 'جامع الترمذی جلد دوم: زکوٰۃ، روزہ، اعتکاف اور حج کے احکام۔' },
+                            { title: 'جلد 3: کتاب الجنائز و النکاح', content: 'جامع الترمذی جلد سوم: جنازے کے مسائل اور نکاح و طلاق کے احکام۔' },
+                            { title: 'جلد 4: کتاب البيوع و الاحکام', content: 'جامع الترمذی جلد چہارم: تجارت، سود، اور عدالتی احکام۔' },
+                            { title: 'جلد 5: کتاب الفتن و المناقب', content: 'جامع الترمذی جلد پنجم: فتنوں کا بیان، علاماتِ قیامت اور صحابہ کے مناقب۔' },
+                            { title: 'جلد 6: کتاب التفسیر و الدعوات', content: 'جامع الترمذی جلد ششم: قرآن مجید کی تفسیری احادیث اور دعاؤں کا مجموعہ۔' }
+                        ]
+                    },
+                    {
+                        id: 'abudawud',
+                        name: 'سنن ابی داؤد (مکمل 5 جلدیں)',
+                        volumes: [
+                            { title: 'جلد 1: کتاب الطہارۃ و الصلاۃ', content: 'سنن ابی داؤد جلد اول: احکامِ طہارت اور نماز کے مسنون طریقے و سنن۔' },
+                            { title: 'جلد 2: کتاب الزکوۃ، الصوم و المناسک', content: 'سنن ابی داؤد جلد دوم: زکوٰۃ، روزے اور مناسکِ حج کی احادیث۔' },
+                            { title: 'جلد 3: کتاب البيوع و الاقضیہ', content: 'سنن ابی داؤد جلد سوم: خرید و فروخت، وراثت اور قضا کے احکام۔' },
+                            { title: 'جلد 4: کتاب الجہاد و النکاح', content: 'سنن ابی داؤد جلد چہارم: جہاد، نکاح، طلاق اور خاندانی حقوق۔' },
+                            { title: 'جلد 5: کتاب الادب و اللباس و الحروف', content: 'سنن ابی داؤد جلد پنجم: اچھے اخلاق، آداب، لباس اور حروفِ قرات کے احکام۔' }
+                        ]
+                    }
+                ],
+                fiqh: [
+                    {
+                        id: 'bahar',
+                        name: 'بہارِ شریعت (مکمل 20 حصص)',
+                        volumes: [
+                            { title: 'حصہ 1: علمِ دین اور عقائدِ اسلام', content: 'بہارِ شریعت حصہ اول: ضروری دینی تعلیمات، عقائدِ اہل سنت اور توحید و رسالت۔' },
+                            { title: 'حصہ 2 & 3: طہارت، وضو اور غسل کے مسائل', content: 'بہارِ شریعت حصص دوم و سوم: پانی کے احکام، استنجا، وضو، غسل اور تیمم کے تفصیلی مسائل۔' },
+                            { title: 'حصہ 4 & 5: نماز کے احکام اور نوافل', content: 'بہارِ شریعت حصص چہارم و پنجم: فرض نمازیں، شرائط، اوقات، اذان اور نوافل کا بیان۔' },
+                            { title: 'حصہ 6 & 7: زکوٰۃ اور روزہ', content: 'بہارِ شریعت حصص ششم و ہفتم: صاحبِ نصاب پر زکوٰۃ کے احکام اور روزے کے مسائل۔' },
+                            { title: 'حصہ 8 & 9: حج، قربانی اور عقیقہ', content: 'بہارِ شریعت حصص ہشتم و نہم: حج کے ارکان، قربانی کے جانور اور عقیقہ کے احکام۔' },
+                            { title: 'حصہ 10 & 11: نکاح اور طلاق', content: 'بہارِ شریعت حصص دہم و یازدہم: نکاح کے شرائط، حق مہر، نفقہ اور طلاق و عدت کے احکام۔' },
+                            { title: 'حصہ 12 تا 20: تجارت، وراثت، جنازہ اور دیگر ابواب', content: 'بہارِ شریعت کے بقیہ تمام حصص: خرید و فروخت، شراکت، وراثت، جنازہ اور شرعی فتاویٰ۔' }
+                        ]
+                    },
+                    {
+                        id: 'rizvia',
+                        name: 'فتاویٰ رضویہ (مبارک 30 جلدیں)',
+                        volumes: [
+                            { title: 'جلد 1 تا 5: کتاب الطہارۃ و کتاب الصلاۃ', content: 'فتاویٰ رضویہ ابتدائی جلدیں: طہارت، پاکی، نماز کے اوقات، اذان اور امامت کے تحقیقی جوابات۔' },
+                            { title: 'جلد 6 تا 10: کتاب الصلاۃ (مختلف ابواب) و زکوٰۃ', content: 'فتاویٰ رضویہ: جمعہ، عیدین، جنازہ اور زکوٰۃ و صدقات کے تفصیلی فتاویٰ۔' },
+                            { title: 'جلد 11 تا 20: روزہ، حج، نکاح، طلاق اور تجارت', content: 'فتاویٰ رضویہ وسطی جلدیں: خاندانی معاملات، نکاح، طلاق، بیع و شرا اور تجارتی مسائل۔' },
+                            { title: 'جلد 21 تا 30: عقائد، تصوف، وراثت اور دیگر اہم فتاویٰ', content: 'فتاویٰ رضویہ آخری جلدیں: تصوف، عقائدِ حقہ، وراثت کی تقسیم اور جدید فقہی مسائل پر مفصل فتاویٰ۔' }
+                        ]
+                    }
+                ]
+            };
 
+            function updateBooksList() {
+                const cat = document.getElementById('mainCatSelect').value;
+                const bookSelect = document.getElementById('specificBookSelect');
+                bookSelect.innerHTML = '';
+                
+                libraryData[cat].forEach(book => {
+                    let opt = document.createElement('option');
+                    opt.value = book.id;
+                    opt.textContent = book.name;
+                    bookSelect.appendChild(opt);
+                });
+                updateVolumesList();
+            }
+
+            function updateVolumesList() {
+                const cat = document.getElementById('mainCatSelect').value;
+                const bookId = document.getElementById('specificBookSelect').value;
+                const volSelect = document.getElementById('volumeSelect');
+                volSelect.innerHTML = '';
+
+                const book = libraryData[cat].find(b => b.id === bookId);
+                if (book) {
+                    book.volumes.forEach((vol, index) => {
+                        let opt = document.createElement('option');
+                        opt.value = index;
+                        opt.textContent = vol.title;
+                        volSelect.appendChild(opt);
+                    });
+                }
+                loadBookContent();
+            }
+
+            function loadBookContent() {
+                const cat = document.getElementById('mainCatSelect').value;
+                const bookId = document.getElementById('specificBookSelect').value;
+                const volIndex = document.getElementById('volumeSelect').value;
+
+                const book = libraryData[cat].find(b => b.id === bookId);
+                if (book && book.volumes[volIndex]) {
+                    document.getElementById('readerTitle').textContent = `${book.name} — ${book.volumes[volIndex].title}`;
+                    document.getElementById('readerBody').textContent = book.volumes[volIndex].content;
+                }
+            }
+
+            window.onload = function() {
+                updateBooksList();
+            };
         function renderComprehensiveBookContent() {
             let bookKey = document.getElementById('comprehensiveBookSelect').value;
             let displayBox = document.getElementById('comprehensiveBookOutput');
